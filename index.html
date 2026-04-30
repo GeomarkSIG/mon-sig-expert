@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic SIG Expert — GeomarkSIG</title>
+    <style>
+        :root {
+            --blue: #1a73e8;
+            --blue-dark: #1557b0;
+            --orange: #f39c12;
+            --green: #27ae60;
+            --gray-bg: #f4f6f9;
+            --gray-border: #dde2eb;
+            --text: #202124;
+            --text-muted: #5f6368;
+            --radius: 10px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--gray-bg); color: var(--text); line-height: 1.5; }
+        .page { max-width: 760px; margin: 40px auto; padding: 0 16px 60px; }
+
+        /* En-tête */
+        .header { text-align: center; margin-bottom: 36px; }
+        .header .badge { display: inline-block; background: #e8f0fe; color: var(--blue); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 4px 14px; border-radius: 20px; margin-bottom: 14px; }
+        .header h1 { font-size: 1.8rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+
+        /* Carte de section */
+        .card { background: #fff; border-radius: var(--radius); border: 1px solid var(--gray-border); padding: 24px; margin-bottom: 20px; }
+        .card h2 { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+        .card h2 .ico { font-size: 1rem; }
+
+        /* Champs */
+        .field { margin-bottom: 16px; }
+        .field:last-child { margin-bottom: 0; }
+        .field label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+        .field label .hint { font-weight: 400; color: var(--text-muted); margin-left: 6px; font-size: 0.82rem; }
+        .field input[type="text"],
+        .field input[type="email"],
+        .field select {
+            width: 100%; padding: 11px 14px; border: 1.5px solid var(--gray-border); border-radius: 8px;
+            font-size: 0.95rem; color: var(--text); background: #fff; transition: border-color 0.2s;
+            appearance: none; -webkit-appearance: none;
+        }
+        .field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235f6368' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; }
+        .field input:focus, .field select:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,115,232,0.12); }
+
+        /* Toggle Simple / Avancé */
+        .mode-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .mode-btn {
+            padding: 14px 10px; border: 2px solid var(--gray-border); border-radius: var(--radius);
+            cursor: pointer; text-align: center; transition: all 0.2s; background: #fff;
+        }
+        .mode-btn .mode-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; color: var(--text); }
+        .mode-btn .mode-desc { font-size: 0.78rem; color: var(--text-muted); }
+        .mode-btn.active { border-color: var(--blue); background: #e8f0fe; }
+        .mode-btn.active .mode-title { color: var(--blue); }
+        .mode-btn.active.orange-mode { border-color: var(--orange); background: #fef9e7; }
+        .mode-btn.active.orange-mode .mode-title { color: var(--orange); }
+
+        /* Badge "Avancé" sur la carte cachée */
+        .advanced-badge { background: #fef9e7; border: 1px solid #f39c12; border-radius: var(--radius); padding: 8px 14px; font-size: 0.8rem; color: #b7770d; margin-bottom: 16px; display: flex; align-items: center; gap: 6px; }
+
+        /* Carte avancée masquée/visible */
+        .card-advanced { display: none; border-color: #f39c12; }
+        .card-advanced.visible { display: block; }
+        .card-advanced h2 { color: #b7770d; }
+
+        /* Bouton submit */
+        .btn-submit {
+            width: 100%; padding: 16px; background: var(--blue); color: #fff;
+            border: none; border-radius: var(--radius); font-size: 1.05rem; font-weight: 700;
+            cursor: pointer; transition: background 0.2s, transform 0.1s; letter-spacing: 0.3px;
+        }
+        .btn-submit:hover { background: var(--blue-dark); }
+        .btn-submit:active { transform: scale(0.99); }
+
+        /* Progress bar */
+        .progress { display: flex; gap: 6px; margin-bottom: 28px; }
+        .progress-step { flex: 1; height: 4px; border-radius: 2px; background: var(--gray-border); }
+        .progress-step.done { background: var(--blue); }
+
+        /* Footer note */
+        .footnote { text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 14px; }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <div class="header">
+        <div class="badge">🛰️ GeomarkSIG</div>
+        <h1>Configurateur SIG Expert</h1>
+        <p>Obtenez votre architecture SIG idéale en 2 minutes — simple ou expert.</p>
+    </div>
+
+    <div class="progress">
+        <div class="progress-step done"></div>
+        <div class="progress-step done"></div>
+        <div class="progress-step"></div>
+    </div>
+
+    <form action="resultats.html" method="GET" id="sigForm">
+        <!-- IDENTITÉ -->
+        <div class="card">
+            <h2><span class="ico">🏷️</span> Votre identité</h2>
+            <div class="field">
+                <label>Nom de l'entreprise ou nom complet</label>
+                <input type="text" name="identite" placeholder="Ex : GéoConseil 974" required>
+            </div>
+            <div class="field">
+                <label>Email professionnel <span class="hint">(pour recevoir votre rapport)</span></label>
+                <input type="email" name="email" placeholder="contact@exemple.com">
+            </div>
+        </div>
+
+        <!-- MODE -->
+        <div class="card">
+            <h2><span class="ico">⚙️</span> Niveau de précision souhaité</h2>
+            <div class="mode-toggle">
+                <div class="mode-btn active" id="btnSimple" onclick="setMode('simple')">
+                    <div class="mode-title">⚡ Diagnostic Simple</div>
+                    <div class="mode-desc">5 questions · 2 min · Résultat immédiat</div>
+                </div>
+                <div class="mode-btn orange-mode" id="btnAvance" onclick="setMode('avance')">
+                    <div class="mode-title">🔬 Diagnostic Expert</div>
+                    <div class="mode-desc">9 questions · 5 min · 5500+ scénarios</div>
+                </div>
+            </div>
+            <input type="hidden" name="mode" id="inputMode" value="simple">
+        </div>
+
+        <!-- QUESTIONS COMMUNES (toujours visibles) -->
+        <div class="card">
+            <h2><span class="ico">🏢</span> Structure &amp; budget</h2>
+            <div class="field">
+                <label>Type de structure</label>
+                <select name="structure">
+                    <option value="public">Public — Collectivité, État, GIP</option>
+                    <option value="prive">Privé — BET, Cabinet, Freelance</option>
+                    <option value="asso">Associatif / Humanitaire / ONG</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Budget annuel (logiciels + hébergement)</label>
+                <select name="budget">
+                    <option value="zero">0 € — Strictement gratuit (open source uniquement)</option>
+                    <option value="starter">Petit budget — jusqu'à 1 000 €/an</option>
+                    <option value="moyen">Budget intermédiaire — 1 000 à 5 000 €/an</option>
+                    <option value="pro">Budget professionnel — plus de 5 000 €/an</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><span class="ico">🎯</span> Usage principal</h2>
+            <div class="field">
+                <label>Votre besoin métier prioritaire</label>
+                <select name="besoin">
+                    <option value="bureau">Analyse & cartographie bureau (QGIS, ArcGIS)</option>
+                    <option value="terrain">Collecte & saisie sur le terrain (GPS, formulaire)</option>
+                    <option value="web">Partage & diffusion web (carte en ligne)</option>
+                    <option value="mixte">Mixte — bureau + terrain + web</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Fond de plan / imagerie souhaité</label>
+                <select name="imagerie">
+                    <option value="osm">OpenStreetMap — gratuit, standard</option>
+                    <option value="google">Google Maps / Satellite — grand public</option>
+                    <option value="ign">IGN / Géoportail — ortho HD 20 cm (France)</option>
+                    <option value="drone">Drone — précision centimétrique</option>
+                    <option value="lidar">LiDAR / Nuage de points 3D</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Besoin de travail collaboratif en équipe ?</label>
+                <select name="collaboration">
+                    <option value="solo">Non — je travaille seul sur mes fichiers</option>
+                    <option value="equipe_small">Oui — petite équipe (2 à 5 personnes)</option>
+                    <option value="equipe_large">Oui — grande équipe (plus de 5 personnes)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- QUESTIONS AVANCÉES (masquées par défaut) -->
+        <div class="card card-advanced" id="cardAvance">
+            <h2><span class="ico">🔬</span> Paramètres techniques avancés</h2>
+            <div class="advanced-badge">
+                ⚠️ Ces questions permettent d'affiner précisément votre architecture SIG parmi plus de 5 500 combinaisons.
+            </div>
+
+            <div class="field">
+                <label>Niveau technique de votre équipe SIG</label>
+                <select name="expertise">
+                    <option value="debutant">Débutant — cherche du "clés en main", peu de code</option>
+                    <option value="intermediaire">Intermédiaire — maîtrise QGIS ou ArcGIS</option>
+                    <option value="expert">Expert — sait coder (Python, SQL) ou gérer un serveur</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Souveraineté &amp; sensibilité des données</label>
+                <select name="souverainete">
+                    <option value="faible">Faible — le cloud américain ne pose pas de problème</option>
+                    <option value="moyenne">Moyenne — préférence Europe mais pas bloquant</option>
+                    <option value="haute">Haute — hébergement France / Europe obligatoire (RGPD, secret)</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Volume et nature des données géographiques</label>
+                <select name="volume">
+                    <option value="leger">Léger — moins de 100 000 objets, fichiers SHP/GPKG</option>
+                    <option value="moyen">Moyen — 100 k à 1 million d'objets, données métier</option>
+                    <option value="lourd">Lourd — plus d'1 million d'objets, flux temps réel, SIG 3D</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Infrastructure d'hébergement envisagée</label>
+                <select name="hosting">
+                    <option value="local">Local / Serveur interne — données sur site</option>
+                    <option value="cloud_facile">Cloud managé — Render, Supabase, Railway (facile)</option>
+                    <option value="cloud_infra">Infrastructure Cloud Pro — Azure, AWS, Google Cloud</option>
+                    <option value="arcgis_cloud">ArcGIS Online / Esri Cloud (écosystème Esri)</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Type de portail de diffusion web souhaité</label>
+                <select name="portail">
+                    <option value="non">Aucun portail — usage bureau uniquement</option>
+                    <option value="simple">Carte web simple — Leaflet, MapLibre, Felt</option>
+                    <option value="metier">Portail métier expert — Lizmap, GeoServer, MapServer</option>
+                    <option value="esri">Portail Esri — Experience Builder, ArcGIS Web AppBuilder</option>
+                    <option value="dashboard">Tableau de bord / BI spatiale — Power BI, Grafana</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-submit">🗺️ Calculer mon architecture SIG optimale</button>
+        <p class="footnote">Diagnostic gratuit · Aucune inscription requise · Résultat instantané</p>
+    </form>
+
+</div>
+
+<script>
+    function setMode(mode) {
+        const cardAvance = document.getElementById('cardAvance');
+        const inputMode = document.getElementById('inputMode');
+        const btnS = document.getElementById('btnSimple');
+        const btnA = document.getElementById('btnAvance');
+
+        if (mode === 'avance') {
+            cardAvance.classList.add('visible');
+            inputMode.value = 'avance';
+            btnA.classList.add('active');
+            btnS.classList.remove('active');
+        } else {
+            cardAvance.classList.remove('visible');
+            inputMode.value = 'simple';
+            btnS.classList.add('active');
+            btnA.classList.remove('active');
+        }
+    }
+</script>
+</body>
+</html>
