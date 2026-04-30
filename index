@@ -3,83 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagnostic SIG Expert - GeomarkSIG</title>
+    <title>Diagnostic SIG - GeomarkSIG</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; background: #f4f7f6; }
-        .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
-        .question-block { margin-bottom: 20px; padding: 15px; border-left: 4px solid #3498db; background: #fafafa; }
-        label { font-weight: bold; display: block; margin-bottom: 10px; }
-        select, input[type="submit"] { width: 100%; padding: 10px; margin-top: 5px; border-radius: 4px; border: 1px solid #ddd; }
-        input[type="submit"] { background: #3498db; color: white; font-weight: bold; border: none; cursor: pointer; transition: 0.3s; }
-        input[type="submit"]:hover { background: #2980b9; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; }
+        .container { max-width: 700px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        h1 { color: #1a73e8; text-align: center; }
+        .section { margin-bottom: 25px; padding: 15px; border-radius: 8px; background: #f8f9fa; }
+        label { display: block; font-weight: bold; margin: 10px 0 5px; }
+        input[type="text"], input[type="email"], select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .hidden { display: none; }
+        .btn { width: 100%; padding: 15px; background: #1a73e8; color: white; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; margin-top: 20px; }
+        .mode-selector { display: flex; gap: 10px; margin: 20px 0; }
+        .mode-btn { flex: 1; padding: 10px; border: 2px solid #1a73e8; border-radius: 8px; background: white; cursor: pointer; text-align: center; font-weight: bold; }
+        .mode-btn.active { background: #1a73e8; color: white; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>🔍 Diagnostic d'Architecture SIG</h1>
-        <p>Répondez à ces questions pour générer votre configuration personnalisée parmi 500+ combinaisons.</p>
-        
-        <form action="resultats.html" method="GET">
-            <div class="question-block">
-                <label>1. Votre structure & Budget annuel :</label>
-                <select name="profil" required>
-                    <option value="public_0">Public / Collectivité (Budget 0€)</option>
-                    <option value="public_pro">Public / Collectivité (Budget Pro)</option>
-                    <option value="prive_0">Privé / Freelance (Budget 0€)</option>
-                    <option value="prive_pro">Privé / Entreprise (Budget Pro)</option>
-                    <option value="ong">ONG / Humanitaire</option>
-                </select>
-            </div>
 
-            <div class="question-block">
-                <label>2. Niveau technique de l'équipe :</label>
-                <select name="expert">
-                    <option value="debutant">Débutant (Cherche simplicité SaaS)</option>
-                    <option value="intermediaire">Intermédiaire (Maîtrise QGIS)</option>
-                    <option value="expert">Expert (Dév, SQL, Admin Serveur)</option>
-                </select>
-            </div>
+<div class="container">
+    <h1>🚀 Configurateur SIG Expert</h1>
+    
+    <form action="resultats.html" method="GET" id="sigForm">
+        <div class="section">
+            <label>Nom de l'entreprise ou Nom complet :</label>
+            <input type="text" name="identite" placeholder="Ex: GéoConseil" required>
+            
+            <label>Votre Email :</label>
+            <input type="email" name="email" placeholder="contact@exemple.com" required>
+        </div>
 
-            <div class="question-block">
-                <label>3. Mode de collaboration :</label>
-                <select name="collaboration">
-                    <option value="solo">Usage Individuel</option>
-                    <option value="equipe">Édition simultanée à plusieurs</option>
-                    <option value="diffusion">Consultation Grand Public uniquement</option>
-                </select>
-            </div>
+        <label>Choisissez votre niveau de précision :</label>
+        <div class="mode-selector">
+            <div id="btnSimple" class="mode-btn active" onclick="toggleMode('simple')">Diagnostic Simple</div>
+            <div id="btnAvance" class="mode-btn" onclick="toggleMode('avance')">Diagnostic Avancé</div>
+        </div>
+        <input type="hidden" name="mode" id="inputMode" value="simple">
 
-            <div class="question-block">
-                <label>4. Confidentialité des données :</label>
-                <select name="confid">
-                    <option value="open">Données Publiques / OpenData</option>
-                    <option value="interne">Données Métier Internes</option>
-                    <option value="sensible">Données Sensibles / Souveraineté</option>
-                </select>
-            </div>
+        <div class="section">
+            <label>Budget annuel (Logiciels + Hébergement) :</label>
+            <select name="budget">
+                <option value="zero">0€ (Strictement gratuit)</option>
+                <option value="pro">Budget Pro (+ 1000€)</option>
+            </select>
 
-            <div class="question-block">
-                <label>5. Volume de données estimé :</label>
+            <label>Besoin principal :</label>
+            <select name="besoin">
+                <option value="bureau">Travail de bureau uniquement</option>
+                <option value="terrain">Collecte sur le terrain</option>
+                <option value="web">Partager une carte sur internet</option>
+            </select>
+        </div>
+
+        <div id="questionsAvancees" class="hidden">
+            <div class="section" style="border-left: 4px solid #f39c12;">
+                <label>Niveau technique de l'équipe :</label>
+                <select name="expertise">
+                    <option value="debutant">Débutant</option>
+                    <option value="expert">Expert (Dév/Serveur)</option>
+                </select>
+
+                <label>Souveraineté des données :</label>
+                <select name="souverainete">
+                    <option value="non">Cloud US accepté</option>
+                    <option value="oui">Hébergement France/Europe requis</option>
+                </select>
+
+                <label>Volume de données :</label>
                 <select name="volume">
-                    <option value="leger">Léger (quelques couches)</option>
-                    <option value="moyen">Moyen (Réseaux, Cadastre)</option>
-                    <option value="lourd">Très lourd (Millions d'objets, Rasters)</option>
+                    <option value="leger">Léger</option>
+                    <option value="lourd">Gros volumes (Millions d'objets)</option>
                 </select>
             </div>
+        </div>
 
-            <div class="question-block">
-                <label>6. Besoin Terrain & Image :</label>
-                <select name="besoin">
-                    <option value="web_only">Usage Bureau uniquement</option>
-                    <option value="terrain_precis">Collecte Terrain Précise (GPS)</option>
-                    <option value="terrain_form">Enquêtes / Formulaires simples</option>
-                    <option value="drone">Besoin de précision Drone (2cm)</option>
-                </select>
-            </div>
+        <button type="submit" class="btn">Obtenir mes résultats</button>
+    </form>
+</div>
 
-            <input type="submit" value="Générer mon Architecture SIG">
-        </form>
-    </div>
+<script>
+    function toggleMode(mode) {
+        const avanceDiv = document.getElementById('questionsAvancees');
+        const inputMode = document.getElementById('inputMode');
+        const btnS = document.getElementById('btnSimple');
+        const btnA = document.getElementById('btnAvance');
+
+        if (mode === 'avance') {
+            avanceDiv.classList.remove('hidden');
+            inputMode.value = 'avance';
+            btnA.classList.add('active');
+            btnS.classList.remove('active');
+        } else {
+            avanceDiv.classList.add('hidden');
+            inputMode.value = 'simple';
+            btnS.classList.add('active');
+            btnA.classList.remove('active');
+        }
+    }
+</script>
+
 </body>
 </html>
