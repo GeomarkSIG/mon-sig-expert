@@ -2,72 +2,294 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Résultats SIG</title>
-<link rel="stylesheet" href="css/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architecture SIG — Scénarios dynamiques</title>
+
+<style>
+:root {
+  --primary:#1a73e8;
+  --success:#27ae60;
+  --bg:#f1f3f4;
+}
+
+body {
+  font-family: Arial;
+  background:var(--bg);
+  margin:0;
+  padding:20px;
+}
+
+.container {
+  max-width:1200px;
+  margin:auto;
+  background:white;
+  padding:30px;
+  border-radius:16px;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:20px;
+}
+
+.card {
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:20px;
+}
+
+.card h3 {
+  margin:0 0 10px;
+  color:var(--primary);
+}
+
+.item {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:6px 0;
+}
+
+.item img {
+  height:22px;
+}
+
+.score-bar {
+  height:8px;
+  background:#eee;
+  border-radius:6px;
+  margin:10px 0;
+}
+
+.fill {
+  height:100%;
+  background:linear-gradient(90deg,#1a73e8,#27ae60);
+  border-radius:6px;
+}
+
+.price {
+  margin-top:10px;
+  font-weight:bold;
+}
+
+</style>
+
 </head>
 
 <body>
 
 <div class="container">
-
-<h1>Votre architecture SIG</h1>
-
-<div id="scenarios"></div>
-
-<h2>Alternatives</h2>
-<div id="alternatives"></div>
-
-<h2>Total</h2>
-<div id="total"></div>
-
+<h1>🎯 Vos scénarios SIG optimisés</h1>
+<div id="resultsGrid" class="grid"></div>
 </div>
 
-<script type="module">
-import { DATA } from "./js/data.js";
-import { computeScores } from "./js/scoring.js";
+<script>
 
-const params = Object.fromEntries(new URLSearchParams(window.location.search));
+/* =========================
+   DATA COMPLET
+========================= */
 
-const { scores, reasons } = computeScores(params);
+const DATA = {
 
-// TOP 3
-function top3(cat) {
-  return Object.entries(scores[cat])
-    .sort((a,b)=>b[1]-a[1])
-    .slice(0,3);
+logiciels: {
+  qgis:{n:"QGIS",p:0,img:"Qgis.png"},
+  arcgis_ent:{n:"ArcGIS Enterprise",p:4500,img:"ArcGisPRO.jpg"},
+  autocad:{n:"AutoCAD Map 3D",p:2500,img:"Autocad.jpg"},
+  geoconcept:{n:"Geoconcept",p:2800,img:"Geoconcept.png"},
+  osm_editor:{n:"OSM / JOSM",p:0,img:"OSM.jpg"}
+},
+
+bases: {
+  postgis:{n:"PostGIS",p:0,img:"PostGre_PostGIS.jpg"},
+  supabase:{n:"Supabase",p:300,img:"Supabase.png"},
+  gpkg:{n:"GeoPackage",p:0,img:"Geopackage.jpg"},
+  spatialite:{n:"SpatiaLite",p:0,img:"Spatialite.jpg"},
+  arcgis_cloud:{n:"ArcGIS Online DB",p:500,img:"AGOL.png"}
+},
+
+serveurs: {
+  ovh:{n:"OVHcloud",p:120,img:"OVH.png"},
+  aws:{n:"AWS",p:1200,img:"Amazon_Web_Services.png"},
+  azure:{n:"Azure",p:1200,img:"Azure.png"},
+  render:{n:"Render",p:84,img:"Render.png"},
+  local:{n:"Serveur local",p:0,img:"Local.png"}
+},
+
+web: {
+  lizmap:{n:"Lizmap",p:0,img:"Lizmap.png"},
+  openlayers:{n:"OpenLayers",p:0,img:"Openlayers.png"},
+  experience:{n:"Experience Builder",p:0,img:"Experience Builder.jpg"},
+  geoserver:{n:"GeoServer",p:0,img:"GeoServer.png"},
+  geonode:{n:"GeoNode",p:0,img:"GeoNode.png"},
+  felt:{n:"Felt",p:0,img:"Felt.png"},
+  qgis_cloud:{n:"QGIS Cloud",p:700,img:"QgisCloud.png"},
+  ago:{n:"ArcGIS Online",p:500,img:"AGOL.png"}
+},
+
+imagerie: {
+  osm:{n:"OSM / Google Maps",p:0,img:"GoogleMap.png"},
+  sentinel:{n:"Sentinel / Planet",p:450,img:"sentinel-2.jpg"},
+  dalle:{n:"Dalle HD",p:800,img:"DalleHD.jpg"},
+  drone:{n:"Drone",p:1500,img:"Drones.jpg"}
 }
 
-// AFFICHAGE
-const container = document.getElementById("scenarios");
+};
 
-["logiciels","bases","serveurs","web","imagerie"].forEach(cat => {
+/* =========================
+   PARAMÈTRES
+========================= */
 
-  let block = `<h2>${cat}</h2><div class="grid">`;
+const params = new URLSearchParams(window.location.search);
 
-  top3(cat).forEach(([key,score]) => {
-    let d = DATA[cat][key];
+/* =========================
+   SCORING
+========================= */
 
-    block += `
-      <div class="card">
-        <img src="img/${d.img}">
-        <h3>${d.n}</h3>
-        <p>${d.d}</p>
-        <div class="score">${score} pts</div>
-        <div class="reasons">${reasons[cat][key].join("<br>")}</div>
-      </div>
-    `;
+let scores = {log:{},base:{},srv:{},web:{},ima:{}};
+
+Object.keys(DATA.logiciels).forEach(k=>scores.log[k]=0);
+Object.keys(DATA.bases).forEach(k=>scores.base[k]=0);
+Object.keys(DATA.serveurs).forEach(k=>scores.srv[k]=0);
+Object.keys(DATA.web).forEach(k=>scores.web[k]=0);
+Object.keys(DATA.imagerie).forEach(k=>scores.ima[k]=0);
+
+// règles simples
+if(params.get("budget")==="zero"){
+  scores.log.qgis+=100;
+  scores.base.gpkg+=100;
+  scores.srv.local+=100;
+}
+
+if(params.get("volume")==="lourd"){
+  scores.base.postgis+=150;
+}
+
+if(params.get("besoin")==="terrain"){
+  scores.ima.drone+=150;
+}
+
+if(params.get("besoin")==="web"){
+  scores.web.lizmap+=100;
+}
+
+/* =========================
+   GÉNÉRATION SCÉNARIOS
+========================= */
+
+function generateScenarios(){
+  let res=[];
+
+  Object.keys(DATA.logiciels).forEach(l=>{
+  Object.keys(DATA.bases).forEach(b=>{
+  Object.keys(DATA.serveurs).forEach(s=>{
+  Object.keys(DATA.web).forEach(w=>{
+  Object.keys(DATA.imagerie).forEach(i=>{
+
+    res.push({
+      logiciels:l,
+      bases:b,
+      serveurs:s,
+      web:w,
+      imagerie:i
+    });
+
+  });});});});});
+
+  return res;
+}
+
+/* =========================
+   SCORE SCÉNARIO
+========================= */
+
+function scoreScenario(s){
+  return (
+    scores.log[s.logiciels] +
+    scores.base[s.bases] +
+    scores.srv[s.serveurs] +
+    scores.web[s.web] +
+    scores.ima[s.imagerie]
+  );
+}
+
+/* =========================
+   NORMALISATION
+========================= */
+
+function normalize(v,max){
+  return max===0?0:Math.round((v/max)*100);
+}
+
+/* =========================
+   BUDGET
+========================= */
+
+function budget(s){
+  return DATA.logiciels[s.logiciels].p +
+         DATA.bases[s.bases].p +
+         DATA.serveurs[s.serveurs].p +
+         DATA.web[s.web].p +
+         DATA.imagerie[s.imagerie].p;
+}
+
+/* =========================
+   PIPELINE
+========================= */
+
+let scenarios = generateScenarios();
+
+scenarios = scenarios.map(s=>({
+  ...s,
+  score:scoreScenario(s)
+}));
+
+scenarios.sort((a,b)=>b.score-a.score);
+
+let maxScore = scenarios[0]?.score || 1;
+
+// limite affichage
+scenarios = scenarios.slice(0,20);
+
+/* =========================
+   AFFICHAGE
+========================= */
+
+const container = document.getElementById("resultsGrid");
+
+scenarios.forEach(s=>{
+
+  let percent = normalize(s.score,maxScore);
+  let total = budget(s);
+
+  let html = `<div class="card">
+  <h3>${percent}% de pertinence</h3>
+
+  <div class="score-bar">
+    <div class="fill" style="width:${percent}%"></div>
+  </div>
+  `;
+
+  Object.entries(s).forEach(([cat,key])=>{
+    if(DATA[cat] && DATA[cat][key]){
+      let d = DATA[cat][key];
+
+      html += `
+        <div class="item">
+          <img src="img/${d.img}">
+          ${d.n}
+        </div>
+      `;
+    }
   });
 
-  block += `</div>`;
-  container.innerHTML += block;
-});
+  html += `<div class="price">💰 ${total} € / an</div>`;
 
-// TOTAL
-let total = 0;
-Object.values(DATA).forEach(cat=>{
-  Object.values(cat).forEach(el=> total += el.p);
+  html += `</div>`;
+
+  container.innerHTML += html;
+
 });
-document.getElementById("total").innerText = total + " €/an";
 
 </script>
 
