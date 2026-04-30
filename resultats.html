@@ -125,11 +125,15 @@
 };
 
     // --- 2. ALGORITHME DE SCORING ---
-    let s = { log: {}, base: {}, srv: {}, web: {}, ima: {} };
-Object.keys(DATA).forEach(cat => {
-    let prefix = cat.substring(0, 3); // log, bas, ser, web, ima
-    Object.keys(DATA[cat]).forEach(k => s[prefix][k] = 0);
-});
+    let scores = { log: {}, base: {}, srv: {}, web: {}, ima: {} };
+    
+    Object.keys(DATA).forEach(cat => {
+        let key = cat === 'logiciels' ? 'log' : 
+                  cat === 'bases' ? 'base' : 
+                  cat === 'serveurs' ? 'srv' : 
+                  cat === 'web' ? 'web' : 'ima';
+        Object.keys(DATA[cat]).forEach(k => scores[key][k] = 0);
+    });
 
 // --- 2. RÉCUPÉRATION DES VARIABLES FORMULAIRE ---
 const P = new URLSearchParams(window.location.search);
@@ -295,7 +299,8 @@ if (s.log.arcgis_ent > s.log.qgis) {
         log: getWinner('log'),
         base: getWinner('base'),
         srv: getWinner('srv'),
-        web: getWinner('web')
+        web: getWinner('web'),
+        ima: getWinner('ima')
     };
 
     const container = document.getElementById('resultsGrid');
