@@ -2,50 +2,112 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Votre Scénario SIG</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultat du Diagnostic - GeomarkSIG</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; max-width: 900px; margin: auto; padding: 20px; background: #ecf0f1; }
+        .result-card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .brique { margin-bottom: 15px; padding: 15px; border-radius: 5px; border-left: 5px solid #2ecc71; background: #f9fefb; }
+        .brique h3 { margin-top: 0; color: #27ae60; }
+        .tag { display: inline-block; background: #e8f4fd; color: #3498db; padding: 2px 8px; border-radius: 10px; font-size: 0.8em; margin-bottom: 5px; }
+        .header-res { text-align: center; margin-bottom: 30px; }
+        .btn-back { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #34495e; color: white; text-decoration: none; border-radius: 5px; }
+    </style>
 </head>
 <body>
-    <h1>Résultat de votre diagnostic</h1>
-    <div id="affichage-resultat">Analyse en cours...</div>
-    <a href="index.html">Recommencer</a>
+    <div class="result-card">
+        <div class="header-res">
+            <h1>Votre Solution SIG Sur Mesure</h1>
+            <p id="scenario-name">Analyse des variables terminée.</p>
+        </div>
+
+        <div id="resultats-container"></div>
+
+        <center><a href="index.html" class="btn-back">Faire un nouveau diagnostic</a></center>
+    </div>
 
     <script>
-        // 1. Récupérer les réponses dans l'URL
         const params = new URLSearchParams(window.location.search);
-        const budget = params.get('budget');
-        const expert = params.get('expert');
-        const donnees = params.get('donnees');
 
-        // 2. La Matrice de Scores
-        let scores = { qgis: 0, arcgis: 0, postgis: 0, render: 0, azure: 0 };
+        // --- MATRICE DE SCORES ---
+        let s = {
+            logiciel: { qgis: 0, arcgis_pro: 0 },
+            base: { gpkg: 0, postgis: 0, arcgis_cloud: 0 },
+            infra: { local: 0, vps: 0, cloud_ent: 0, render: 0 },
+            diff: { lizmap: 0, leaflet: 0, arcgis_api: 0, felt: 0 },
+            terrain: { qfield: 0, kobo: 0, fieldmaps: 0, aucun: 0 }
+        };
 
-        if (budget === 'zero') {
-            scores.qgis += 100; scores.render += 100; scores.arcgis -= 500;
-        } else if (budget === 'pro') {
-            scores.arcgis += 100; scores.azure += 100;
-        }
+        // Logique de calcul
+        const p = params.get('profil');
+        const ex = params.get('expert');
+        const coll = params.get('collaboration');
+        const conf = params.get('confid');
+        const vol = params.get('volume');
+        const bes = params.get('besoin');
 
-        if (donnees === 'sensibles') {
-            scores.azure -= 500; scores.postgis += 100;
-        }
+        // 1. Budget et Profil
+        if(p.includes('0')) { s.logiciel.qgis += 200; s.infra.render += 150; s.logiciel.arcgis_pro -= 500; }
+        if(p.includes('pro')) { s.logiciel.arcgis_pro += 200; s.infra.cloud_ent += 150; }
+        if(p === 'ong') { s.terrain.kobo += 200; s.logiciel.qgis += 100; }
 
-        // 3. Logique d'affichage (Exemple simplifié)
-        let message = "<h2>Nous vous conseillons :</h2><ul>";
-        
-        if (scores.qgis > scores.arcgis) {
-            message += "<li><strong>Logiciel :</strong> QGIS (Open Source)</li>";
-        } else {
-            message += "<li><strong>Logiciel :</strong> ArcGIS Pro (Entreprise)</li>";
-        }
+        // 2. Expertise
+        if(ex === 'debutant') { s.diff.felt += 200; s.base.arcgis_cloud += 150; s.infra.render += 100; }
+        if(ex === 'expert') { s.base.postgis += 200; s.infra.vps += 150; }
 
-        if (scores.render > scores.azure) {
-            message += "<li><strong>Hébergement :</strong> Cloud gratuit (Render/Supabase)</li>";
-        } else {
-            message += "<li><strong>Hébergement :</strong> Cloud Entreprise (Azure/AWS)</li>";
-        }
+        // 3. Collaboration & Volume
+        if(coll === 'equipe' || vol === 'lourd') { s.base.postgis += 300; s.base.gpkg -= 500; }
+        else { s.base.gpkg += 100; }
 
-        message += "</ul>";
-        document.getElementById('affichage-resultat').innerHTML = message;
+        // 4. Souveraineté
+        if(conf === 'sensible') { s.infra.local += 500; s.infra.cloud_ent -= 1000; s.base.arcgis_cloud -= 1000; }
+
+        // 5. Terrain
+        if(bes === 'terrain_precis') { s.terrain.qfield += 200; s.terrain.fieldmaps += 100; }
+        if(bes === 'terrain_form') { s.terrain.kobo += 200; }
+
+        // --- DÉTERMINATION DES GAGNANTS ---
+        const getWinner = (obj) => Object.keys(obj).reduce((a, b) => obj[a] > obj[b] ? a : b);
+
+        const win = {
+            log: getWinner(s.logiciel),
+            base: getWinner(s.base),
+            infra: getWinner(s.infra),
+            diff: getWinner(s.diff),
+            terrain: getWinner(s.terrain)
+        };
+
+        // --- AFFICHAGE ---
+        const briquesHTML = {
+            qgis: "<h3>Logiciel : QGIS</h3><p>Solution libre et gratuite, idéale pour vos analyses complexes sans coût de licence.</p>",
+            arcgis_pro: "<h3>Logiciel : ArcGIS Pro</h3><p>L'excellence métier pour les entreprises avec support et outils avancés.</p>",
+            gpkg: "<h3>Données : GeoPackage</h3><p>Fichier unique simple à gérer, idéal pour vos projets en solo.</p>",
+            postgis: "<h3>Données : PostGIS</h3><p>La base de données spatiale de référence pour le travail en équipe et les gros volumes.</p>",
+            arcgis_cloud: "<h3>Données : ArcGIS Online</h3><p>Hébergement cloud sécurisé sans besoin d'administrer de serveur.</p>",
+            local: "<h3>Hébergement : Serveur Interne</h3><p>Vos données restent chez vous, garantissant une souveraineté totale.</p>",
+            render: "<h3>Hébergement : Cloud Gratuit (Render/Supabase)</h3><p>Idéal pour héberger une base PostGIS gratuitement ou à faible coût.</p>",
+            vps: "<h3>Hébergement : VPS (OVH / DigitalOcean)</h3><p>Contrôle total du serveur pour un budget maîtrisé (environ 10€/mois).</p>",
+            cloud_ent: "<h3>Hébergement : Cloud Entreprise (Azure/AWS)</h3><p>Infrastructure robuste et évolutive pour les besoins critiques de l'entreprise.</p>",
+            felt: "<h3>Diffusion : Felt</h3><p>Le moyen le plus simple et moderne de partager des cartes sur le web en quelques clics.</p>",
+            lizmap: "<h3>Diffusion : Lizmap</h3><p>Le reflet parfait de vos projets QGIS sur le web, sans coder.</p>",
+            leaflet: "<h3>Diffusion : Leaflet</h3><p>Bibliothèque légère pour intégrer des cartes personnalisées dans votre site web.</p>",
+            arcgis_api: "<h3>Diffusion : Experience Builder / API JS</h3><p>Portails web puissants intégrés à l'écosystème Esri.</p>",
+            qfield: "<h3>Terrain : QField</h3><p>Le compagnon de terrain idéal pour synchroniser vos saisies avec QGIS.</p>",
+            kobo: "<h3>Terrain : KoboCollect</h3><p>Parfait pour les enquêtes, recensements et formulaires socio-économiques.</p>",
+            fieldmaps: "<h3>Terrain : ArcGIS Field Maps</h3><p>Application professionnelle pour la saisie terrain connectée au cloud ArcGIS.</p>",
+            aucun: "<h3>Terrain : Aucun besoin spécifique</h3><p>Focus sur les outils de bureau et web.</p>"
+        };
+
+        const container = document.getElementById('resultats-container');
+        [win.log, win.base, win.infra, win.diff, win.terrain].forEach(key => {
+            if(key !== 'aucun') {
+                const div = document.createElement('div');
+                div.className = 'brique';
+                div.innerHTML = briquesHTML[key];
+                container.appendChild(div);
+            }
+        });
+
     </script>
 </body>
 </html>
