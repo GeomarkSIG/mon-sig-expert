@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Résultats SIG</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Votre architecture SIG</h1>
+
+<div id="scenarios"></div>
+
+<h2>Alternatives</h2>
+<div id="alternatives"></div>
+
+<h2>Total</h2>
+<div id="total"></div>
+
+</div>
+
+<script type="module">
+import { DATA } from "./js/data.js";
+import { computeScores } from "./js/scoring.js";
+
+const params = Object.fromEntries(new URLSearchParams(window.location.search));
+
+const { scores, reasons } = computeScores(params);
+
+// TOP 3
+function top3(cat) {
+  return Object.entries(scores[cat])
+    .sort((a,b)=>b[1]-a[1])
+    .slice(0,3);
+}
+
+// AFFICHAGE
+const container = document.getElementById("scenarios");
+
+["logiciels","bases","serveurs","web","imagerie"].forEach(cat => {
+
+  let block = `<h2>${cat}</h2><div class="grid">`;
+
+  top3(cat).forEach(([key,score]) => {
+    let d = DATA[cat][key];
+
+    block += `
+      <div class="card">
+        <img src="img/${d.img}">
+        <h3>${d.n}</h3>
+        <p>${d.d}</p>
+        <div class="score">${score} pts</div>
+        <div class="reasons">${reasons[cat][key].join("<br>")}</div>
+      </div>
+    `;
+  });
+
+  block += `</div>`;
+  container.innerHTML += block;
+});
+
+// TOTAL
+let total = 0;
+Object.values(DATA).forEach(cat=>{
+  Object.values(cat).forEach(el=> total += el.p);
+});
+document.getElementById("total").innerText = total + " €/an";
+
+</script>
+
+</body>
+</html>
