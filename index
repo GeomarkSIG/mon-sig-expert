@@ -2,25 +2,84 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Diagnostic SIG Expert</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic SIG Expert - GeomarkSIG</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; background: #f4f7f6; }
+        .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .question-block { margin-bottom: 20px; padding: 15px; border-left: 4px solid #3498db; background: #fafafa; }
+        label { font-weight: bold; display: block; margin-bottom: 10px; }
+        select, input[type="submit"] { width: 100%; padding: 10px; margin-top: 5px; border-radius: 4px; border: 1px solid #ddd; }
+        input[type="submit"] { background: #3498db; color: white; font-weight: bold; border: none; cursor: pointer; transition: 0.3s; }
+        input[type="submit"]:hover { background: #2980b9; }
+    </style>
 </head>
 <body>
-    <h1>Quel SIG pour votre projet ?</h1>
-    <form action="resultats.html" method="GET">
-        <p>1. Quel est votre budget ?<br>
-            <input type="radio" name="budget" value="zero" required> 0€ (Strict)<br>
-            <input type="radio" name="budget" value="starter"> < 1000€<br>
-            <input type="radio" name="budget" value="pro"> + 5000€
-        </p>
-        <p>2. Niveau technique ?<br>
-            <input type="radio" name="expert" value="non" required> Débutant<br>
-            <input type="radio" name="expert" value="oui"> Expert / Dév
-        </p>
-        <p>3. Type de données ?<br>
-            <input type="radio" name="donnees" value="publiques" required> Publiques / OpenData<br>
-            <input type="radio" name="donnees" value="sensibles"> Sensibles / Souveraines
-        </p>
-        <button type="submit">Générer mon scénario</button>
-    </form>
+    <div class="card">
+        <h1>🔍 Diagnostic d'Architecture SIG</h1>
+        <p>Répondez à ces questions pour générer votre configuration personnalisée parmi 500+ combinaisons.</p>
+        
+        <form action="resultats.html" method="GET">
+            <div class="question-block">
+                <label>1. Votre structure & Budget annuel :</label>
+                <select name="profil" required>
+                    <option value="public_0">Public / Collectivité (Budget 0€)</option>
+                    <option value="public_pro">Public / Collectivité (Budget Pro)</option>
+                    <option value="prive_0">Privé / Freelance (Budget 0€)</option>
+                    <option value="prive_pro">Privé / Entreprise (Budget Pro)</option>
+                    <option value="ong">ONG / Humanitaire</option>
+                </select>
+            </div>
+
+            <div class="question-block">
+                <label>2. Niveau technique de l'équipe :</label>
+                <select name="expert">
+                    <option value="debutant">Débutant (Cherche simplicité SaaS)</option>
+                    <option value="intermediaire">Intermédiaire (Maîtrise QGIS)</option>
+                    <option value="expert">Expert (Dév, SQL, Admin Serveur)</option>
+                </select>
+            </div>
+
+            <div class="question-block">
+                <label>3. Mode de collaboration :</label>
+                <select name="collaboration">
+                    <option value="solo">Usage Individuel</option>
+                    <option value="equipe">Édition simultanée à plusieurs</option>
+                    <option value="diffusion">Consultation Grand Public uniquement</option>
+                </select>
+            </div>
+
+            <div class="question-block">
+                <label>4. Confidentialité des données :</label>
+                <select name="confid">
+                    <option value="open">Données Publiques / OpenData</option>
+                    <option value="interne">Données Métier Internes</option>
+                    <option value="sensible">Données Sensibles / Souveraineté</option>
+                </select>
+            </div>
+
+            <div class="question-block">
+                <label>5. Volume de données estimé :</label>
+                <select name="volume">
+                    <option value="leger">Léger (quelques couches)</option>
+                    <option value="moyen">Moyen (Réseaux, Cadastre)</option>
+                    <option value="lourd">Très lourd (Millions d'objets, Rasters)</option>
+                </select>
+            </div>
+
+            <div class="question-block">
+                <label>6. Besoin Terrain & Image :</label>
+                <select name="besoin">
+                    <option value="web_only">Usage Bureau uniquement</option>
+                    <option value="terrain_precis">Collecte Terrain Précise (GPS)</option>
+                    <option value="terrain_form">Enquêtes / Formulaires simples</option>
+                    <option value="drone">Besoin de précision Drone (2cm)</option>
+                </select>
+            </div>
+
+            <input type="submit" value="Générer mon Architecture SIG">
+        </form>
+    </div>
 </body>
 </html>
