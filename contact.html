@@ -3,153 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demande de Devis — GeomarkSIG</title>
+    <title>Demande de Devis — Geomark-SIG</title>
     <style>
         :root {
             --blue: #1a73e8; --blue-dark: #1557b0; --blue-light: #e8f0fe;
             --green: #1e8449; --green-light: #d5f5e3;
             --gray-bg: #f4f6f9; --gray-border: #dde2eb;
             --text: #202124; --text-muted: #5f6368;
-            --radius: 10px;
+            --radius: 12px;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--gray-bg); color: var(--text); }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--gray-bg); color: var(--text); line-height: 1.6; }
         .page { max-width: 680px; margin: 40px auto; padding: 0 16px 60px; }
 
         .header { text-align: center; margin-bottom: 30px; }
-        .header .badge { display: inline-block; background: var(--blue-light); color: var(--blue); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 4px 14px; border-radius: 20px; margin-bottom: 14px; }
-        .header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; }
-        .header p { color: var(--text-muted); }
+        .header .badge { display: inline-block; background: var(--blue-light); color: var(--blue); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; padding: 4px 14px; border-radius: 20px; margin-bottom: 14px; }
+        .header h1 { font-size: 1.8rem; font-weight: 700; color: var(--blue); }
 
-        .card { background: #fff; border-radius: var(--radius); border: 1px solid var(--gray-border); padding: 24px; margin-bottom: 20px; }
-        .card h2 { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin-bottom: 18px; }
+        .card { background: #fff; border-radius: var(--radius); border: 1px solid var(--gray-border); padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        
+        .recap-box { background: var(--blue-light); border-left: 4px solid var(--blue); padding: 15px; border-radius: 8px; margin-bottom: 25px; }
+        .recap-box h3 { font-size: 0.9rem; margin-bottom: 5px; color: var(--blue-dark); }
+        .recap-box p { font-size: 1.1rem; font-weight: bold; margin: 0; }
 
-        /* Résumé du diagnostic */
-        .recap { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 0; }
-        .recap-item { background: var(--blue-light); color: var(--blue); font-size: 0.78rem; font-weight: 600; padding: 4px 12px; border-radius: 14px; }
-
-        .field { margin-bottom: 16px; }
-        .field:last-child { margin-bottom: 0; }
-        .field label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 6px; }
-        .field input, .field textarea, .field select {
-            width: 100%; padding: 11px 14px; border: 1.5px solid var(--gray-border); border-radius: 8px;
-            font-size: 0.95rem; color: var(--text); background: #fff; transition: border-color 0.2s;
-            font-family: inherit;
+        .field { margin-bottom: 20px; }
+        label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; }
+        input, textarea, select { 
+            width: 100%; padding: 12px; border: 1.5px solid var(--gray-border); border-radius: 8px; 
+            font-size: 1rem; font-family: inherit; transition: 0.3s;
         }
-        .field textarea { min-height: 110px; resize: vertical; }
-        .field input:focus, .field textarea:focus, .field select:focus {
-            outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,115,232,0.12);
+        input:focus, textarea:focus { border-color: var(--blue); outline: none; box-shadow: 0 0 0 3px rgba(26,115,232,0.1); }
+        input[readonly] { background: #f1f3f4; cursor: not-allowed; }
+
+        .btn-submit { 
+            width: 100%; padding: 16px; background: var(--blue); color: white; 
+            border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; 
+            cursor: pointer; transition: 0.3s; margin-top: 10px;
         }
+        .btn-submit:hover { background: var(--blue-dark); transform: translateY(-2px); }
 
-        .btn-submit { width: 100%; padding: 15px; background: var(--blue); color: #fff; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
-        .btn-submit:hover { background: var(--blue-dark); }
-
-        .success-msg { display: none; background: var(--green-light); border: 1px solid #82e0aa; color: var(--green); border-radius: var(--radius); padding: 20px; text-align: center; margin-top: 16px; }
-        .success-msg h3 { margin-bottom: 6px; }
-
-        .back-link { text-align: center; margin-top: 16px; }
-        .back-link a { color: var(--text-muted); font-size: 0.85rem; text-decoration: none; }
-        .back-link a:hover { text-decoration: underline; }
+        .back-link { text-align: center; margin-top: 25px; }
+        .back-link a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
+        .back-link a:hover { color: var(--blue); text-decoration: underline; }
     </style>
 </head>
 <body>
+
 <div class="page">
-
     <div class="header">
-        <div class="badge">📩 GeomarkSIG</div>
-        <h1>Demander un devis ou un accompagnement</h1>
-        <p>Un expert SIG vous répondra sous 24h ouvrées.</p>
-    </div>
-
-    <!-- Récapitulatif du diagnostic -->
-    <div class="card" id="recapCard" style="display:none">
-        <h2>📋 Votre diagnostic transmis automatiquement</h2>
-        <div class="recap" id="recapTags"></div>
+        <div class="badge">📩 Geomark-SIG</div>
+        <h1>Finaliser mon projet SIG</h1>
+        <p>Recevez votre devis personnalisé sous 24h.</p>
     </div>
 
     <div class="card">
-        <h2>🗒️ Vos coordonnées et votre besoin</h2>
-        <form id="contactForm">
+        <div class="recap-box">
+            <h3>Estimation de votre architecture :</h3>
+            <p id="recapBudget">-- € / an</p>
+        </div>
+
+        <form action="https://formspree.io/f/https://formspree.io/f/mkoywdpd" method="POST">
+            
             <div class="field">
-                <label>Nom complet ou entreprise</label>
-                <input type="text" id="nomField" placeholder="Ex : GéoConseil 974" required>
+                <label>Nom ou Entreprise</label>
+                <input type="text" name="entreprise" id="dispNom" readonly>
             </div>
+
             <div class="field">
                 <label>Email professionnel</label>
-                <input type="email" id="emailField" placeholder="contact@exemple.com" required>
+                <input type="email" name="_replyto" id="dispEmail" readonly>
             </div>
+
             <div class="field">
-                <label>Téléphone (optionnel)</label>
-                <input type="tel" id="tel" placeholder="+262 6 00 00 00 00">
+                <label>Téléphone (pour vous rappeler)</label>
+                <input type="tel" name="telephone" placeholder="Ex: 06 92 XX XX XX">
             </div>
+
             <div class="field">
-                <label>Type de prestation souhaitée</label>
-                <select id="prestation">
-                    <option value="audit">Audit SIG — état des lieux de mon système actuel</option>
-                    <option value="mise_en_place">Mise en place — installation et configuration</option>
-                    <option value="formation">Formation — QGIS, PostGIS, terrain, web</option>
-                    <option value="dev">Développement — portail web, application métier</option>
-                    <option value="accompagnement">Accompagnement global — projet de A à Z</option>
+                <label>Type de prestation</label>
+                <select name="prestation">
+                    <option value="Installation">Installation & Configuration</option>
+                    <option value="Formation">Formation (QGIS/PostGIS)</option>
+                    <option value="Audit">Audit & Conseil</option>
+                    <option value="Developpement">Développement Web-SIG</option>
                 </select>
             </div>
+
             <div class="field">
-                <label>Décrivez votre projet ou votre besoin</label>
-                <textarea id="message" placeholder="Ex : Nous souhaitons mettre en place un SIG partagé pour 3 agents, avec saisie terrain et diffusion web pour nos élus…"></textarea>
+                <label>Message ou précisions</label>
+                <textarea name="message" placeholder="Décrivez votre besoin spécifique ici..."></textarea>
             </div>
+
+            <input type="hidden" name="budget_estime" id="hiddenBudget">
+            <input type="hidden" name="_subject" value="Nouvelle demande de devis SIG">
+
             <button type="submit" class="btn-submit">📤 Envoyer ma demande</button>
         </form>
-
-        <div class="success-msg" id="successMsg">
-            <h3>✅ Demande envoyée !</h3>
-            <p>Merci pour votre message. Un expert GeomarkSIG vous contactera dans les 24h ouvrées.</p>
-        </div>
     </div>
 
     <div class="back-link">
-        <a href="resultats.html">← Retour à mon diagnostic</a> &nbsp;·&nbsp;
-        <a href="index.html">Refaire un diagnostic</a>
+        <a href="index.html">← Modifier mon diagnostic</a>
     </div>
-
 </div>
 
 <script>
-// Pré-remplissage depuis URL
-const params = new URLSearchParams(window.location.search);
-const nom = params.get('identite') || '';
-const email = params.get('email') || '';
-const mode = params.get('mode') || '';
+    // Récupération des paramètres de l'URL (venant de resultats.html)
+    const params = new URLSearchParams(window.location.search);
+    
+    const nom = params.get('identite') || "Non précisé";
+    const email = params.get('email') || "";
+    const budget = params.get('total') || "0";
 
-if (nom) document.getElementById('nomField').value = nom;
-if (email) document.getElementById('emailField').value = email;
-
-// Récapitulatif diagnostic
-const tags = [];
-if (nom) tags.push('Client : ' + nom);
-if (mode) tags.push('Mode : ' + (mode === 'avance' ? 'Expert' : 'Simple'));
-['structure','budget','besoin','imagerie','expertise','souverainete'].forEach(k => {
-    const v = params.get(k);
-    if (v) tags.push(k + ' : ' + v);
-});
-
-if (tags.length > 1) {
-    document.getElementById('recapCard').style.display = 'block';
-    const recapTags = document.getElementById('recapTags');
-    tags.forEach(t => {
-        const span = document.createElement('span');
-        span.className = 'recap-item';
-        span.textContent = t;
-        recapTags.appendChild(span);
-    });
-}
-
-// Soumission du formulaire (simulation)
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    document.getElementById('contactForm').style.display = 'none';
-    document.getElementById('successMsg').style.display = 'block';
-    // Ici vous pouvez intégrer un vrai envoi via Formspree, EmailJS ou votre backend
-    // Exemple Formspree : fetch('https://formspree.io/f/VOTRE_ID', { method: 'POST', ... })
-});
+    // Affichage dans le formulaire
+    document.getElementById('dispNom').value = nom;
+    document.getElementById('dispEmail').value = email;
+    document.getElementById('recapBudget').innerText = budget + " € / an";
+    
+    // Remplissage du champ caché pour le mail
+    document.getElementById('hiddenBudget').value = budget + " € / an";
 </script>
+
 </body>
 </html>
