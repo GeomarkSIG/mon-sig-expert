@@ -38,20 +38,34 @@
         .btn-alt { background: white; border: 2px solid var(--primary); color: var(--primary); }
 
         svg { width: 24px; height: 24px; fill: var(--primary); }
+        .alt-section { background: var(--gray-light); border-radius: var(--radius); padding: 25px; margin-top: 40px; }
+        .alt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .alt-item { background: white; padding: 15px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.85rem; }
+
+        .summary-box { background: #e8f0fe; border-radius: var(--radius); padding: 25px; margin-top: 30px; border-left: 6px solid var(--primary); }
+        .total-price { font-size: 1.8rem; font-weight: bold; color: var(--primary); margin-top: 10px; }
+        .actions { display: flex; gap: 15px; margin-top: 30px; }
+        .btn { padding: 12px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; text-decoration: none; text-align: center; }
+        .btn-primary { background: var(--primary); color: white; border: none; }
+        .btn-outline { background: white; border: 2px solid var(--primary); color: var(--primary); }
     </style>
 </head>
 <body>
 
 <div class="container fade-in">
     <div class="header-res">
-        <div id="badgeClient" class="user-badge">Analyse GeomarkSIG</div>
+        <div id="badgeClient" class="user-badge">Analyse Geomark-SIG</div>
         <h1 id="mainTitle">Votre Architecture SIG Optimisée</h1>
         <p id="subTitle">Basé sur vos contraintes métiers et techniques</p>
     </div>
 
     <div id="resultsGrid" class="grid-results">
         </div>
-
+    <div class="alt-section" id="altSection">
+        <h2 style="font-size:1.1rem; text-transform:uppercase;">🔄 Alternatives envisageables</h2>
+        <div class="alt-grid" id="altList"></div>
+    </div>
+    
     <div class="summary-box">
         <h3>💰 Estimation Budgétaire Globale</h3>
         <p id="budgetDetail">Calcul des coûts de licences et d'infrastructure...</p>
@@ -61,6 +75,7 @@
 
     <div class="btn-group">
         <button class="btn btn-main" onclick="window.print()">🖨️ Télécharger le rapport (PDF)</button>
+        <a href="index.html" class="btn btn-outline">← Modifier</a>
         <a href="contact.html" id="contactBtn" class="btn btn-alt">📧 Recevoir un devis détaillé</a>
     </div>
 </div>
@@ -71,25 +86,41 @@
     // --- 1. CONFIGURATION DES BRIQUES ---
     const DATA = {
         logiciels: {
-            qgis: { n: "QGIS Desktop", d: "SIG Open Source leader. Indispensable pour votre profil. Version LTR conseillée.", p: 0, icon: 'M12 2L2 7l10 5 10-5-10-5z' },
-            arcgis: { n: "ArcGIS Pro", d: "Puissance d'analyse maximale et intégration cloud native pour entreprise.", p: 850, icon: 'M12 21l-9-5 9-5 9 5-9 5z' },
-            autocad: { n: "AutoCAD Map 3D", d: "Indispensable pour votre métier de géomètre. Pont DWG/SIG intégré.", p: 2500, icon: 'M3 3h18v18H3V3z' }
+            osm: { n: "ID / JOSM (OSM Editor)", d: "Outils d'édition communautaires. Idéal pour contribuer à la base mondiale OpenStreetMap.", p: 0, link: "https://openstreetmap.org", mail: "support@openstreetmap.org" },
+            geoconcept: { n: "Geoconcept Sales & Marketing", d: "SIG expert pour l'optimisation de tournées et le géomarketing décisionnel.", p: 2800, link: "https://geoconcept.com", mail: "info@geoconcept.com" },
+            arcgis_ent: { n: "ArcGIS Enterprise", d: "La suite serveur complète : portail, serveur cartographique et data store privé.", p: 4500, link: "https://esri.com", mail: "contact@esri.com" },
+            qgis: { n: "QGIS Desktop", d: "Le standard Open Source. Incontournable pour l'analyse et la préparation des données.", p: 0, link: "https://qgis.org", mail: "office@qgis.org" },
+            autocad: { n: "AutoCAD Map 3D", d: "Indispensable pour votre métier de géomètre. Pont DWG/SIG intégré.", p: 2500, https://www.autodesk.com/fr/products/autocad/included-toolsets/autocad-map-3d' }
         },
         bases: {
             gpkg: { n: "GeoPackage", d: "Stockage local simple et performant. Idéal pour vos volumes légers.", p: 0 },
             postgis: { n: "PostgreSQL / PostGIS", d: "Le moteur spatial pro. Gestion multi-utilisateurs et gros volumes.", p: 0 },
-            arcgis_cloud: { n: "ArcGIS Online Hosting", d: "Données dans le Cloud Esri. Sécurité et scalabilité totale.", p: 500 }
+            arcgis_cloud: { n: "ArcGIS Online Hosting", d: "Données dans le Cloud Esri. Sécurité et scalabilité totale.", p: 500 },
+            spatialite: { n: "SpatiaLite (SQLite)", d: "Base de données spatiale dans un seul fichier. Parfait pour l'usage local et terrain.", p: 0, link: "https://gaia-gis.it", mail: "sqlite-users@mailinglists.org" },
+            supabase: { n: "Supabase (PostGIS Managed)", d: "L'alternative moderne à Firebase. PostgreSQL avec extension spatiale clé en main.", p: 300, link: "https://supabase.com", mail: "support@supabase.com" }
         },
         serveurs: {
-            render: { n: "Render (Cloud Managé)", d: "Hébergement agile de base de données. Version Free ou Starter.", p: 84 },
+            aws: { n: "Amazon Web Services (AWS)", d: "Infrastructure Cloud mondiale. Scalabilité illimitée pour héberger des services OGC.", p: 1200, link: "https://aws.amazon.com", mail: "aws-support@amazon.com" },
+            render: { n: "Render (Cloud Managé)", d: "Hébergement agile de base de données.", p: 84, link: "https://render.com", mail: "support@render.com" },
             vps_ovh: { n: "VPS OVH (France)", d: "Souveraineté européenne garantie. Serveur Linux dédié à vos SIG.", p: 120 },
             azure: { n: "Azure SQL Spatial", d: "Intégration parfaite dans votre infrastructure Microsoft actuelle.", p: 1200 },
             local: { n: "Serveur Physique", d: "Contrôle total en interne. Idéal pour données ultra-sensibles.", p: 0 }
         },
         web: {
+            ago: { n: "ArcGIS Online", d: "Plateforme SaaS leader. Diffusion rapide, cartes interactives et apps mobiles prêtes à l'emploi.", p: 500, link: "https://arcgis.com", mail: "support@esri.com" },
+            qgis_cloud: { n: "QGIS Cloud", d: "Publication directe depuis QGIS. Solution simplifiée pour le partage web-SIG.", p: 700, link: "https://qgiscloud.com", mail: "support@sourcepole.ch" },
+            openlayers: { n: "OpenLayers / Leaflet", d: "Frameworks JS pour créer des portails web cartographiques sur-mesure et légers.", p: 0, link: "https://openlayers.org", mail: "dev@openlayers.org" },
             felt: { n: "Felt", d: "La diffusion web la plus rapide du marché. Collaboration en temps réel.", p: 0 },
             lizmap: { n: "Lizmap Web Client", d: "Le portail pro pour QGIS. Fidélité cartographique 100%.", p: 0 },
             experience: { n: "Experience Builder", d: "Applications web haut de gamme pour l'écosystème ArcGIS.", p: 0 }
+            geoserver: { n: "GeoServer", d: "Le moteur de rendu standard de l'OGC. Indispensable pour diffuser des flux WMS/WFS complexes depuis PostGIS.", p: 0, link: "https://geoserver.org", mail: "geoserver-users@lists.sourceforge.net"},
+            geonode: { n: "GeoNode", d: "Plateforme de gestion de données géospatiales (CMS). Combine GeoServer, PostGIS et MapStore pour une infrastructure complète.", p: 0, link: "https://geonode.org", mail: "info@geonode.org"}
+        },
+        imagerie: {
+            OSM/Google Map: { n: "Flux Open Source / Local", d: "Utilisation de fonds de plan OSM et BD Ortho historique (non mis à jour).", p: 0 },
+            Sentinel/Planet: { n: "Abonnement Flux Premium", d: "Accès à des imageries satellites fraîches (Sentinel/Planet) via abonnement.", p: 450 },
+            Dalle HD: { n: "Plans Haute Précision", d: "Achat de dalles Ortho HD 5cm ou Cadastre vectoriel à l'unité.", p: 800 },
+            Drone: { n: "Sur mesure Drone & Aérien", d: "Levés topographiques par drone pour une précision centimétrique et mise à jour à la demande.", p: 1500 }
         }
     };
 
@@ -105,6 +136,7 @@
     const si = params.get('si_existant');
 
     // Logique croisée
+    if (
     if (secteur === 'geometre') scores.log.autocad += 500;
     if (budget === 'zero') { scores.log.qgis += 1000; scores.srv.render += 500; }
     if (souverain === 'haute' || souverain === 'critique') { scores.srv.vps_ovh += 500; scores.srv.local += 600; scores.srv.azure -= 1000; }
