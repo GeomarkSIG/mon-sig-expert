@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Votre Scénario SIG</title>
+</head>
+<body>
+    <h1>Résultat de votre diagnostic</h1>
+    <div id="affichage-resultat">Analyse en cours...</div>
+    <a href="index.html">Recommencer</a>
+
+    <script>
+        // 1. Récupérer les réponses dans l'URL
+        const params = new URLSearchParams(window.location.search);
+        const budget = params.get('budget');
+        const expert = params.get('expert');
+        const donnees = params.get('donnees');
+
+        // 2. La Matrice de Scores
+        let scores = { qgis: 0, arcgis: 0, postgis: 0, render: 0, azure: 0 };
+
+        if (budget === 'zero') {
+            scores.qgis += 100; scores.render += 100; scores.arcgis -= 500;
+        } else if (budget === 'pro') {
+            scores.arcgis += 100; scores.azure += 100;
+        }
+
+        if (donnees === 'sensibles') {
+            scores.azure -= 500; scores.postgis += 100;
+        }
+
+        // 3. Logique d'affichage (Exemple simplifié)
+        let message = "<h2>Nous vous conseillons :</h2><ul>";
+        
+        if (scores.qgis > scores.arcgis) {
+            message += "<li><strong>Logiciel :</strong> QGIS (Open Source)</li>";
+        } else {
+            message += "<li><strong>Logiciel :</strong> ArcGIS Pro (Entreprise)</li>";
+        }
+
+        if (scores.render > scores.azure) {
+            message += "<li><strong>Hébergement :</strong> Cloud gratuit (Render/Supabase)</li>";
+        } else {
+            message += "<li><strong>Hébergement :</strong> Cloud Entreprise (Azure/AWS)</li>";
+        }
+
+        message += "</ul>";
+        document.getElementById('affichage-resultat').innerHTML = message;
+    </script>
+</body>
+</html>
