@@ -3,633 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Résultat Diagnostic SIG — GeomarkSIG</title>
+    <title>Architecture Préconisée — GeomarkSIG</title>
     <style>
         :root {
-            --blue: #1a73e8; --blue-light: #e8f0fe;
-            --green: #1e8449; --green-light: #d5f5e3;
-            --orange: #d68910; --orange-light: #fef9e7;
-            --purple: #6c3483; --purple-light: #f5eef8;
-            --red: #922b21; --red-light: #fdedec;
-            --teal: #117a65; --teal-light: #e8f8f5;
-            --gray-bg: #f4f6f9; --gray-border: #dde2eb;
-            --text: #202124; --text-muted: #5f6368;
-            --radius: 10px;
+            --primary: #1a73e8; --secondary: #f39c12; --success: #27ae60;
+            --danger: #d93025; --dark: #202124; --gray: #5f6368;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--gray-bg); color: var(--text); }
-        .page { max-width: 900px; margin: 40px auto; padding: 0 16px 60px; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f1f3f4; color: var(--dark); margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        
+        /* Animation d'entrée */
+        .fade-in { animation: fadeIn 0.8s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Header résultat */
-        .result-header { background: #fff; border-radius: var(--radius); border: 1px solid var(--gray-border); padding: 30px; text-align: center; margin-bottom: 24px; }
-        .result-header .badge { display: inline-block; background: var(--green-light); color: var(--green); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 4px 14px; border-radius: 20px; margin-bottom: 14px; }
-        .result-header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; }
-        .result-header .subtitle { color: var(--text-muted); font-size: 1rem; }
-        .result-header .mode-tag { display: inline-block; margin-top: 12px; padding: 5px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
-        .mode-tag.simple { background: var(--blue-light); color: var(--blue); }
-        .mode-tag.avance { background: var(--orange-light); color: var(--orange); }
+        .header-res { text-align: center; border-bottom: 2px solid #eee; padding-bottom: 20px; margin-bottom: 30px; }
+        .user-badge { background: var(--primary); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; margin-bottom: 10px; display: inline-block; }
+        
+        .grid-results { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        
+        .card { border: 1px solid #dadce0; border-radius: 12px; padding: 20px; position: relative; transition: 0.3s; display: flex; flex-direction: column; }
+        .card:hover { border-color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .card .type { font-size: 0.75rem; font-weight: bold; text-transform: uppercase; color: var(--gray); margin-bottom: 10px; }
+        .card h3 { margin: 0 0 10px 0; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .card p { font-size: 0.95rem; flex-grow: 1; margin-bottom: 15px; }
+        
+        .price-tag { background: #e6f4ea; color: var(--success); padding: 8px; border-radius: 6px; font-weight: bold; text-align: center; margin-top: auto; }
+        
+        .summary-box { background: #f8f9fa; border-radius: 12px; padding: 25px; margin-top: 40px; border-left: 6px solid var(--secondary); }
+        .total-price { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
 
-        /* Score global */
-        .score-bar { background: #fff; border-radius: var(--radius); border: 1px solid var(--gray-border); padding: 20px; margin-bottom: 24px; }
-        .score-bar h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin-bottom: 14px; font-weight: 700; }
-        .score-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; }
-        .score-item { text-align: center; }
-        .score-label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; }
-        .score-value { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+        .btn-group { display: flex; gap: 15px; margin-top: 30px; justify-content: center; }
+        .btn { padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; text-decoration: none; border: none; }
+        .btn-main { background: var(--primary); color: white; }
+        .btn-alt { background: white; border: 2px solid var(--primary); color: var(--primary); }
 
-        /* Grille des briques résultat */
-        .results-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); font-weight: 700; margin-bottom: 14px; }
-        .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 24px; }
-        .brique {
-            background: #fff; border-radius: var(--radius); border: 1px solid var(--gray-border);
-            padding: 20px; transition: transform 0.15s, box-shadow 0.15s;
-        }
-        .brique:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.07); }
-        .brique .cat { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 3px 10px; border-radius: 12px; display: inline-block; margin-bottom: 10px; }
-        .brique h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
-        .brique p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 10px; }
-        .brique .links a { font-size: 0.8rem; color: var(--blue); text-decoration: none; margin-right: 10px; }
-        .brique .links a:hover { text-decoration: underline; }
-        .brique .badge-free { display: inline-block; background: var(--green-light); color: var(--green); font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-left: 8px; }
-        .brique .badge-pro { display: inline-block; background: var(--purple-light); color: var(--purple); font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-left: 8px; }
-        .brique .badge-cloud { display: inline-block; background: var(--blue-light); color: var(--blue); font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-left: 8px; }
-        .brique .badge-warn { display: inline-block; background: var(--orange-light); color: var(--orange); font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-left: 8px; }
-
-        /* Couleurs par catégorie */
-        .cat.logiciel { background: var(--blue-light); color: var(--blue); }
-        .cat.base { background: var(--purple-light); color: var(--purple); }
-        .cat.infra { background: var(--teal-light); color: var(--teal); }
-        .cat.web { background: var(--green-light); color: var(--green); }
-        .cat.terrain { background: var(--orange-light); color: var(--orange); }
-        .cat.image { background: var(--red-light); color: var(--red); }
-        .cat.portail { background: #e8f0fe; color: #1557b0; }
-
-        /* Alerte souveraineté */
-        .alert { border-radius: var(--radius); padding: 14px 18px; margin-bottom: 20px; font-size: 0.88rem; display: flex; gap: 10px; align-items: flex-start; }
-        .alert.warn { background: var(--orange-light); border: 1px solid #f0ca6d; color: #7d6608; }
-        .alert.info { background: var(--blue-light); border: 1px solid #aac4f0; color: #174ea6; }
-        .alert.success { background: var(--green-light); border: 1px solid #82e0aa; color: var(--green); }
-
-        /* Section alternatives -->
-        .alt-section { background: #fff; border-radius: var(--radius); border: 1px solid var(--gray-border); padding: 22px; margin-bottom: 24px; }
-        .alt-section h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); font-weight: 700; margin-bottom: 14px; }
-        .alt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-        .alt-item { padding: 12px; border-radius: 8px; border: 1px solid var(--gray-border); font-size: 0.85rem; }
-        .alt-item strong { display: block; margin-bottom: 3px; }
-        .alt-item span { color: var(--text-muted); }
-
-        /* Footer actions */
-        .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
-        .btn { padding: 12px 22px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
-        .btn-primary { background: var(--blue); color: #fff; border: none; }
-        .btn-primary:hover { background: #1557b0; }
-        .btn-outline { background: #fff; color: var(--text); border: 1.5px solid var(--gray-border); }
-        .btn-outline:hover { background: var(--gray-bg); }
-
-        @media print {
-            body { background: white; }
-            .actions { display: none; }
-        }
+        svg { width: 24px; height: 24px; fill: var(--primary); }
     </style>
 </head>
 <body>
-<div class="page">
 
-    <div class="result-header">
-        <div class="badge">✅ Diagnostic SIG complété</div>
-        <h1>Votre Architecture SIG Idéale</h1>
-        <p class="subtitle" id="userName">Analyse en cours...</p>
-        <span class="mode-tag" id="modeTag">—</span>
+<div class="container fade-in">
+    <div class="header-res">
+        <div id="badgeClient" class="user-badge">Analyse GeomarkSIG</div>
+        <h1 id="mainTitle">Votre Architecture SIG Optimisée</h1>
+        <p id="subTitle">Basé sur vos contraintes métiers et techniques</p>
     </div>
 
-    <div id="alertContainer"></div>
-
-    <p class="results-title">🧩 Briques recommandées pour votre contexte</p>
-    <div class="results-grid" id="resultatsList"></div>
-
-    <div class="alt-section" id="altSection" style="display:none">
-        <h2>🔄 Alternatives envisageables</h2>
-        <div class="alt-grid" id="altList"></div>
-    </div>
-
-    <div style="background:#fff; border-radius:var(--radius); border:1px solid var(--gray-border); padding:22px; margin-bottom:24px;">
-        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:14px; text-transform:uppercase; letter-spacing:0.8px; font-weight:700;">Actions</p>
-        <div class="actions">
-            <button onclick="window.print()" class="btn btn-primary">🖨️ Télécharger en PDF</button>
-            <a href="index.html" class="btn btn-outline">← Modifier mes réponses</a>
-            <a href="contact.html" id="contactBtn" class="btn btn-outline">📩 Demander un devis</a>
+    <div id="resultsGrid" class="grid-results">
         </div>
-        <p style="font-size:0.78rem; color:var(--text-muted); margin-top:12px;">Ce diagnostic est indicatif. Pour un accompagnement personnalisé, contactez un expert GeomarkSIG.</p>
+
+    <div class="summary-box">
+        <h3>💰 Estimation Budgétaire Globale</h3>
+        <p id="budgetDetail">Calcul des coûts de licences et d'infrastructure...</p>
+        <div class="total-price" id="totalPrice">-- € / an</div>
+        <p style="font-size: 0.8rem; color: var(--gray);">*Estimation indicative hors prestation de service et formation.</p>
     </div>
 
+    <div class="btn-group">
+        <button class="btn btn-main" onclick="window.print()">🖨️ Télécharger le rapport (PDF)</button>
+        <a href="contact.html" id="contactBtn" class="btn btn-alt">📧 Recevoir un devis détaillé</a>
+    </div>
 </div>
 
 <script>
-// ============================================================
-// 1. LECTURE DES PARAMÈTRES URL
-// ============================================================
-const params = new URLSearchParams(window.location.search);
-
-const nom      = params.get('identite') || "Cher Partenaire";
-const email    = params.get('email') || "";
-const mode     = params.get('mode') || "simple";
-const structure= params.get('structure') || "public";
-const budget   = params.get('budget') || "zero";
-const besoin   = params.get('besoin') || "bureau";
-const imagerie = params.get('imagerie') || "osm";
-const collab   = params.get('collaboration') || "solo";
-// Avancé uniquement
-const expertise  = params.get('expertise') || "intermediaire";
-const souverain  = params.get('souverainete') || "faible";
-const volume     = params.get('volume') || "leger";
-const hosting    = params.get('hosting') || "local";
-const portail    = params.get('portail') || "non";
-
-// Affichage identité et mode
-document.getElementById('userName').textContent = `Préconisations pour : ${nom}`;
-const modeTag = document.getElementById('modeTag');
-if (mode === 'avance') {
-    modeTag.textContent = '🔬 Mode Expert — 9 dimensions analysées';
-    modeTag.classList.add('avance');
-} else {
-    modeTag.textContent = '⚡ Mode Simple — Résultat rapide';
-    modeTag.classList.add('simple');
-}
-
-// Lien contact avec données
-document.getElementById('contactBtn').href =
-    `contact.html?identite=${encodeURIComponent(nom)}&email=${encodeURIComponent(email)}&mode=${mode}`;
-
-// ============================================================
-// 2. INITIALISATION DES SCORES (6 catégories × N options)
-// ============================================================
-let s = {
-    logiciel: { qgis: 0, arcgis_pro: 0, mapinfo: 0 },
-    base:     { gpkg: 0, postgis: 0, arcgis_cloud: 0, spatialite: 0, mongodb_geo: 0 },
-    infra:    { local: 0, vps_eu: 0, render: 0, cloud_us: 0, arcgis_hosted: 0 },
-    web:      { felt: 0, lizmap: 0, leaflet: 0, arcgis_api: 0, mapstore: 0, dashboard_bi: 0, aucun: 0 },
-    terrain:  { qfield: 0, kobo: 0, fieldmaps: 0, mergin: 0, aucun: 0 },
-    image:    { osm: 0, google: 0, ign: 0, drone: 0, lidar: 0 }
-};
-
-// ============================================================
-// 3. MATRICE DE CALCUL — SOCLE COMMUN (simple + avancé)
-// ============================================================
-
-// --- Structure ---
-if (structure === 'public') {
-    s.logiciel.qgis += 80;
-    s.infra.local += 100;
-    s.infra.vps_eu += 80;
-}
-if (structure === 'prive') {
-    s.logiciel.arcgis_pro += 60;
-    s.infra.cloud_us += 60;
-}
-if (structure === 'asso') {
-    s.logiciel.qgis += 120;
-    s.infra.render += 80;
-    s.logiciel.arcgis_pro -= 200;
-}
-
-// --- Budget ---
-if (budget === 'zero') {
-    s.logiciel.qgis += 300;
-    s.logiciel.arcgis_pro -= 1000;
-    s.base.gpkg += 200;
-    s.base.postgis += 100;
-    s.infra.render += 150;
-    s.infra.local += 100;
-    s.web.leaflet += 100;
-    s.web.felt += 80;
-}
-if (budget === 'starter') {
-    s.logiciel.qgis += 200;
-    s.logiciel.arcgis_pro -= 300;
-    s.base.postgis += 100;
-    s.infra.render += 120;
-    s.infra.vps_eu += 80;
-}
-if (budget === 'moyen') {
-    s.logiciel.qgis += 100;
-    s.logiciel.arcgis_pro += 80;
-    s.base.postgis += 150;
-    s.infra.vps_eu += 100;
-    s.infra.cloud_us += 80;
-}
-if (budget === 'pro') {
-    s.logiciel.arcgis_pro += 250;
-    s.base.arcgis_cloud += 200;
-    s.infra.arcgis_hosted += 150;
-    s.infra.cloud_us += 120;
-    s.web.arcgis_api += 200;
-}
-
-// --- Besoin principal ---
-if (besoin === 'bureau') {
-    s.web.aucun += 200;
-    s.terrain.aucun += 200;
-}
-if (besoin === 'terrain') {
-    s.terrain.qfield += 200;
-    s.terrain.kobo += 100;
-    s.terrain.fieldmaps += 80;
-    s.terrain.mergin += 80;
-    s.base.postgis += 100;
-}
-if (besoin === 'web') {
-    s.web.felt += 150;
-    s.web.leaflet += 120;
-    s.web.lizmap += 80;
-    s.terrain.aucun += 150;
-}
-if (besoin === 'mixte') {
-    s.terrain.qfield += 150;
-    s.web.lizmap += 100;
-    s.web.felt += 80;
-    s.base.postgis += 200;
-}
-
-// --- Imagerie ---
-if (imagerie === 'osm') { s.image.osm += 200; }
-if (imagerie === 'google') { s.image.google += 200; }
-if (imagerie === 'ign') { s.image.ign += 200; }
-if (imagerie === 'drone') { s.image.drone += 200; s.base.postgis += 80; }
-if (imagerie === 'lidar') { s.image.lidar += 200; s.base.postgis += 150; s.logiciel.qgis += 50; }
-
-// --- Collaboration ---
-if (collab === 'solo') {
-    s.base.gpkg += 150;
-    s.base.spatialite += 100;
-    s.base.postgis -= 50;
-}
-if (collab === 'equipe_small') {
-    s.base.postgis += 200;
-    s.base.gpkg -= 50;
-    s.infra.vps_eu += 100;
-}
-if (collab === 'equipe_large') {
-    s.base.postgis += 350;
-    s.base.gpkg -= 200;
-    s.base.arcgis_cloud += 100;
-    s.infra.cloud_us += 100;
-    s.infra.vps_eu += 80;
-}
-
-// ============================================================
-// 4. MATRICE AVANCÉE (uniquement si mode === 'avance')
-// ============================================================
-if (mode === 'avance') {
-
-    // --- Expertise ---
-    if (expertise === 'debutant') {
-        s.logiciel.qgis -= 50; // QGIS reste bon mais moins adapté sans tuto
-        s.web.felt += 200;
-        s.web.lizmap -= 100;
-        s.infra.render += 150;
-        s.infra.vps_eu -= 80;
-        s.terrain.kobo += 100;
-        s.base.gpkg += 80;
-    }
-    if (expertise === 'intermediaire') {
-        s.web.lizmap += 80;
-        s.base.postgis += 100;
-        s.infra.vps_eu += 80;
-    }
-    if (expertise === 'expert') {
-        s.web.lizmap += 200;
-        s.web.leaflet += 150;
-        s.web.mapstore += 100;
-        s.base.postgis += 300;
-        s.base.mongodb_geo += 80;
-        s.infra.vps_eu += 200;
-        s.infra.local += 100;
-        s.infra.render += 80;
-        s.terrain.mergin += 100;
-    }
-
-    // --- Souveraineté ---
-    if (souverain === 'faible') {
-        s.infra.cloud_us += 100;
-        s.infra.render += 80;
-    }
-    if (souverain === 'moyenne') {
-        s.infra.vps_eu += 150;
-        s.infra.cloud_us -= 50;
-    }
-    if (souverain === 'haute') {
-        s.infra.local += 400;
-        s.infra.vps_eu += 300;
-        s.infra.cloud_us -= 1000;
-        s.infra.render -= 200; // Render = serveurs hors UE principalement
-        s.infra.arcgis_hosted -= 200;
-        s.base.arcgis_cloud -= 200;
-    }
-
-    // --- Volume ---
-    if (volume === 'leger') {
-        s.base.gpkg += 150;
-        s.base.spatialite += 100;
-        s.base.postgis -= 30;
-    }
-    if (volume === 'moyen') {
-        s.base.postgis += 200;
-        s.base.gpkg -= 80;
-    }
-    if (volume === 'lourd') {
-        s.base.postgis += 500;
-        s.base.gpkg -= 500;
-        s.base.spatialite -= 500;
-        s.base.mongodb_geo += 150;
-        s.infra.cloud_us += 150;
-        s.infra.vps_eu += 100;
-    }
-
-    // --- Hosting ---
-    if (hosting === 'local') {
-        s.infra.local += 300;
-        s.infra.cloud_us -= 100;
-        s.infra.render -= 100;
-        s.infra.arcgis_hosted -= 200;
-    }
-    if (hosting === 'cloud_facile') {
-        s.infra.render += 300;
-        s.infra.vps_eu += 100;
-        s.infra.local -= 100;
-    }
-    if (hosting === 'cloud_infra') {
-        s.infra.cloud_us += 300;
-        s.infra.vps_eu += 200;
-        s.infra.local -= 100;
-    }
-    if (hosting === 'arcgis_cloud') {
-        s.infra.arcgis_hosted += 400;
-        s.base.arcgis_cloud += 300;
-        s.web.arcgis_api += 300;
-        s.logiciel.arcgis_pro += 150;
-        s.logiciel.qgis -= 100;
-    }
-
-    // --- Portail ---
-    if (portail === 'non') {
-        s.web.aucun += 300;
-        s.web.felt -= 100;
-        s.web.lizmap -= 100;
-        s.web.leaflet -= 100;
-    }
-    if (portail === 'simple') {
-        s.web.felt += 250;
-        s.web.leaflet += 200;
-        s.web.lizmap -= 50;
-    }
-    if (portail === 'metier') {
-        s.web.lizmap += 350;
-        s.web.mapstore += 200;
-        s.web.leaflet += 100;
-        s.web.felt -= 100;
-    }
-    if (portail === 'esri') {
-        s.web.arcgis_api += 400;
-        s.infra.arcgis_hosted += 200;
-        s.logiciel.arcgis_pro += 150;
-    }
-    if (portail === 'dashboard') {
-        s.web.dashboard_bi += 400;
-        s.base.postgis += 100;
-    }
-}
-
-// ============================================================
-// 5. FONCTION POUR TROUVER LE GAGNANT
-// ============================================================
-function getWinner(cat) {
-    const entries = Object.entries(s[cat]);
-    return entries.reduce((a, b) => a[1] > b[1] ? a : b)[0];
-}
-function getTop2(cat) {
-    return Object.entries(s[cat]).sort((a, b) => b[1] - a[1]).slice(0, 2).map(e => e[0]);
-}
-
-const result = {
-    logiciel : getWinner('logiciel'),
-    base     : getWinner('base'),
-    infra    : getWinner('infra'),
-    web      : getWinner('web'),
-    terrain  : getWinner('terrain'),
-    image    : getWinner('image')
-};
-
-const alt = {
-    logiciel : getTop2('logiciel')[1],
-    base     : getTop2('base')[1],
-    infra    : getTop2('infra')[1],
-    web      : getTop2('web')[1],
-};
-
-// ============================================================
-// 6. CATALOGUE DES BRIQUES
-// ============================================================
-const BRIQUES = {
-    // Logiciels
-    qgis:        { cat:'logiciel', label:'Logiciel SIG Desktop', name:'QGIS', badge:'free',
-        desc:'Le SIG libre le plus complet au monde. Plugins, Python, traitement de données, cartographie avancée. Communauté active.',
-        links:[{t:'Site officiel',u:'https://qgis.org'},{t:'Plugins',u:'https://plugins.qgis.org'}] },
-    arcgis_pro:  { cat:'logiciel', label:'Logiciel SIG Desktop', name:'ArcGIS Pro (Esri)', badge:'pro',
-        desc:'Standard industriel. Intégration cloud ArcGIS Online, analyses avancées, support professionnel garanti.',
-        links:[{t:'Esri.com',u:'https://www.esri.com/fr-fr/arcgis/products/arcgis-pro/overview'}] },
-    mapinfo:     { cat:'logiciel', label:'Logiciel SIG Desktop', name:'MapInfo Pro', badge:'pro',
-        desc:'Référence dans les télécoms et réseaux. Interface accessible, performances sur tables volumineuses.',
-        links:[{t:'Precisely.com',u:'https://www.precisely.com/product/precisely-mapinfo/mapinfo-pro'}] },
-
-    // Bases de données
-    gpkg:        { cat:'base', label:'Stockage Géographique', name:'GeoPackage (.gpkg)', badge:'free',
-        desc:'Format fichier OGC moderne. Portable, no-server, compatible QGIS/ArcGIS. Idéal pour usage solo et données légères.',
-        links:[] },
-    postgis:     { cat:'base', label:'Base de Données Spatiale', name:'PostgreSQL / PostGIS', badge:'free',
-        desc:'Référence open source pour la geodata en équipe. Requêtes spatiales SQL, topologie, données volumineuses, triggers.',
-        links:[{t:'PostGIS.net',u:'https://postgis.net'},{t:'PostgreSQL',u:'https://www.postgresql.org'}] },
-    arcgis_cloud:{ cat:'base', label:'Stockage Cloud Esri', name:'ArcGIS Online (Feature Services)', badge:'cloud',
-        desc:'Données hébergées en SaaS Esri. Zéro maintenance serveur, partage simplifié, intégration native ArcGIS.',
-        links:[{t:'ArcGIS Online',u:'https://www.arcgis.com'}] },
-    spatialite:  { cat:'base', label:'Stockage Géographique', name:'SpatiaLite', badge:'free',
-        desc:'PostGIS en version fichier SQLite. Légère, sans serveur, idéale pour les petits projets ou applis mobiles.',
-        links:[{t:'SpatiaLite',u:'https://www.gaia-gis.it/fossil/libspatialite'}] },
-    mongodb_geo: { cat:'base', label:'Base NoSQL Géospatiale', name:'MongoDB (GeoJSON)', badge:'cloud',
-        desc:'Base NoSQL avec index géospatiaux 2dsphere. Idéale pour flux temps réel, IoT, données hétérogènes volumineuses.',
-        links:[{t:'MongoDB Atlas',u:'https://www.mongodb.com/atlas'}] },
-
-    // Infrastructure
-    local:       { cat:'infra', label:'Infrastructure', name:'Serveur Local / NAS', badge:'free',
-        desc:'Données hébergées sur site. Souveraineté totale, aucun coût cloud. Nécessite maintenance réseau et sauvegardes.',
-        links:[] },
-    vps_eu:      { cat:'infra', label:'Infrastructure', name:'VPS Europe (OVH, Scaleway)', badge:'free',
-        desc:'Serveur dédié virtuel hébergé en Europe. RGPD compatible, contrôle total, coût raisonnable (~10-30€/mois).',
-        links:[{t:'OVH.com',u:'https://www.ovhcloud.com'},{t:'Scaleway',u:'https://www.scaleway.com'}] },
-    render:      { cat:'infra', label:'Infrastructure Cloud', name:'Render / Railway / Supabase', badge:'cloud',
-        desc:'Hébergement cloud managé moderne. Déploiement facile de PostGIS, GeoServer, sans admin serveur.',
-        links:[{t:'Render.com',u:'https://render.com'},{t:'Supabase',u:'https://supabase.com'}] },
-    cloud_us:    { cat:'infra', label:'Infrastructure Cloud Pro', name:'Azure / AWS / Google Cloud', badge:'cloud',
-        desc:'Puissance de calcul mondiale, scalabilité infinie. Géoservices managés (Azure Maps, AWS Location Service).',
-        links:[{t:'Azure Maps',u:'https://azure.microsoft.com/fr-fr/products/azure-maps'}] },
-    arcgis_hosted:{ cat:'infra', label:'Infrastructure Esri', name:'ArcGIS Enterprise (Cloud)', badge:'pro',
-        desc:'Portail Esri hébergé sur vos serveurs ou cloud. Sécurité maximale, intégration Active Directory.',
-        links:[{t:'Esri ArcGIS',u:'https://enterprise.arcgis.com'}] },
-
-    // Web / Diffusion
-    felt:        { cat:'web', label:'Diffusion Web', name:'Felt', badge:'cloud',
-        desc:'L\'outil web-SIG collaboratif le plus rapide. Importez, dessinez, partagez sans coder. Idéal pour non-techs.',
-        links:[{t:'Felt.com',u:'https://felt.com'}] },
-    lizmap:      { cat:'web', label:'Portail Web SIG', name:'Lizmap', badge:'free',
-        desc:'Publiez vos projets QGIS sur le web avec toute la symbologie, les formulaires et les outils de mesure.',
-        links:[{t:'Lizmap.com',u:'https://www.lizmap.com'},{t:'GitHub',u:'https://github.com/3liz/lizmap-web-client'}] },
-    leaflet:     { cat:'web', label:'Cartographie Web', name:'Leaflet.js / MapLibre GL', badge:'free',
-        desc:'Bibliothèques JS légères pour cartes web sur mesure. Idéal pour intégration dans site existant.',
-        links:[{t:'Leaflet.js',u:'https://leafletjs.com'},{t:'MapLibre',u:'https://maplibre.org'}] },
-    arcgis_api:  { cat:'web', label:'Portail Web Esri', name:'ArcGIS Web AppBuilder / Experience Builder', badge:'pro',
-        desc:'Applications web sophistiquées intégrées à ArcGIS Online. Widgets, dashboards, formulaires métier.',
-        links:[{t:'Esri Experience Builder',u:'https://www.esri.com/fr-fr/arcgis/products/arcgis-experience-builder/overview'}] },
-    mapstore:    { cat:'web', label:'Portail Web SIG', name:'MapStore / GeoServer', badge:'free',
-        desc:'Suite open source pour serveurs de tuiles et portails web. GeoServer publie vos données en WMS/WFS.',
-        links:[{t:'GeoServer',u:'https://geoserver.org'},{t:'MapStore',u:'https://mapstore.geosolutionsgroup.com'}] },
-    dashboard_bi:{ cat:'web', label:'Tableau de Bord BI', name:'Power BI + Azure Maps / Grafana', badge:'cloud',
-        desc:'Tableaux de bord analytiques avec composant cartographique. Idéal pour reporting et suivi métier.',
-        links:[{t:'Power BI Maps',u:'https://powerbi.microsoft.com'},{t:'Grafana Maps',u:'https://grafana.com'}] },
-    aucun_web:   { cat:'web', label:'Diffusion Web', name:'Non requis', badge:null,
-        desc:'Votre projet ne nécessite pas de diffusion sur internet. Usage bureau uniquement.', links:[] },
-
-    // Terrain
-    qfield:      { cat:'terrain', label:'Application Terrain', name:'QField', badge:'free',
-        desc:'L\'extension terrain de QGIS. GPS précis, synchronisation cloud (QFieldCloud), saisie géométrie avancée.',
-        links:[{t:'QField.cloud',u:'https://qfield.cloud'},{t:'QField app',u:'https://qfield.org'}] },
-    kobo:        { cat:'terrain', label:'Collecte de Données', name:'KoboToolbox', badge:'free',
-        desc:'Standard humanitaire pour formulaires de collecte. Hors ligne, géolocalisation, photos, analyses intégrées.',
-        links:[{t:'KoboToolbox.org',u:'https://www.kobotoolbox.org'}] },
-    fieldmaps:   { cat:'terrain', label:'Application Terrain', name:'ArcGIS Field Maps', badge:'cloud',
-        desc:'App mobile Esri pour mise à jour temps réel des données de terrain. Intégration ArcGIS Online native.',
-        links:[{t:'Esri Field Maps',u:'https://www.esri.com/fr-fr/arcgis/products/arcgis-field-maps/overview'}] },
-    mergin:      { cat:'terrain', label:'Application Terrain', name:'Mergin Maps (Input)', badge:'free',
-        desc:'QField + synchronisation cloud Mergin. Idéal équipes techniques avec PostGIS. Open source possible.',
-        links:[{t:'MerginMaps.com',u:'https://merginmaps.com'}] },
-    aucun_terrain:{ cat:'terrain', label:'Terrain', name:'Non requis', badge:null,
-        desc:'Votre projet ne nécessite pas de collecte terrain mobile.', links:[] },
-
-    // Imagerie
-    osm:         { cat:'image', label:'Fond de Plan', name:'OpenStreetMap / OSMB', badge:'free',
-        desc:'Fond de plan standard mondial. Gratuit, sans restriction de diffusion, mise à jour communautaire.',
-        links:[{t:'OpenStreetMap',u:'https://www.openstreetmap.org'}] },
-    google:      { cat:'image', label:'Fond de Plan', name:'Google Maps / Satellite', badge:'warn',
-        desc:'Couverture mondiale, qualité élevée. Attention : conditions d\'utilisation commerciale restrictives.',
-        links:[{t:'Google Maps API',u:'https://developers.google.com/maps'}] },
-    ign:         { cat:'image', label:'Fond de Plan HD', name:'IGN / Géoportail', badge:'free',
-        desc:'Ortho HD 20 cm, BDTOPO, SCAN, Plans IGN. Référence pour la France. API Géoportail + flux WMS libres.',
-        links:[{t:'Géoportail IGN',u:'https://www.geoportail.gouv.fr'},{t:'Geoplateforme',u:'https://geoplateforme.fr'}] },
-    drone:       { cat:'image', label:'Imagerie Drone', name:'Drone / Photogrammétrie', badge:'warn',
-        desc:'Orthophoto centimétrique sur zone précise. Nécessite traitement Agisoft Metashape, ODM ou Pix4D.',
-        links:[{t:'OpenDroneMap',u:'https://opendronemap.org'},{t:'Pix4D',u:'https://www.pix4d.com'}] },
-    lidar:       { cat:'image', label:'Nuage de Points 3D', name:'LiDAR / Nuage de Points', badge:'pro',
-        desc:'Précision 5-10 cm en altimétrie. Traitement PDAL, CloudCompare, QGIS 3D. Données RGE ALTI IGN disponibles.',
-        links:[{t:'PDAL.io',u:'https://pdal.io'},{t:'CloudCompare',u:'https://www.cloudcompare.org'}] }
-};
-
-// Mappage résultat → clé BRIQUES
-const keyMap = {
-    aucun: 'aucun_web',  // pour web
-};
-function getBrique(cat, key) {
-    if (key === 'aucun') {
-        return cat === 'terrain' ? BRIQUES['aucun_terrain'] : BRIQUES['aucun_web'];
-    }
-    return BRIQUES[key] || null;
-}
-
-// ============================================================
-// 7. ALERTES CONTEXTUELLES
-// ============================================================
-const alertContainer = document.getElementById('alertContainer');
-
-if (souverain === 'haute' && mode === 'avance') {
-    alertContainer.innerHTML += `<div class="alert warn">⚠️ <strong>Souveraineté haute :</strong> Les solutions cloud américaines (AWS, Azure, ArcGIS Online) ont été écartées. Architecture recommandée sur serveur local ou VPS européen (OVH, Scaleway) conforme RGPD.</div>`;
-}
-if (imagerie === 'google') {
-    alertContainer.innerHTML += `<div class="alert warn">⚠️ <strong>Google Maps :</strong> Vérifiez les conditions d'utilisation commerciale. Pour un usage professionnel, préférez l'API Google Maps Platform ou envisagez IGN/OpenStreetMap.</div>`;
-}
-if (budget === 'zero' && besoin === 'mixte') {
-    alertContainer.innerHTML += `<div class="alert info">ℹ️ <strong>Budget zéro + usage mixte :</strong> C'est possible avec QGIS + PostGIS + QField + Lizmap. La mise en place demande une expertise technique ou un accompagnement initial.</div>`;
-}
-if (collab === 'equipe_large' && budget === 'zero') {
-    alertContainer.innerHTML += `<div class="alert warn">⚠️ <strong>Grande équipe + budget 0€ :</strong> PostGIS est indispensable. Un VPS OVH à ~15€/mois est fortement recommandé pour la base de données partagée.</div>`;
-}
-if (result.logiciel === 'qgis') {
-    alertContainer.innerHTML += `<div class="alert success">✅ <strong>Bonne nouvelle :</strong> QGIS est entièrement gratuit et open source. Disponible sur Windows, Mac et Linux. Téléchargeable sur qgis.org.</div>`;
-}
-
-// ============================================================
-// 8. AFFICHAGE DES BRIQUES
-// ============================================================
-const container = document.getElementById('resultatsList');
-
-const toShow = [
-    { cat: 'logiciel', key: result.logiciel },
-    { cat: 'base',     key: result.base },
-    { cat: 'infra',    key: result.infra },
-    { cat: 'terrain',  key: result.terrain },
-    { cat: 'web',      key: result.web },
-    { cat: 'image',    key: result.image },
-];
-
-function badgeHTML(type) {
-    if (!type) return '';
-    const map = {
-        free:  '<span class="badge-free">Gratuit</span>',
-        pro:   '<span class="badge-pro">Licence Pro</span>',
-        cloud: '<span class="badge-cloud">Cloud</span>',
-        warn:  '<span class="badge-warn">Attention CGU</span>',
+    const params = new URLSearchParams(window.location.search);
+    
+    // --- 1. CONFIGURATION DES BRIQUES ---
+    const DATA = {
+        logiciels: {
+            qgis: { n: "QGIS Desktop", d: "SIG Open Source leader. Indispensable pour votre profil. Version LTR conseillée.", p: 0, icon: 'M12 2L2 7l10 5 10-5-10-5z' },
+            arcgis: { n: "ArcGIS Pro", d: "Puissance d'analyse maximale et intégration cloud native pour entreprise.", p: 850, icon: 'M12 21l-9-5 9-5 9 5-9 5z' },
+            autocad: { n: "AutoCAD Map 3D", d: "Indispensable pour votre métier de géomètre. Pont DWG/SIG intégré.", p: 2500, icon: 'M3 3h18v18H3V3z' }
+        },
+        bases: {
+            gpkg: { n: "GeoPackage", d: "Stockage local simple et performant. Idéal pour vos volumes légers.", p: 0 },
+            postgis: { n: "PostgreSQL / PostGIS", d: "Le moteur spatial pro. Gestion multi-utilisateurs et gros volumes.", p: 0 },
+            arcgis_cloud: { n: "ArcGIS Online Hosting", d: "Données dans le Cloud Esri. Sécurité et scalabilité totale.", p: 500 }
+        },
+        serveurs: {
+            render: { n: "Render (Cloud Managé)", d: "Hébergement agile de base de données. Version Free ou Starter.", p: 84 },
+            vps_ovh: { n: "VPS OVH (France)", d: "Souveraineté européenne garantie. Serveur Linux dédié à vos SIG.", p: 120 },
+            azure: { n: "Azure SQL Spatial", d: "Intégration parfaite dans votre infrastructure Microsoft actuelle.", p: 1200 },
+            local: { n: "Serveur Physique", d: "Contrôle total en interne. Idéal pour données ultra-sensibles.", p: 0 }
+        },
+        web: {
+            felt: { n: "Felt", d: "La diffusion web la plus rapide du marché. Collaboration en temps réel.", p: 0 },
+            lizmap: { n: "Lizmap Web Client", d: "Le portail pro pour QGIS. Fidélité cartographique 100%.", p: 0 },
+            experience: { n: "Experience Builder", d: "Applications web haut de gamme pour l'écosystème ArcGIS.", p: 0 }
+        }
     };
-    return map[type] || '';
-}
 
-toShow.forEach(item => {
-    const b = getBrique(item.cat, item.key);
-    if (!b) return;
-    // Masquer "Non requis" si besoin est mixte ou terrain ou web
-    if ((item.key === 'aucun' || item.key === 'aucun_web' || item.key === 'aucun_terrain') &&
-        (besoin === 'mixte' || besoin === 'terrain' || besoin === 'web')) return;
+    // --- 2. ALGORITHME DE SCORING ---
+    let scores = { log: {}, base: {}, srv: {}, web: {} };
+    Object.keys(DATA).forEach(cat => Object.keys(DATA[cat]).forEach(k => scores[cat === 'logiciels'?'log':cat === 'bases'?'base':cat === 'serveurs'?'srv':'web'][k] = 0));
 
-    const linksHTML = b.links.map(l => `<a href="${l.u}" target="_blank" rel="noopener">${l.t} ↗</a>`).join('');
-    container.innerHTML += `
-        <div class="brique">
-            <span class="cat ${b.cat}">${b.label}</span>
-            <h3>${b.name} ${badgeHTML(b.badge)}</h3>
-            <p>${b.desc}</p>
-            ${linksHTML ? `<div class="links">${linksHTML}</div>` : ''}
-        </div>`;
-});
+    // Récupération variables
+    const budget = params.get('budget');
+    const secteur = params.get('secteur');
+    const souverain = params.get('souverainete');
+    const volume = params.get('volume');
+    const si = params.get('si_existant');
 
-// ============================================================
-// 9. ALTERNATIVES
-// ============================================================
-const altItems = [
-    { cat: 'Logiciel alternatif', key: alt.logiciel },
-    { cat: 'Base de données alt.', key: alt.base },
-    { cat: 'Infrastructure alt.', key: alt.infra },
-    { cat: 'Diffusion web alt.', key: alt.web },
-];
+    // Logique croisée
+    if (secteur === 'geometre') scores.log.autocad += 500;
+    if (budget === 'zero') { scores.log.qgis += 1000; scores.srv.render += 500; }
+    if (souverain === 'haute' || souverain === 'critique') { scores.srv.vps_ovh += 500; scores.srv.local += 600; scores.srv.azure -= 1000; }
+    if (volume === 'lourd' || params.get('collaboration') === 'multi_10') { scores.base.postgis += 500; scores.base.gpkg -= 1000; }
+    if (si === 'azure') { scores.srv.azure += 800; scores.log.arcgis += 200; }
 
-const altSection = document.getElementById('altSection');
-const altList = document.getElementById('altList');
-let hasAlt = false;
+    // --- 3. SELECTION & AFFICHAGE ---
+    const getWinner = (cat) => Object.keys(scores[cat]).reduce((a, b) => scores[cat][a] > scores[cat][b] ? a : b);
+    
+    const win = {
+        log: getWinner('log'),
+        base: getWinner('base'),
+        srv: getWinner('srv'),
+        web: getWinner('web')
+    };
 
-altItems.forEach(item => {
-    const b = getBrique(null, item.key);
-    if (!b || item.key === 'aucun') return;
-    altList.innerHTML += `
-        <div class="alt-item">
-            <strong>${b.name}</strong>
-            <span>${b.desc.substring(0, 80)}…</span>
-        </div>`;
-    hasAlt = true;
-});
+    const container = document.getElementById('resultsGrid');
+    let totalAnnuel = 0;
 
+    [
+        {c:'logiciels', k:win.log, l:'Logiciel SIG'},
+        {c:'bases', k:win.base, l:'Base de Données'},
+        {c:'serveurs', k:win.srv, l:'Infrastructure'},
+        {c:'web', k:win.web, l:'Diffusion Web'}
+    ].forEach(item => {
+        const d = DATA[item.c][item.k];
+        totalAnnuel += d.p;
+        container.innerHTML += `
+            <div class="card">
+                <div class="type">${item.l}</div>
+                <h3>${d.n}</h3>
+                <p>${d.d}</p>
+                <div class="price-tag">${d.p === 0 ? 'Gratuit / Open Source' : d.p + ' € / an*'}</div>
+            </div>
+        `;
+    });
+
+    document.getElementById('totalPrice').innerText = totalAnnuel + " € / an";
+    document.getElementById('badgeClient').innerText = "Client : " + params.get('identite');
+    
+    // Mise à jour du lien contact avec les infos
+    document.getElementById('contactBtn').href = `contact.html${window.location.search}&total=${totalAnnuel}`;
+
+</script>
+</body>
+</html>
 if (hasAlt) altSection.style.display = 'block';
 </script>
 </body>
