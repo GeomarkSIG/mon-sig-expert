@@ -73,18 +73,18 @@
                 <label>Votre secteur :</label>
                 <select name="secteur">
                     <option value="collectivite">Collectivité Territoriale</option>
-                    <option value="geometre">Géomètre / Topographe (AutoCAD/Mensura)</option>
+                    <option value="geometre">Géomètre / Topographe </option>
                     <option value="bet">Bureau d'études Environnement / VRD</option>
                     <option value="ong">Humanitaire / Santé / ONG</option>
-                    <option value="energie">Énergie / Réseaux (Smart Grids)</option>
-                    <option value="ne_sait_pas">Je ne sais pas / Autre</option>
+                    <option value="energie">Énergie / Réseaux</option>
+                    <option value="ne_sait_pas">Étudiant / Autre</option>
                 </select>
             </div>
             <div class="field">
                 <label>Budget annuel estimé :</label>
                 <select name="budget">
                     <option value="zero">0€ (Logiciels libres uniquement)</option>
-                    <option value="starter_free">Starter (Hébergement Render Free / SaaS gratuit)</option>
+                    <option value="starter_free">Starter (50€ - 500€)</option>
                     <option value="inter_pro">Intermédiaire (1000€ - 5000€)</option>
                     <option value="entreprise">Entreprise / Grand Compte (+10k€)</option>
                 </select>
@@ -135,10 +135,10 @@
                 <div class="field">
                     <label>Diffusion Web souhaitée :</label>
                     <select name="diffusion">
-                        <option value="simple">Carte simple (Felt / Leaflet)</option>
-                        <option value="pro_lizmap">Portail Métier complet (Lizmap / MapServer)</option>
+                        <option value="simple">Carte simple </option>
+                        <option value="pro_lizmap">Portail Métier complet </option>
                         <option value="esri_builder">Esri Experience Builder / Dashboards</option>
-                        <option value="bi_spatial">BI Spatiale (Superset / PowerBI)</option>
+                        <option value="bi_spatial">BI Spatiale </option>
                     </select>
                 </div>
                 <div class="field">
@@ -146,7 +146,6 @@
                     <select name="crs">
                         <option value="wgs84">WGS 84 (Mondial / Web)</option>
                         <option value="lambert93">Lambert 93 (France Métropole)</option>
-                        <option value="reunion">RGR92 / UTM 40S (La Réunion)</option>
                         <option value="autre">Autre spécifique</option>
                     </select>
                 </div>
@@ -157,10 +156,15 @@
                 <div class="field">
                     <label>Fond de plan prioritaire :</label>
                     <select name="imagerie">
-                        <option value="osm">OpenStreetMap (Gratuit)</option>
-                        <option value="google">Google Maps Satellite (API)</option>
-                        <option value="ign">IGN Ortho HD / Flux WMTS</option>
-                        <option value="drone">Orthophoto Drone (Besoin local)</option>
+                        <div class="field">
+                    <label>Source des fonds de plan & imagerie :</label>
+                    <select name="imagerie">
+                        <option value="gratuit_local">Gratuit / Local (OSM, image satellite - Non mis à jour)</option>
+                        <option value="payant_mensuel">Abonnement Mensuel (Flux Premium, Sentinel-2 frais, Planet)</option>
+                        <option value="achat_precision">Achat Plan de Précision (Cadastre vectoriel, dalles Ortho HD 5cm)</option>
+                        <option value="drone">Imagerie Drone/Aérienne (Saisie sur mesure, très haute résolution)</option>
+                    </select>
+                </div>
                     </select>
                 </div>
                 <div class="field">
