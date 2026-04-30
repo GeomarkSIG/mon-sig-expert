@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Diagnostic SIG Expert</title>
+</head>
+<body>
+    <h1>Quel SIG pour votre projet ?</h1>
+    <form action="resultats.html" method="GET">
+        <p>1. Quel est votre budget ?<br>
+            <input type="radio" name="budget" value="zero" required> 0€ (Strict)<br>
+            <input type="radio" name="budget" value="starter"> < 1000€<br>
+            <input type="radio" name="budget" value="pro"> + 5000€
+        </p>
+        <p>2. Niveau technique ?<br>
+            <input type="radio" name="expert" value="non" required> Débutant<br>
+            <input type="radio" name="expert" value="oui"> Expert / Dév
+        </p>
+        <p>3. Type de données ?<br>
+            <input type="radio" name="donnees" value="publiques" required> Publiques / OpenData<br>
+            <input type="radio" name="donnees" value="sensibles"> Sensibles / Souveraines
+        </p>
+        <button type="submit">Générer mon scénario</button>
+    </form>
+</body>
+</html>
