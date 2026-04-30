@@ -136,6 +136,7 @@
     });
 
 // --- 2. RÉCUPÉRATION DES VARIABLES FORMULAIRE ---
+// --- 2. RÉCUPÉRATION DES VARIABLES FORMULAIRE ---
 const P = new URLSearchParams(window.location.search);
 const secteur = P.get('secteur') || '';
 const budget = P.get('budget') || '';
@@ -146,56 +147,46 @@ const souverain = P.get('souverainete') || '';
 const diffusion = P.get('diffusion') || '';
 const imagerie = P.get('imagerie') || '';
 
+// Alias pour simplifier l'écriture (IMPORTANT : On définit 's' pour pointer vers 'scores')
+const s = scores;
+
 // ==============================================================================
 // 3. MATRICE DES LOGIQUES CROISÉES (LE MOTEUR EXPERT)
 // ==============================================================================
 
-// ---------------------------------------------------------
-// A. LOGIQUE MÉTIER (Le point de départ)
-// ---------------------------------------------------------
 switch(secteur) {
     case 'collectivite':
-        // Le public favorise l'Open Source, Lizmap et la souveraineté
         s.log.qgis += 600; s.web.lizmap += 800; s.web.geonode += 500;
-        s.bas.postgis += 500; s.srv.vps_ovh += 500;
+        s.base.postgis += 500; s.srv.vps_ovh += 500;
         break;
     case 'geometre':
-        // Haute précision, DAO, exports terrains
-        s.log.autocad += 1500; s.bas.spatialite += 800;
-        s.ima.drone += 500; s.ima.achat_precision += 800;
+        s.log.autocad += 1500; s.base.spatialite += 800;
+        s.ima.drone += 500; s.ima['Dalle HD'] += 800;
         break;
-    case 'bet': // Bureau d'études
+    case 'bet':
         s.log.qgis += 800; s.log.arcgis_ent += 400;
-        s.web.geoserver += 600; s.bas.postgis += 600;
+        s.web.geoserver += 600; s.base.postgis += 600;
         break;
     case 'ong':
-        // Terrains déconnectés, petit budget, collaboratif
         s.log.osm += 1000; s.log.qgis += 800;
-        s.bas.gpkg += 800; s.web.felt += 800;
+        s.base.gpkg += 800; s.web.felt += 800;
         break;
     case 'energie':
-        // Gros réseaux, dashboards complexes, Esri
         s.log.arcgis_ent += 1000; s.web.experience += 1000;
-        s.bas.postgis += 500; s.srv.aws += 600;
+        s.base.postgis += 500; s.srv.aws += 600;
         break;
 }
 
-// ---------------------------------------------------------
-// B. CONTRAINTES DE BUDGET (Les coupe-circuits)
-// ---------------------------------------------------------
 if (budget === 'zero') {
-    // On force l'écosystème communautaire et on tue le propriétaire
     s.log.qgis += 2000; s.log.osm += 1000;
-    s.bas.gpkg += 1500; s.bas.spatialite += 1000;
+    s.base.gpkg += 1500; s.base.spatialite += 1000;
     s.srv.local += 1500; s.srv.render += 500;
     s.web.openlayers += 1500; s.web.felt += 1000; s.web.lizmap += 800;
-    
-    // Pénalités fatales
     s.log.arcgis_ent -= 5000; s.log.autocad -= 5000; s.log.geoconcept -= 5000;
     s.srv.aws -= 5000; s.srv.azure -= 5000;
 } 
 else if (budget === 'starter_free') {
-    s.srv.render += 1000; s.bas.supabase += 800;
+    s.srv.render += 1000; s.base.supabase += 800;
     s.web.qgis_cloud += 800;
 }
 else if (budget === 'entreprise') {
@@ -204,115 +195,69 @@ else if (budget === 'entreprise') {
     s.web.ago += 1000; s.web.experience += 1000;
 }
 
-// ---------------------------------------------------------
-// C. VOLUMÉTRIE & COLLABORATION (L'Architecture Base de données)
-// ---------------------------------------------------------
 if (volume === 'leger' && collab === 'solo') {
-    s.bas.gpkg += 1500; s.bas.spatialite += 1000;
+    s.base.gpkg += 1500; s.base.spatialite += 1000;
     s.log.qgis += 500; s.srv.local += 1000;
 } 
 else if (volume === 'lourd' || collab === 'multi_10') {
-    // Si c'est lourd ou multi-utilisateurs, le fichier plat meurt, vive le SGBD
-    s.bas.postgis += 2000; s.bas.arcgis_cloud += 1000; s.bas.supabase += 800;
-    s.bas.gpkg -= 2000; s.bas.spatialite -= 2000;
-    s.web.geoserver += 1000; // Pour tuiler les données lourdes
+    s.base.postgis += 2000; s.base.arcgis_cloud += 1000; s.base.supabase += 800;
+    s.base.gpkg -= 2000; s.base.spatialite -= 2000;
+    s.web.geoserver += 1000;
 }
 
-// ---------------------------------------------------------
-// D. SOUVERAINETÉ & SI EXISTANT (Le choix des Serveurs)
-// ---------------------------------------------------------
 if (souverain === 'haute' || souverain === 'critique') {
     s.srv.vps_ovh += 2000; s.srv.local += 3000;
     s.srv.aws -= 5000; s.srv.azure -= 5000; s.srv.render -= 5000;
-    s.bas.arcgis_cloud -= 5000; // Pas de cloud US
+    s.base.arcgis_cloud -= 5000;
     s.web.ago -= 5000; 
 }
 
 if (si_existant === 'azure') {
-    s.srv.azure += 2000; s.log.arcgis_ent += 800; s.bas.arcgis_cloud += 500;
+    s.srv.azure += 2000; s.log.arcgis_ent += 800; s.base.arcgis_cloud += 500;
 } else if (si_existant === 'aws') {
-    s.srv.aws += 2000; s.bas.supabase += 500;
+    s.srv.aws += 2000; s.base.supabase += 500;
 } else if (si_existant === 'on_premise') {
-    s.srv.local += 2000; s.web.geoserver += 800; s.bas.postgis += 1000;
+    s.srv.local += 2000; s.web.geoserver += 800; s.base.postgis += 1000;
 }
 
-// ---------------------------------------------------------
-// E. DIFFUSION WEB & ÉCOSYSTÈMES STRICTS (L'Effet Domino)
-// ---------------------------------------------------------
-if (diffusion === 'simple') {
-    s.web.felt += 1500; s.web.openlayers += 1000;
-} 
-else if (diffusion === 'pro_lizmap') {
-    // Écosystème QGIS Web pur
-    s.web.lizmap += 2000; s.log.qgis += 1500; // Lizmap = QGIS Desktop obligatoire
-    s.srv.vps_ovh += 1000; s.bas.postgis += 800;
-} 
-else if (diffusion === 'esri_builder') {
-    // Écosystème Esri pur
+if (diffusion === 'pro_lizmap') {
+    s.web.lizmap += 2000; s.log.qgis += 1500;
+    s.srv.vps_ovh += 1000; s.base.postgis += 800;
+} else if (diffusion === 'esri_builder') {
     s.web.experience += 2000; s.web.ago += 1500;
-    s.log.arcgis_ent += 2000; s.bas.arcgis_cloud += 1500;
-    s.log.qgis -= 1000; // On évite le mélange des genres
-}
-else if (diffusion === 'bi_spatial') {
-    s.log.geoconcept += 1500; s.bas.postgis += 1000; s.log.arcgis_ent += 800;
+    s.log.arcgis_ent += 2000; s.base.arcgis_cloud += 1500;
+    s.log.qgis -= 1000;
 }
 
-// ---------------------------------------------------------
-// F. L'IMAGERIE (Le choix du fond de plan)
-// ---------------------------------------------------------
-if (imagerie === 'gratuit_local') { s.ima['OSM/Google Map'] += 2000; }
-if (imagerie === 'payant_mensuel') { s.ima['Sentinel/Planet'] += 2000; s.web.ago += 500; }
-if (imagerie === 'achat_precision') { s.ima['Dalle HD'] += 2000; s.log.autocad += 800; }
-if (imagerie === 'drone') { 
-    s.ima['Drone'] += 2000; 
-    s.log.qgis += 800; // Meilleur gestionnaire de nuages de points libre
-    s.srv.vps_ovh += 500; // Besoin d'espace disque
-    s.web.geoserver += 1000; // Pour servir les orthophotos
-}
+// Gestion Imagerie
+if (imagerie === 'gratuit_local') s.ima['OSM/Google Map'] += 2000;
+if (imagerie === 'payant_mensuel') s.ima['Sentinel/Planet'] += 2000;
+if (imagerie === 'achat_precision') s.ima['Dalle HD'] += 2000;
+if (imagerie === 'drone') s.ima['Drone'] += 2000;
 
-// ---------------------------------------------------------
-// G. RÈGLES DE REDRESSEMENT (Dépendances Technologiques Finales)
-// ---------------------------------------------------------
-// Règle 1 : QGIS Cloud nécessite QGIS Desktop
-if (s.web.qgis_cloud > s.web.lizmap && s.web.qgis_cloud > s.web.ago) {
-    s.log.qgis += 1000;
-}
-// Règle 2 : GeoNode inclut GeoServer et PostGIS par défaut
-if (s.web.geonode > s.web.lizmap) {
-    s.web.geoserver += 1000; 
-    s.bas.postgis += 1000;
-}
-// Règle 3 : On ne met pas AutoCAD sur le Cloud Render (incompatible)
-if (s.log.autocad > s.log.qgis) {
-    s.srv.render -= 2000;
-}
-// Règle 4 : AGOL + ArcGIS Enterprise
-if (s.log.arcgis_ent > s.log.qgis) {
-    s.bas.arcgis_cloud += 1000;
-    s.web.ago += 800;
-}
+// --- 3. SELECTION & AFFICHAGE ---
+const getWinner = (cat) => Object.keys(scores[cat]).reduce((a, b) => scores[cat][a] >= scores[cat][b] ? a : b);
 
-    // --- 3. SELECTION & AFFICHAGE ---
-    const getWinner = (cat) => Object.keys(scores[cat]).reduce((a, b) => scores[cat][a] > scores[cat][b] ? a : b);
-    
-    const win = {
-        log: getWinner('log'),
-        base: getWinner('base'),
-        srv: getWinner('srv'),
-        web: getWinner('web'),
-        ima: getWinner('ima')
-    };
+const win = {
+    log: getWinner('log'),
+    base: getWinner('base'),
+    srv: getWinner('srv'),
+    web: getWinner('web'),
+    ima: getWinner('ima')
+};
 
-    const container = document.getElementById('resultsGrid');
-    let totalAnnuel = 0;
+const container = document.getElementById('resultsGrid');
+let totalAnnuel = 0;
 
-    [
-        {c:'logiciels', k:win.log, l:'Logiciel SIG'},
-        {c:'bases', k:win.base, l:'Base de Données'},
-        {c:'serveurs', k:win.srv, l:'Infrastructure'},
-        {c:'web', k:win.web, l:'Diffusion Web'}
-    ].forEach(item => {
-        const d = DATA[item.c][item.k];
+[
+    {c:'logiciels', k:win.log, l:'Logiciel SIG'},
+    {c:'bases', k:win.base, l:'Base de Données'},
+    {c:'serveurs', k:win.srv, l:'Infrastructure'},
+    {c:'web', k:win.web, l:'Diffusion Web'},
+    {c:'imagerie', k:win.ima, l:'Fond de plan / Imagerie'}
+].forEach(item => {
+    const d = DATA[item.c][item.k];
+    if (d) {
         totalAnnuel += d.p;
         container.innerHTML += `
             <div class="card">
@@ -322,10 +267,11 @@ if (s.log.arcgis_ent > s.log.qgis) {
                 <div class="price-tag">${d.p === 0 ? 'Gratuit / Open Source' : d.p + ' € / an*'}</div>
             </div>
         `;
-    });
+    }
+});
 
-    document.getElementById('totalPrice').innerText = totalAnnuel + " € / an";
-    document.getElementById('badgeClient').innerText = "Client : " + params.get('identite');
+document.getElementById('totalPrice').innerText = totalAnnuel + " € / an";
+document.getElementById('badgeClient').innerText = "Client : " + (params.get('identite') || 'Anonyme');
     
     // Mise à jour du lien contact avec les infos
     document.getElementById('contactBtn').href = `contact.html${window.location.search}&total=${totalAnnuel}`;
