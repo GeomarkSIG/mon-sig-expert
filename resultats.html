@@ -483,26 +483,34 @@ switch(si_exist){
 }
 
 // ── DIFFUSION WEB ────────────────────────────────────────
-switch(diffusion){
-  case 'simple':
-    s.web.felt += 900; s.web.openlayers += 700; s.web.qgis_cloud += 500;
-    reasons.push("Diffusion <strong>simple</strong> : Felt est la solution la plus rapide pour partager une carte. QGIS Cloud pour une publication directe sans développement.");
+switch(diffusion) {
+  case 'interne':
+    // L'utilisateur veut rester en local : on booste les fichiers et le desktop
+    s.logiciels.qgis += 1000;
+    s.bases.gpkg += 1500;
+    s.serveurs.local += 1200;
+    // On baisse les solutions Web SaaS
+    s.web.ago -= 2000;
+    s.web.felt -= 2000;
+    reasons.push("Usage <strong>interne</strong> : Priorité au stockage local (GeoPackage) et au logiciel desktop pour une confidentialité totale sans exposition web.");
     break;
-  case 'pro_lizmap':
-    s.web.lizmap += 2800; s.logiciels.qgis += 1200;
-    s.serveurs.vps_ovh += 1000; s.bases.postgis += 700;
-    reasons.push("Portail métier <strong>Lizmap</strong> : publie vos projets QGIS sur le web avec 100% de fidélité. Recommandé avec OVHcloud pour la souveraineté et PostGIS pour les données.");
+
+  case 'simple_web':
+    // L'utilisateur veut diffuser rapidement
+    s.web.felt += 1500; 
+    s.web.qgis_cloud += 1200;
+    s.web.ago += 800; // Esri est aussi bon pour le simple web
+    reasons.push("Diffusion <strong>Web simple</strong> : Felt est privilégié pour sa rapidité de mise en ligne, ou QGIS Cloud pour publier un projet existant en un clic.");
     break;
-  case 'esri_builder':
-    s.web.experience += 2800; s.web.ago += 1600;
-    s.logiciels.arcgis_ent += 2200; s.bases.arcgis_cloud += 1300;
-    s.logiciels.qgis -= 800;
-    reasons.push("Portail <strong>ArcGIS Experience Builder</strong> : applications web haut de gamme Esri. Nécessite ArcGIS Online ou Enterprise. Inclus dans les licences Esri.");
-    break;
-  case 'bi_spatial':
-    s.web.ago += 1100; s.web.geonode += 900;
-    s.bases.postgis += 900;
-    reasons.push("BI spatiale : ArcGIS Online Dashboards ou GeoNode pour la gestion et la visualisation analytique des données géospatiales.");
+
+  case 'collaboratif':
+    // Le collaboratif nécessite un serveur de base de données (PostGIS) et un portail métier
+    s.web.lizmap += 2000; 
+    s.web.experience += 1500; // Esri est très fort en collaboratif
+    s.bases.postgis += 1500;   // Indispensable pour la gestion des droits
+    s.serveurs.vps_ovh += 1000;
+    s.web.felt += 800;        // Felt permet aussi l'édition partagée
+    reasons.push("Mode <strong>Collaboratif</strong> : Nécessite une base de données robuste (PostGIS) et un portail type Lizmap ou ArcGIS pour gérer les droits d'édition de plusieurs utilisateurs.");
     break;
 }
 
