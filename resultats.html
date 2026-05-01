@@ -3,295 +3,727 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Architecture SIG — Scénarios dynamiques</title>
-
+<title>Architecture SIG Préconisée — GeomarkSIG</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --primary:#1a73e8;
-  --success:#27ae60;
-  --bg:#f1f3f4;
+:root{
+  --ink:#0f1923; --ink2:#2c3e50; --muted:#6b7a8d; --border:#dde3ec; --surface:#f5f7fa; --white:#fff;
+  --green:#1a7a4a; --green-l:#e6f5ee; --blue:#1a56e8; --blue-l:#e8effd;
+  --amber:#c9720c; --amber-l:#fef3e2; --red:#c0392b; --red-l:#fdf0ef;
+  --purple:#6c3483; --purple-l:#f5eef8; --teal:#0e7490; --teal-l:#e0f2f7;
+  --r:10px; --r2:16px;
 }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink);line-height:1.6}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
 
-body {
-  font-family: Arial;
-  background:var(--bg);
-  margin:0;
-  padding:20px;
+/* ── HEADER ── */
+.page-header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.header-inner{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:14px 24px}
+.logo-area{display:flex;align-items:center;gap:10px}
+.logo-area img{height:40px;border-radius:6px}
+.logo-fallback{font-weight:700;font-size:1.05rem;color:var(--green)}
+.logo-sub{font-size:.7rem;color:var(--muted);display:block}
+.header-badge{background:var(--green-l);color:var(--green);padding:5px 14px;border-radius:20px;font-size:.78rem;font-weight:600}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,#0c1a10 0%,#0f2820 55%,#1a6040 100%);color:#fff;padding:50px 24px 42px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 80%,rgba(26,122,74,.15) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(26,86,232,.1) 0%,transparent 50%)}
+.hero-grid{max-width:1180px;margin:auto;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start;position:relative}
+.hero-tag{display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:.72rem;font-weight:600;letter-spacing:.6px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:14px}
+.hero h1{font-size:1.9rem;font-weight:700;margin-bottom:10px;line-height:1.25;max-width:620px}
+.hero-sub{font-size:.92rem;opacity:.72;max-width:520px;line-height:1.65;margin-bottom:20px}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap}
+.hm{display:flex;align-items:center;gap:6px;font-size:.8rem;opacity:.75}
+.hm strong{opacity:1;font-weight:600}
+.score-pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:16px 22px;text-align:center;min-width:130px}
+.score-big{font-family:'DM Mono',monospace;font-size:2.6rem;font-weight:500;color:#5be89e;line-height:1}
+.score-lbl{font-size:.72rem;opacity:.65;margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+.score-bar-wrap{margin-top:16px;width:100%;background:rgba(255,255,255,.12);height:4px;border-radius:2px;overflow:hidden}
+.score-bar-fill{height:100%;background:linear-gradient(90deg,#2ecc71,#5be89e);border-radius:2px;transition:width .8s ease}
+
+/* ── WRAP ── */
+.wrap{max-width:1180px;margin:0 auto;padding:30px 24px 80px}
+
+/* ── SECTION LABEL ── */
+.slabel{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:14px;margin-top:28px;display:flex;align-items:center;gap:8px}
+.slabel::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ── SCÉNARIO TITRE ── */
+.scenario-name{font-size:1.25rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+.scenario-desc{color:var(--muted);font-size:.87rem;margin-bottom:20px;line-height:1.65}
+
+/* ── GRILLE BRIQUES ── */
+.brique-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;margin-bottom:8px}
+.brique{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r2);padding:0;display:flex;flex-direction:column;transition:box-shadow .2s,border-color .2s;position:relative;overflow:hidden;animation:fadeUp .45s ease both}
+.brique:hover{box-shadow:0 6px 28px rgba(0,0,0,.08);border-color:#b5c8e0}
+.brique:nth-child(1){animation-delay:.04s}.brique:nth-child(2){animation-delay:.09s}.brique:nth-child(3){animation-delay:.14s}.brique:nth-child(4){animation-delay:.19s}.brique:nth-child(5){animation-delay:.24s}.brique:nth-child(6){animation-delay:.29s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.brique-top{display:flex;align-items:flex-start;gap:14px;padding:20px 20px 14px}
+.brique-logo-wrap{flex-shrink:0;width:54px;height:54px;border-radius:10px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.brique-logo-wrap img{width:42px;height:42px;object-fit:contain}
+.brique-logo-wrap .ico{font-size:1.5rem}
+.brique-meta{flex:1}
+.brique-cat{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:2px}
+.brique-name{font-size:1rem;font-weight:700;color:var(--ink);line-height:1.25}
+.brique-body{font-size:.83rem;color:var(--muted);line-height:1.65;padding:0 20px 14px;flex:1}
+.brique-foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:12px 20px;border-top:1px solid var(--border);background:var(--surface);margin-top:auto}
+.brique-price{font-family:'DM Mono',monospace;font-size:.78rem;font-weight:500;padding:3px 10px;border-radius:6px}
+.brique-links{display:flex;gap:6px;flex-wrap:wrap}
+.blink{font-size:.72rem;font-weight:500;padding:3px 9px;border-radius:5px;transition:background .15s}
+.blink.web{color:var(--blue);background:var(--blue-l)}.blink.web:hover{background:#c8d8fa;text-decoration:none}
+.blink.mail{color:var(--green);background:var(--green-l)}.blink.mail:hover{background:#b8e8cc;text-decoration:none}
+.winner-badge{position:absolute;top:12px;right:12px;background:var(--green);color:#fff;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:3px 8px;border-radius:10px}
+
+/* Accents couleur par catégorie */
+.cat-log .brique-cat{color:var(--blue)} .cat-log .brique-price{background:var(--blue-l);color:var(--blue)} .cat-log{border-top:3px solid var(--blue)}
+.cat-base .brique-cat{color:var(--purple)} .cat-base .brique-price{background:var(--purple-l);color:var(--purple)} .cat-base{border-top:3px solid var(--purple)}
+.cat-srv .brique-cat{color:var(--teal)} .cat-srv .brique-price{background:var(--teal-l);color:var(--teal)} .cat-srv{border-top:3px solid var(--teal)}
+.cat-web .brique-cat{color:var(--green)} .cat-web .brique-price{background:var(--green-l);color:var(--green)} .cat-web{border-top:3px solid var(--green)}
+.cat-ima .brique-cat{color:var(--amber)} .cat-ima .brique-price{background:var(--amber-l);color:var(--amber)} .cat-ima{border-top:3px solid var(--amber)}
+.cat-ter .brique-cat{color:var(--red)} .cat-ter .brique-price{background:var(--red-l);color:var(--red)} .cat-ter{border-top:3px solid var(--red)}
+
+/* ── BUDGET ── */
+.budget-box{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r2);padding:26px;margin-bottom:4px;border-left:4px solid var(--green)}
+.budget-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px}
+.budget-total{font-family:'DM Mono',monospace;font-size:2.3rem;font-weight:500;color:var(--green)}
+.budget-per{font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--ink2);text-align:right}
+.budget-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px}
+.budget-item{background:var(--surface);border-radius:8px;padding:11px 14px;display:flex;justify-content:space-between;align-items:center}
+.bi-lbl{font-size:.78rem;color:var(--muted)}.bi-val{font-family:'DM Mono',monospace;font-size:.85rem;font-weight:500;color:var(--ink)}
+.budget-note{font-size:.73rem;color:var(--muted);margin-top:12px}
+
+/* ── RAISONS ── */
+.reasons-box{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r2);padding:24px;margin-bottom:4px}
+.reason-item{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border-radius:8px;background:var(--surface);font-size:.83rem;color:var(--ink2);line-height:1.6;margin-bottom:8px}
+.reason-item:last-child{margin-bottom:0}
+.rdot{width:7px;height:7px;background:var(--green);border-radius:50%;margin-top:6px;flex-shrink:0}
+
+/* ── ALTERNATIVES ── */
+.alt-box{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r2);padding:24px;margin-bottom:4px}
+.alt-intro{font-size:.84rem;color:var(--muted);margin-bottom:18px;line-height:1.65}
+.alt-group{margin-bottom:20px}
+.alt-group:last-child{margin-bottom:0}
+.alt-group-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--border)}
+.alt-cards{display:flex;flex-wrap:wrap;gap:9px}
+.alt-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:11px 13px;display:flex;align-items:center;gap:10px;flex:1;min-width:195px;max-width:275px;transition:border-color .15s}
+.alt-card:hover{border-color:#b5c8e0}
+.alt-logo{width:30px;height:30px;object-fit:contain;background:#fff;border:1px solid var(--border);border-radius:6px;padding:3px;flex-shrink:0}
+.alt-ico{width:30px;height:30px;background:#fff;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.alt-name{font-size:.81rem;font-weight:600;color:var(--ink)}
+.alt-d{font-size:.71rem;color:var(--muted);line-height:1.4}
+.alt-p{font-family:'DM Mono',monospace;font-size:.68rem;margin-top:2px}
+.p-free{color:var(--green)}.p-paid{color:var(--amber)}.p-big{color:var(--red)}
+.hb-tag{font-size:.62rem;font-weight:700;text-transform:uppercase;background:var(--amber-l);color:var(--amber);padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:middle}
+
+/* ── ACTIONS ── */
+.actions{display:flex;gap:11px;flex-wrap:wrap;margin-bottom:4px}
+.btn{padding:13px 22px;border-radius:var(--r);font-size:.88rem;font-weight:600;cursor:pointer;transition:all .15s;text-decoration:none;display:inline-flex;align-items:center;gap:7px;border:none;font-family:'DM Sans',sans-serif}
+.btn-primary{background:var(--green);color:#fff;box-shadow:0 2px 14px rgba(26,122,74,.22)}.btn-primary:hover{background:#15643d;text-decoration:none;color:#fff}
+.btn-outline{background:#fff;color:var(--ink);border:1.5px solid var(--border)}.btn-outline:hover{border-color:#a0b4cc;text-decoration:none;color:var(--ink)}
+.btn-amber{background:var(--amber-l);color:var(--amber);border:1.5px solid #f0c070}.btn-amber:hover{background:#fde8b8;text-decoration:none;color:var(--amber)}
+
+/* ── FOOTER ── */
+.page-footer{border-top:1px solid var(--border);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--white)}
+.footer-right img{height:32px;opacity:.55}
+.footer-note{font-size:.73rem;color:var(--muted)}
+
+@media(max-width:640px){
+  .hero-grid{grid-template-columns:1fr}.score-pill{display:none}
+  .hero h1{font-size:1.45rem}.budget-total{font-size:1.7rem}
+  .brique-grid{grid-template-columns:1fr}.actions{flex-direction:column}
 }
-
-.container {
-  max-width:1200px;
-  margin:auto;
-  background:white;
-  padding:30px;
-  border-radius:16px;
-}
-
-.grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:20px;
-}
-
-.card {
-  border:1px solid #ddd;
-  border-radius:12px;
-  padding:20px;
-}
-
-.card h3 {
-  margin:0 0 10px;
-  color:var(--primary);
-}
-
-.item {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin:6px 0;
-}
-
-.item img {
-  height:22px;
-}
-
-.score-bar {
-  height:8px;
-  background:#eee;
-  border-radius:6px;
-  margin:10px 0;
-}
-
-.fill {
-  height:100%;
-  background:linear-gradient(90deg,#1a73e8,#27ae60);
-  border-radius:6px;
-}
-
-.price {
-  margin-top:10px;
-  font-weight:bold;
-}
-
+@media print{.page-header,.actions,.page-footer{display:none}.hero{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
 </style>
-
 </head>
-
 <body>
 
-<div class="container">
-<h1>🎯 Vos scénarios SIG optimisés</h1>
-<div id="resultsGrid" class="grid"></div>
+<!-- ═══ HEADER ═══ -->
+<header class="page-header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <img src="img/Gemini_Generated_Image_d7fwz8d7fwz8d7fw.png" alt="GeomarkSIG Logo"
+           onerror="this.style.display='none';document.getElementById('logoFallback').style.display='block'">
+      <div>
+        <span class="logo-fallback" id="logoFallback" style="display:none">GeomarkSIG</span>
+        <span class="logo-sub">Diagnostic SIG Expert</span>
+      </div>
+    </div>
+    <div class="header-badge" id="headerBadge">Analyse en cours…</div>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-tag">Architecture SIG Préconisée</div>
+      <h1 id="heroTitle">Votre Solution SIG Optimisée</h1>
+      <p class="hero-sub" id="heroSub">Analyse multicritères basée sur vos contraintes métier, budgétaires et techniques.</p>
+      <div class="hero-meta">
+        <div class="hm">👤 Client&nbsp;: <strong id="heroClient">—</strong></div>
+        <div class="hm">💼&nbsp;<strong id="heroSecteur">—</strong></div>
+        <div class="hm">⚙️ <strong id="heroMode">—</strong></div>
+        <div class="hm">🔢 Scénarios analysés : <strong>500+</strong></div>
+      </div>
+    </div>
+    <div class="score-pill">
+      <div class="score-big" id="scoreNum">—</div>
+      <div class="score-lbl">Pertinence</div>
+      <div class="score-bar-wrap"><div class="score-bar-fill" id="scoreFill" style="width:0%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTENU ═══ -->
+<div class="wrap">
+
+  <div class="scenario-name" id="scenarioTitle" style="margin-top:4px">Calcul en cours…</div>
+  <div class="scenario-desc" id="scenarioDesc"></div>
+
+  <div class="slabel">🎯 Architecture recommandée</div>
+  <div class="brique-grid" id="resultsGrid"></div>
+
+  <div class="slabel">💶 Estimation budgétaire</div>
+  <div class="budget-box">
+    <div class="budget-row">
+      <div><div style="font-size:.78rem;color:var(--muted);margin-bottom:4px">Coût total estimé</div><div class="budget-total" id="totalPrice">0 € / an</div></div>
+      <div style="text-align:right"><div style="font-size:.78rem;color:var(--muted);margin-bottom:4px">Par utilisateur</div><div class="budget-per" id="perUser">—</div></div>
+    </div>
+    <div class="budget-grid" id="budgetDetail"></div>
+    <div class="budget-note">* Estimation indicative hors prestations, formation et intégration. Les logiciels open source peuvent nécessiter un hébergement et une maintenance interne.</div>
+  </div>
+
+  <div class="slabel">🧠 Pourquoi cette architecture ?</div>
+  <div class="reasons-box"><div id="reasonsList"></div></div>
+
+  <div class="slabel">🔄 Alternatives — toutes les solutions du marché</div>
+  <div class="alt-box">
+    <p class="alt-intro">L'ensemble des solutions SIG disponibles sont présentées ci-dessous par catégorie. Les solutions <span style="font-size:.72rem;background:var(--amber-l);color:var(--amber);padding:1px 6px;border-radius:4px;font-weight:700">Hors budget</span> sont indiquées à titre informatif — elles peuvent devenir pertinentes si votre enveloppe évolue.</p>
+    <div id="altContent"></div>
+  </div>
+
+  <div class="slabel">📋 Prochaines étapes</div>
+  <div class="actions">
+    <button class="btn btn-primary" onclick="window.print()">🖨️ Télécharger le rapport (PDF)</button>
+    <a href="index.html" class="btn btn-outline">← Modifier mon diagnostic</a>
+    <a href="#" id="contactBtn" class="btn btn-amber">📧 Demander un devis détaillé</a>
+  </div>
+
 </div>
 
+<!-- ═══ FOOTER ═══ -->
+<footer class="page-footer">
+  <div class="footer-note">GeomarkSIG · Diagnostic SIG Expert · Estimation indicative · <a href="index.html">Refaire un diagnostic</a></div>
+  <div class="footer-right">
+    <img src="img/Gemini_Generated_Image_109d2i109d2i109d.png" alt="GeomarkSIG"
+         onerror="this.style.display='none'">
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCRIPT PRINCIPAL
+     Structure identique à resultats_avant_claude.html :
+     DATA → scores → matrice → getWinner → affichage
+════════════════════════════════════════════════════════════ -->
 <script>
 
-/* =========================
-   DATA COMPLET
-========================= */
-
+/* ─────────────────────────────────────────────────────────
+   DATA — toutes les constantes (chacune apparaîtra dans
+   au moins un scénario ou dans les alternatives affichées)
+───────────────────────────────────────────────────────── */
 const DATA = {
 
-logiciels: {
-  qgis:{n:"QGIS",p:0,img:"Qgis.png"},
-  arcgis_ent:{n:"ArcGIS Enterprise",p:4500,img:"ArcGisPRO.jpg"},
-  autocad:{n:"AutoCAD Map 3D",p:2500,img:"Autocad.jpg"},
-  geoconcept:{n:"Geoconcept",p:2800,img:"Geoconcept.png"},
-  osm_editor:{n:"OSM / JOSM",p:0,img:"OSM.jpg"}
-},
+  logiciels: {
+    qgis:        { n:"QGIS Desktop",              d:"Le standard open source mondial. Analyse spatiale avancée, 1 000+ plugins, Python intégré, communauté massive. Gratuit sous licence GPL.", p:0,    img:"Qgis.png",            link:"https://qgis.org",           mail:"office@qgis.org" },
+    arcgis_ent:  { n:"ArcGIS Enterprise",         d:"Suite serveur complète Esri : portail SIG, serveur cartographique, data store privé et ArcGIS Online. Standard industriel pour organisations complexes.", p:4500, img:"ArcGisPRO.jpg",  link:"https://www.esri.com",       mail:"contact@esri.com" },
+    autocad:     { n:"AutoCAD Map 3D",             d:"Le pont indispensable entre DAO et SIG. Lecture native DWG/DXF, outils topographiques, export GIS. Référence absolue pour les géomètres et le BTP.", p:2500, img:"Autocad.jpg",    link:"https://www.autodesk.com/fr", mail:"support@autodesk.com" },
+    geoconcept:  { n:"Geoconcept",                 d:"SIG expert français pour le géomarketing, l'optimisation de tournées et l'analyse de territoire. Interface accessible, fort support francophone.", p:2800, img:"Geoconcept.png", link:"https://geoconcept.com",     mail:"info@geoconcept.com" },
+    osm_editor:  { n:"JOSM / OSM Editor",          d:"Éditeur OpenStreetMap de référence. Idéal pour ONG, humanitaires et projets de cartographie participative. Entièrement gratuit, communauté mondiale.", p:0, img:"OSM.jpg",        link:"https://josm.openstreetmap.de" }
+  },
 
-bases: {
-  postgis:{n:"PostGIS",p:0,img:"PostGre_PostGIS.jpg"},
-  supabase:{n:"Supabase",p:300,img:"Supabase.png"},
-  gpkg:{n:"GeoPackage",p:0,img:"Geopackage.jpg"},
-  spatialite:{n:"SpatiaLite",p:0,img:"Spatialite.jpg"},
-  arcgis_cloud:{n:"ArcGIS Online DB",p:500,img:"AGOL.png"}
-},
+  bases: {
+    postgis:     { n:"PostgreSQL / PostGIS",       d:"Moteur spatial open source de référence. Requêtes SQL spatiales, topologie, multi-utilisateurs, millions d'objets. Pilier de toute infrastructure SIG sérieuse.", p:0,   img:"PostGre_PostGIS.jpg", link:"https://postgis.net",     mail:"pgsql-general@postgresql.org" },
+    supabase:    { n:"Supabase (PostGIS Managé)",  d:"PostGIS clé en main dans le cloud. API REST auto-générée, authentification intégrée, tableau de bord moderne. Zéro administration serveur.",        p:300,  img:"Supabase.png",       link:"https://supabase.com",    mail:"support@supabase.com" },
+    gpkg:        { n:"GeoPackage (.gpkg)",          d:"Format OGC standard ultra-portable. Une base spatiale dans un seul fichier. Compatible QGIS, ArcGIS, GDAL. Idéal pour usage solo et transfert de données.", p:0,   img:"Geopackage.jpg",     link:"https://geopackage.org" },
+    spatialite:  { n:"SpatiaLite / SQLite",        d:"Base spatiale légère dans un fichier SQLite. Parfaite pour applications embarquées, mobiles ou projets nécessitant zéro configuration serveur.",     p:0,   img:"Spatialite.jpg",     link:"https://gaia-gis.it" },
+    arcgis_cloud:{ n:"ArcGIS Online Data Store",  d:"Données hébergées dans le Cloud Esri. Feature Services scalables, partage simplifié, intégration native ArcGIS Online et Field Maps.",              p:500,  img:"AGOL.png",           link:"https://arcgis.com",      mail:"support@esri.com" }
+  },
 
-serveurs: {
-  ovh:{n:"OVHcloud",p:120,img:"OVH.png"},
-  aws:{n:"AWS",p:1200,img:"Amazon_Web_Services.png"},
-  azure:{n:"Azure",p:1200,img:"Azure.png"},
-  render:{n:"Render",p:84,img:"Render.png"},
-  local:{n:"Serveur local",p:0,img:"Local.png"}
-},
+  serveurs: {
+    vps_ovh:     { n:"VPS OVHcloud (France)",      d:"Hébergement souverain français. VPS Linux dédié, centres de données en France, conformité RGPD native. Rapport qualité/prix excellent pour collectivités.", p:120,  img:"OVH.png",           link:"https://ovhcloud.com",        mail:"support@ovhcloud.com" },
+    aws:         { n:"Amazon Web Services (AWS)",  d:"Infrastructure cloud mondiale (N°1). Scalabilité illimitée, services managés (RDS, EC2, S3), SLA 99.99%. Idéal pour projets à forte volumétrie.",    p:1200, img:"Amazon_Web_Services.png", link:"https://aws.amazon.com", mail:"aws-support@amazon.com" },
+    azure:       { n:"Microsoft Azure",            d:"Cloud Microsoft. Intégration Office 365, Active Directory et Azure Maps. Option France Central pour souveraineté. Idéal si SI Microsoft existant.",   p:1200, img:"Azure.png",          link:"https://azure.microsoft.com", mail:"azuresupport@microsoft.com" },
+    render:      { n:"Render (Cloud Managé)",      d:"Hébergement moderne et abordable. Déploiement PostGIS, GeoServer ou Lizmap en quelques clics. Plan gratuit disponible, sans administration serveur.", p:84,   img:"Render.png",         link:"https://render.com",          mail:"support@render.com" },
+    local:       { n:"Serveur Physique Local",     d:"Contrôle total sur vos données. Aucun coût cloud récurrent, données sur site. Nécessite maintenance interne, onduleur et politique de sauvegarde.",   p:0,    img:"Local.png" }
+  },
 
-web: {
-  lizmap:{n:"Lizmap",p:0,img:"Lizmap.png"},
-  openlayers:{n:"OpenLayers",p:0,img:"Openlayers.png"},
-  experience:{n:"Experience Builder",p:0,img:"Experience Builder.jpg"},
-  geoserver:{n:"GeoServer",p:0,img:"GeoServer.png"},
-  geonode:{n:"GeoNode",p:0,img:"GeoNode.png"},
-  felt:{n:"Felt",p:0,img:"Felt.png"},
-  qgis_cloud:{n:"QGIS Cloud",p:700,img:"QgisCloud.png"},
-  ago:{n:"ArcGIS Online",p:500,img:"AGOL.png"}
-},
+  web: {
+    lizmap:      { n:"Lizmap Web Client",          d:"Publiez vos projets QGIS sur le web avec fidélité cartographique 100% : symbologie, formulaires, outils de mesure et d'interrogation. Standard des collectivités FR.", p:0,  img:"Lizmap.png",            link:"https://www.lizmap.com",  mail:"contact@3liz.com" },
+    openlayers:  { n:"OpenLayers / Leaflet.js",    d:"Bibliothèques JavaScript de cartographie web. Cartes interactives sur mesure, légères et personnalisables. Standard des développeurs web-SIG.",         p:0,  img:"Openlayers.png",        link:"https://openlayers.org" },
+    experience:  { n:"ArcGIS Experience Builder",  d:"Applications web haut de gamme pour l'écosystème Esri. Widgets riches, dashboards et StoryMaps. Solution clé en main pour organisations ArcGIS.",      p:0,  img:"Experience Builder.jpg", link:"https://experience.arcgis.com", mail:"support@esri.com" },
+    geoserver:   { n:"GeoServer",                  d:"Moteur OGC open source. Publie vos données PostGIS en flux WMS, WFS, WCS standards. Indispensable pour architectures interopérables et big data.",      p:0,  img:"GeoServer.png",         link:"https://geoserver.org",   mail:"geoserver-users@lists.sf.net" },
+    geonode:     { n:"GeoNode",                    d:"Plateforme complète de gestion géospatiale (CMS). Combine GeoServer, PostGIS et MapStore. Idéale pour projets de data infrastructure et open data.",   p:0,  img:"GeoNode.png",           link:"https://geonode.org",     mail:"info@geonode.org" },
+    felt:        { n:"Felt",                       d:"La diffusion web la plus rapide du marché. Importez, dessinez, partagez en quelques secondes. Collaboration temps réel. Interface grand public.",        p:0,  img:"Felt.png",              link:"https://felt.com" },
+    qgis_cloud:  { n:"QGIS Cloud",                d:"Publication directe depuis QGIS Desktop vers le web. Solution hébergée, zéro serveur. Idéale pour diffusion rapide de projets QGIS existants.",         p:700, img:"QgisCloud.png",         link:"https://qgiscloud.com",   mail:"support@sourcepole.ch" },
+    ago:         { n:"ArcGIS Online (AGO)",        d:"Plateforme SaaS Esri leader mondial. Cartes interactives, Field Maps mobile, dashboards. Tout-en-un pour organisations adoptant l'écosystème Esri.",   p:500, img:"AGOL.png",              link:"https://arcgis.com",      mail:"support@esri.com" }
+  },
 
-imagerie: {
-  osm:{n:"OSM / Google Maps",p:0,img:"GoogleMap.png"},
-  sentinel:{n:"Sentinel / Planet",p:450,img:"sentinel-2.jpg"},
-  dalle:{n:"Dalle HD",p:800,img:"DalleHD.jpg"},
-  drone:{n:"Drone",p:1500,img:"Drones.jpg"}
-}
+  imagerie: {
+    osm_gmap:    { n:"OSM / Google Maps",          d:"Fonds de plan gratuits et universels. OpenStreetMap (libre diffusion), Google Maps (grand public). Parfaits comme fond neutre sans coût.",              p:0,    img:"GoogleMap.png" },
+    sentinel:    { n:"Sentinel-2 / Planet",        d:"Imagerie satellite multispectrale fraîche. Sentinel (ESA, gratuit), Planet (haute fréquence, payant). Idéale pour suivi agricole et télédétection.",   p:450,  img:"sentinel-2.jpg",  link:"https://planet.com" },
+    dalle_hd:    { n:"Dalles HD / Ortho 5 cm",    d:"Orthophotographies haute définition (5–20 cm/pixel). Cadastre vectoriel, BD TOPO IGN. Précision maximale pour études foncières et topographiques.",      p:800,  img:"DalleHD.jpg" },
+    drone:       { n:"Imagerie Drone & Aérien",    d:"Levés photogrammétriques par drone. Précision centimétrique, orthophoto et MNT sur mesure. Traitement sous OpenDroneMap, Metashape ou Pix4D.",          p:1500, img:"Drones.jpg",      link:"https://opendronemap.org" }
+  },
+
+  terrain: {
+    qfield:      { n:"QField",                    d:"Application terrain de QGIS. GPS décimétrique, synchronisation QFieldCloud, formulaires métier fidèles à votre projet QGIS. Open source, Android & iOS.", p:0,  img:"Qfield.png",         link:"https://qfield.cloud" },
+    fieldmaps:   { n:"ArcGIS Field Maps",         d:"Application mobile Esri. Collecte en temps réel, intégration ArcGIS Online native, hors-ligne. Standard pour les organisations Esri sur le terrain.",    p:0,  img:"ArcGISFieldMaps.jpg", link:"https://www.esri.com",    mail:"support@esri.com" }
+  }
 
 };
 
-/* =========================
-   PARAMÈTRES
-========================= */
+/* ─────────────────────────────────────────────────────────
+   PARAMÈTRES URL
+───────────────────────────────────────────────────────── */
+const P        = new URLSearchParams(window.location.search);
+const nom      = P.get('identite')    || 'Anonyme';
+const email    = P.get('email')       || '';
+const secteur  = P.get('secteur')     || '';
+const budget   = P.get('budget')      || '';
+const volume   = P.get('volume')      || '';
+const collab   = P.get('collaboration')|| '';
+const si_exist = P.get('si_existant') || '';
+const souverain= P.get('souverainete')|| '';
+const diffusion= P.get('diffusion')   || '';
+const imagerie = P.get('imagerie')    || '';
+const terrain  = P.get('terrain')     || '';
+const mode     = P.get('mode')        || 'simple';
 
-const params = new URLSearchParams(window.location.search);
+/* ─────────────────────────────────────────────────────────
+   INITIALISATION SCORES — même structure que resultats_avant_claude
+───────────────────────────────────────────────────────── */
+const s = {};
+Object.keys(DATA).forEach(cat => {
+  s[cat] = {};
+  Object.keys(DATA[cat]).forEach(k => s[cat][k] = 0);
+});
 
-/* =========================
-   SCORING
-========================= */
+const reasons = []; // raisons textuelles pour l'explication
 
-let scores = {log:{},base:{},srv:{},web:{},ima:{}};
+/* ─────────────────────────────────────────────────────────
+   MATRICE DE SCORING
+───────────────────────────────────────────────────────── */
 
-Object.keys(DATA.logiciels).forEach(k=>scores.log[k]=0);
-Object.keys(DATA.bases).forEach(k=>scores.base[k]=0);
-Object.keys(DATA.serveurs).forEach(k=>scores.srv[k]=0);
-Object.keys(DATA.web).forEach(k=>scores.web[k]=0);
-Object.keys(DATA.imagerie).forEach(k=>scores.ima[k]=0);
-
-// règles simples
-if(params.get("budget")==="zero"){
-  scores.log.qgis+=100;
-  scores.base.gpkg+=100;
-  scores.srv.local+=100;
+// ── SECTEUR ─────────────────────────────────────────────
+const SECTEUR_LABELS = {
+  collectivite:"Collectivité Territoriale", geometre:"Géomètre / Topographe",
+  bet:"Bureau d'Études", ong:"Humanitaire / ONG", energie:"Énergie / Réseaux",
+  ne_sait_pas:"Étudiant / Autre domaine"
+};
+switch(secteur){
+  case 'collectivite':
+    s.logiciels.qgis += 600; s.web.lizmap += 900; s.web.geonode += 400;
+    s.bases.postgis += 500; s.serveurs.vps_ovh += 650; s.serveurs.local += 400;
+    s.imagerie.dalle_hd += 300; s.imagerie.osm_gmap += 200;
+    reasons.push("Secteur <strong>Collectivité</strong> : QGIS + Lizmap est la pile standard adoptée par les SIG territoriaux français. OVHcloud garantit la souveraineté des données publiques.");
+    break;
+  case 'geometre':
+    s.logiciels.autocad += 1500; s.logiciels.qgis += 500;
+    s.bases.spatialite += 900; s.bases.gpkg += 700;
+    s.imagerie.drone += 1000; s.imagerie.dalle_hd += 900;
+    s.serveurs.local += 700; s.terrain.qfield += 600;
+    s.logiciels.osm_editor -= 500;
+    reasons.push("Secteur <strong>Géomètre-Expert</strong> : AutoCAD Map 3D assure la lecture native DWG/DXF. SpatiaLite ou GeoPackage pour le stockage terrain. Drone et dalles HD pour l'imagerie de précision.");
+    break;
+  case 'bet':
+    s.logiciels.qgis += 800; s.logiciels.arcgis_ent += 400;
+    s.web.geoserver += 700; s.web.lizmap += 500;
+    s.bases.postgis += 700; s.serveurs.vps_ovh += 500;
+    s.imagerie.sentinel += 400;
+    reasons.push("Secteur <strong>Bureau d'Études</strong> : QGIS + GeoServer ou Lizmap pour la production et la diffusion. PostGIS pour les analyses avancées et le multi-utilisateur.");
+    break;
+  case 'ong':
+    s.logiciels.osm_editor += 1000; s.logiciels.qgis += 900;
+    s.bases.gpkg += 1000; s.bases.spatialite += 500;
+    s.web.felt += 900; s.web.openlayers += 400;
+    s.serveurs.render += 600; s.serveurs.local += 400;
+    s.imagerie.osm_gmap += 900; s.terrain.qfield += 700;
+    s.logiciels.arcgis_ent -= 1500; s.logiciels.autocad -= 1500; s.logiciels.geoconcept -= 1500;
+    reasons.push("Secteur <strong>Humanitaire / ONG</strong> : JOSM + QGIS + OpenStreetMap est le standard mondial des ONG (HOT, Croix-Rouge, MSF). GeoPackage et Felt pour la simplicité de partage.");
+    break;
+  case 'energie':
+    s.logiciels.arcgis_ent += 1000; s.web.experience += 1100; s.web.ago += 800;
+    s.bases.postgis += 600; s.bases.arcgis_cloud += 700;
+    s.serveurs.aws += 700; s.terrain.fieldmaps += 700;
+    reasons.push("Secteur <strong>Énergie / Réseaux</strong> : ArcGIS Enterprise + Experience Builder est la suite de référence pour la gestion d'actifs réseau. Field Maps pour les équipes terrain.");
+    break;
+  default:
+    s.logiciels.qgis += 500; s.bases.postgis += 300;
+    reasons.push("Profil généraliste : QGIS est le choix polyvalent par défaut pour la plupart des usages SIG non spécialisés.");
 }
 
-if(params.get("volume")==="lourd"){
-  scores.base.postgis+=150;
+// ── BUDGET ──────────────────────────────────────────────
+let budgetMax = Infinity;
+switch(budget){
+  case 'zero':
+    budgetMax = 0;
+    s.logiciels.qgis += 2000; s.logiciels.osm_editor += 900;
+    s.bases.gpkg += 1600; s.bases.spatialite += 900; s.bases.postgis += 700;
+    s.serveurs.local += 1600; s.serveurs.render += 700;
+    s.web.openlayers += 1300; s.web.felt += 1000; s.web.lizmap += 900;
+    s.web.geoserver += 700; s.web.geonode += 500;
+    s.logiciels.arcgis_ent -= 5000; s.logiciels.autocad -= 5000; s.logiciels.geoconcept -= 5000;
+    s.serveurs.aws -= 5000; s.serveurs.azure -= 5000;
+    s.bases.arcgis_cloud -= 3000; s.bases.supabase -= 400;
+    s.web.ago -= 3500; s.web.qgis_cloud -= 1000;
+    reasons.push("Budget <strong>0€</strong> : uniquement des solutions open source gratuites. QGIS, PostGIS, GeoPackage, Lizmap, GeoServer et Felt sont tous 100% libres.");
+    break;
+  case 'starter_free':
+    budgetMax = 500;
+    s.serveurs.render += 1000; s.serveurs.vps_ovh += 600;
+    s.bases.supabase += 900; s.bases.gpkg += 700;
+    s.web.qgis_cloud += 800; s.web.felt += 600; s.web.lizmap += 500;
+    s.logiciels.qgis += 900;
+    s.logiciels.arcgis_ent -= 3000; s.logiciels.autocad -= 2500;
+    s.serveurs.aws -= 2500; s.serveurs.azure -= 2500;
+    reasons.push("Budget <strong>Starter (< 500€)</strong> : solutions open source + hébergement abordable. Render ou OVH VPS (~84–120€/an) + Supabase pour la base managée.");
+    break;
+  case 'inter_pro':
+    budgetMax = 5000;
+    s.serveurs.vps_ovh += 900; s.serveurs.render += 700;
+    s.bases.postgis += 900; s.bases.supabase += 500;
+    s.web.lizmap += 700; s.web.geoserver += 500;
+    s.logiciels.qgis += 700; s.logiciels.arcgis_ent += 300;
+    s.imagerie.sentinel += 500; s.imagerie.dalle_hd += 400;
+    reasons.push("Budget <strong>Intermédiaire (1 000–5 000€)</strong> : combinaison open source + hébergement dédié. Enveloppe suffisante pour un VPS OVH, PostGIS et une imagerie de qualité.");
+    break;
+  case 'entreprise':
+    budgetMax = 999999;
+    s.logiciels.arcgis_ent += 1600; s.logiciels.geoconcept += 700;
+    s.serveurs.aws += 1100; s.serveurs.azure += 1000;
+    s.bases.arcgis_cloud += 1100; s.bases.postgis += 800;
+    s.web.ago += 1100; s.web.experience += 1300;
+    s.imagerie.drone += 700; s.imagerie.dalle_hd += 600;
+    s.terrain.fieldmaps += 900;
+    reasons.push("Budget <strong>Enterprise (10 000€+)</strong> : niveau d'investissement compatible avec ArcGIS Enterprise, AWS/Azure et des acquisitions d'imagerie haute résolution.");
+    break;
 }
 
-if(params.get("besoin")==="terrain"){
-  scores.ima.drone+=150;
+// ── VOLUME & COLLABORATION ───────────────────────────────
+if(volume === 'leger' && collab !== 'multi_2_5' && collab !== 'multi_10'){
+  s.bases.gpkg += 1600; s.bases.spatialite += 900;
+  s.serveurs.local += 900; s.logiciels.qgis += 400;
+  reasons.push("Volume <strong>léger</strong> (< 10 000 objets) : GeoPackage ou SpatiaLite suffisent amplement. Pas besoin de serveur de base de données.");
+} else if(volume === 'moyen'){
+  s.bases.postgis += 900; s.bases.supabase += 500;
+  s.serveurs.vps_ovh += 500; s.serveurs.render += 400;
+  reasons.push("Volume <strong>moyen</strong> (10k–500k objets) : PostGIS recommandé pour les requêtes spatiales et le multi-utilisateur.");
+} else if(volume === 'lourd'){
+  s.bases.postgis += 2800; s.bases.arcgis_cloud += 900;
+  s.bases.gpkg -= 2200; s.bases.spatialite -= 2200;
+  s.serveurs.aws += 700; s.serveurs.azure += 600;
+  s.web.geoserver += 900;
+  reasons.push("Volume <strong>lourd</strong> (> 1 million d'objets / LiDAR) : PostGIS est le seul choix viable. GeoServer pour la diffusion en flux tuilé. Serveur cloud scalable requis.");
+}
+if(collab === 'multi_2_5'){
+  s.bases.postgis += 700; s.bases.supabase += 500;
+  s.serveurs.vps_ovh += 400; s.serveurs.render += 300;
+  reasons.push("Collaboration <strong>petite équipe</strong> : PostGIS ou Supabase permettent l'édition simultanée avec gestion des conflits. Serveur partagé nécessaire.");
+} else if(collab === 'multi_10'){
+  s.bases.postgis += 2800; s.bases.arcgis_cloud += 1000;
+  s.bases.gpkg -= 2200; s.bases.spatialite -= 2200;
+  s.serveurs.aws += 800; s.serveurs.azure += 700; s.serveurs.vps_ovh += 600;
+  s.web.geoserver += 1000;
+  reasons.push("Collaboration <strong>large équipe (10+)</strong> : PostgreSQL/PostGIS est indispensable. Infrastructure cloud dimensionnée pour les accès concurrents.");
 }
 
-if(params.get("besoin")==="web"){
-  scores.web.lizmap+=100;
+// ── SOUVERAINETÉ ─────────────────────────────────────────
+switch(souverain){
+  case 'haute':
+    s.serveurs.vps_ovh += 2800; s.serveurs.local += 2000; s.serveurs.azure += 1200; // Azure France Central
+    s.serveurs.aws -= 5000; s.serveurs.render -= 3000;
+    s.bases.arcgis_cloud -= 4000; s.web.ago -= 4000;
+    reasons.push("Souveraineté <strong>haute</strong> : hébergement France/Europe obligatoire. OVHcloud ou Azure France Central répondent aux exigences RGPD. AWS et Render exclus.");
+    break;
+  case 'critique':
+    s.serveurs.local += 5000; s.serveurs.vps_ovh += 1000;
+    s.serveurs.aws -= 5000; s.serveurs.azure -= 5000; s.serveurs.render -= 5000;
+    s.bases.arcgis_cloud -= 5000; s.web.ago -= 5000;
+    reasons.push("Souveraineté <strong>critique</strong> (intranet/air-gap) : serveur physique local requis. Aucune dépendance cloud externe. Données sur sol français uniquement.");
+    break;
+  case 'faible':
+    s.serveurs.aws += 400; s.serveurs.render += 300;
+    break;
 }
 
-/* =========================
-   GÉNÉRATION SCÉNARIOS
-========================= */
-
-function generateScenarios(){
-  let res=[];
-
-  Object.keys(DATA.logiciels).forEach(l=>{
-  Object.keys(DATA.bases).forEach(b=>{
-  Object.keys(DATA.serveurs).forEach(s=>{
-  Object.keys(DATA.web).forEach(w=>{
-  Object.keys(DATA.imagerie).forEach(i=>{
-
-    res.push({
-      logiciels:l,
-      bases:b,
-      serveurs:s,
-      web:w,
-      imagerie:i
-    });
-
-  });});});});});
-
-  return res;
+// ── SI EXISTANT ──────────────────────────────────────────
+switch(si_exist){
+  case 'azure':
+    s.serveurs.azure += 2800; s.logiciels.arcgis_ent += 900;
+    s.bases.arcgis_cloud += 600; s.web.experience += 700;
+    reasons.push("SI existant <strong>Microsoft Azure</strong> : recommandation d'une architecture Azure-native. ArcGIS Enterprise s'intègre nativement avec Azure AD et Office 365.");
+    break;
+  case 'aws':
+    s.serveurs.aws += 2800; s.bases.supabase += 600; s.bases.postgis += 500;
+    reasons.push("SI existant <strong>Amazon AWS</strong> : exploitation des services AWS (RDS pour PostGIS, EC2 pour GeoServer). Supabase compatible AWS aussi.");
+    break;
+  case 'google':
+    s.serveurs.render += 800; s.bases.supabase += 400;
+    reasons.push("SI existant <strong>Google Cloud</strong> : compatibilité avec les outils Google. Render et Supabase sont des alternatives modernes compatibles.");
+    break;
+  case 'on_premise':
+    s.serveurs.local += 2800; s.web.geoserver += 900;
+    s.bases.postgis += 1200;
+    reasons.push("SI existant <strong>On-Premise</strong> : architecture tout-local avec PostGIS sur serveur interne. GeoServer pour la diffusion des flux OGC en intranet.");
+    break;
 }
 
-/* =========================
-   SCORE SCÉNARIO
-========================= */
-
-function scoreScenario(s){
-  return (
-    scores.log[s.logiciels] +
-    scores.base[s.bases] +
-    scores.srv[s.serveurs] +
-    scores.web[s.web] +
-    scores.ima[s.imagerie]
-  );
+// ── DIFFUSION WEB ────────────────────────────────────────
+switch(diffusion){
+  case 'simple':
+    s.web.felt += 900; s.web.openlayers += 700; s.web.qgis_cloud += 500;
+    reasons.push("Diffusion <strong>simple</strong> : Felt est la solution la plus rapide pour partager une carte. QGIS Cloud pour une publication directe sans développement.");
+    break;
+  case 'pro_lizmap':
+    s.web.lizmap += 2800; s.logiciels.qgis += 1200;
+    s.serveurs.vps_ovh += 1000; s.bases.postgis += 700;
+    reasons.push("Portail métier <strong>Lizmap</strong> : publie vos projets QGIS sur le web avec 100% de fidélité. Recommandé avec OVHcloud pour la souveraineté et PostGIS pour les données.");
+    break;
+  case 'esri_builder':
+    s.web.experience += 2800; s.web.ago += 1600;
+    s.logiciels.arcgis_ent += 2200; s.bases.arcgis_cloud += 1300;
+    s.logiciels.qgis -= 800;
+    reasons.push("Portail <strong>ArcGIS Experience Builder</strong> : applications web haut de gamme Esri. Nécessite ArcGIS Online ou Enterprise. Inclus dans les licences Esri.");
+    break;
+  case 'bi_spatial':
+    s.web.ago += 1100; s.web.geonode += 900;
+    s.bases.postgis += 900;
+    reasons.push("BI spatiale : ArcGIS Online Dashboards ou GeoNode pour la gestion et la visualisation analytique des données géospatiales.");
+    break;
 }
 
-/* =========================
-   NORMALISATION
-========================= */
-
-function normalize(v,max){
-  return max===0?0:Math.round((v/max)*100);
+// ── IMAGERIE ─────────────────────────────────────────────
+switch(imagerie){
+  case 'gratuit_local':  s.imagerie.osm_gmap += 2200; break;
+  case 'payant_mensuel': s.imagerie.sentinel += 2200; break;
+  case 'achat_precision':s.imagerie.dalle_hd += 2200; break;
+  case 'drone':          s.imagerie.drone    += 2200; break;
 }
 
-/* =========================
-   BUDGET
-========================= */
-
-function budget(s){
-  return DATA.logiciels[s.logiciels].p +
-         DATA.bases[s.bases].p +
-         DATA.serveurs[s.serveurs].p +
-         DATA.web[s.web].p +
-         DATA.imagerie[s.imagerie].p;
+// ── TERRAIN ──────────────────────────────────────────────
+switch(terrain){
+  case 'qfield':    s.terrain.qfield    += 1200; s.logiciels.qgis += 400; break;
+  case 'fieldmaps': s.terrain.fieldmaps += 1200; s.logiciels.arcgis_ent += 400; break;
+  case 'kobo':      s.terrain.qfield    += 600; break; // Kobo → QField est l'alternative SIG
+  case 'non':       break;
 }
 
-/* =========================
-   PIPELINE
-========================= */
+/* ─────────────────────────────────────────────────────────
+   SÉLECTION DES GAGNANTS
+───────────────────────────────────────────────────────── */
+function getWinner(cat){
+  return Object.keys(s[cat]).reduce((a,b) => s[cat][a] >= s[cat][b] ? a : b);
+}
+function getTop(cat, n){
+  return Object.entries(s[cat]).sort((a,b)=>b[1]-a[1]).slice(0,n).map(e=>e[0]);
+}
 
-let scenarios = generateScenarios();
+const win = {
+  logiciels: getWinner('logiciels'),
+  bases:     getWinner('bases'),
+  serveurs:  getWinner('serveurs'),
+  web:       getWinner('web'),
+  imagerie:  getWinner('imagerie'),
+  terrain:   getWinner('terrain')
+};
 
-scenarios = scenarios.map(s=>({
-  ...s,
-  score:scoreScenario(s)
-}));
+/* ─────────────────────────────────────────────────────────
+   CALCUL DU SCORE DE PERTINENCE
+───────────────────────────────────────────────────────── */
+function maxCat(cat){ return Math.max(1,...Object.values(s[cat])) }
+const totalScore = Object.keys(win).reduce((a,cat)=>a+Math.max(0,s[cat][win[cat]]),0);
+const totalMax   = Object.keys(win).reduce((a,cat)=>a+maxCat(cat),0);
+const pct        = Math.min(99, Math.max(42, Math.round((totalScore/totalMax)*100)));
 
-scenarios.sort((a,b)=>b.score-a.score);
+/* ─────────────────────────────────────────────────────────
+   TITRES CONTEXTUALISÉS (style résultats_avant_claude)
+───────────────────────────────────────────────────────── */
+function buildTitle(){
+  const logN = DATA.logiciels[win.logiciels].n;
+  const webN = DATA.web[win.web].n;
+  const srvN = DATA.serveurs[win.serveurs].n;
+  const map  = {
+    lizmap:     `Architecture ${logN} + ${webN} — Portail métier souverain`,
+    experience: `Suite Esri — Écosystème Enterprise intégré`,
+    ago:        `ArcGIS Online — Plateforme SaaS Esri clé en main`,
+    felt:       `Diffusion collaborative rapide — ${logN} + ${webN}`,
+    geoserver:  `Infrastructure OGC ouverte — ${logN} + GeoServer`,
+    geonode:    `Plateforme data géospatiale — GeoNode + ${srvN}`,
+    openlayers: `Web-SIG sur mesure — ${logN} + JavaScript`,
+    qgis_cloud: `Publication rapide — QGIS Cloud + ${srvN}`,
+  };
+  return map[win.web] || `Architecture SIG — ${logN} + ${webN}`;
+}
+function buildDesc(){
+  const items=[];
+  if(budget==='zero')    items.push("100% open source, zéro coût de licence.");
+  if(souverain==='haute') items.push("Données hébergées sur sol français/européen (RGPD).");
+  if(souverain==='critique') items.push("Architecture intranet, sans cloud externe.");
+  if(collab==='multi_10') items.push("Dimensionné pour équipe large et édition simultanée.");
+  if(volume==='lourd')   items.push("Optimisé pour gros volumes et flux de données.");
+  if(si_exist==='azure') items.push("Intégré dans votre infrastructure Microsoft Azure.");
+  if(si_exist==='aws')   items.push("Compatible vos services Amazon Web Services.");
+  if(diffusion==='pro_lizmap')   items.push("Portail QGIS avec fidélité cartographique complète.");
+  if(diffusion==='esri_builder') items.push("Applications web Esri haut de gamme.");
+  if(!items.length) items.push("Architecture équilibrée adaptée à votre profil et contraintes.");
+  return items.join(" · ");
+}
 
-let maxScore = scenarios[0]?.score || 1;
+/* ─────────────────────────────────────────────────────────
+   REMPLISSAGE META HERO
+───────────────────────────────────────────────────────── */
+document.getElementById('heroTitle').textContent    = buildTitle();
+document.getElementById('heroSub').textContent      = buildDesc();
+document.getElementById('heroClient').textContent   = nom;
+document.getElementById('heroSecteur').textContent  = SECTEUR_LABELS[secteur] || 'Non précisé';
+document.getElementById('heroMode').textContent     = mode === 'expert' ? 'Mode Expert Professionnel' : 'Mode Standard';
+document.getElementById('headerBadge').textContent  = `Client : ${nom}`;
+document.getElementById('scenarioTitle').textContent= buildTitle();
+document.getElementById('scenarioDesc').textContent = buildDesc();
+document.getElementById('scoreNum').textContent     = pct + '%';
+document.getElementById('scoreFill').style.width    = pct + '%';
 
-// limite affichage
-scenarios = scenarios.slice(0,20);
+/* ─────────────────────────────────────────────────────────
+   AFFICHAGE BRIQUES — même logique que resultats_avant_claude
+   (getWinner → DATA[cat][key] → card HTML)
+───────────────────────────────────────────────────────── */
+const CONFIG = [
+  {cat:'logiciels', key:win.logiciels, cls:'cat-log', lbl:'Logiciel SIG Desktop',     ico:'💻', primary:true},
+  {cat:'bases',     key:win.bases,     cls:'cat-base', lbl:'Base de données spatiale', ico:'🗄️'},
+  {cat:'serveurs',  key:win.serveurs,  cls:'cat-srv',  lbl:'Infrastructure / Serveur', ico:'🖧'},
+  {cat:'web',       key:win.web,       cls:'cat-web',  lbl:'Diffusion Web & Portail',  ico:'🌐'},
+  {cat:'imagerie',  key:win.imagerie,  cls:'cat-ima',  lbl:'Fond de plan / Imagerie',  ico:'🛰️'},
+  {cat:'terrain',   key:win.terrain,   cls:'cat-ter',  lbl:'Application Terrain',      ico:'📱'}
+];
 
-/* =========================
-   AFFICHAGE
-========================= */
+const grid = document.getElementById('resultsGrid');
+let totalAnnuel = 0;
 
-const container = document.getElementById("resultsGrid");
+CONFIG.forEach((cfg,i) => {
+  const d = DATA[cfg.cat][cfg.key];
+  if(!d) return;
+  totalAnnuel += d.p;
 
-scenarios.forEach(s=>{
+  // Logo avec fallback icône
+  const logoHtml = d.img
+    ? `<img src="img/${d.img}" alt="${d.n}"
+           onerror="this.style.display='none';this.nextSibling.style.display='flex'"
+           style="width:42px;height:42px;object-fit:contain">
+       <span class="ico" style="display:none">${cfg.ico}</span>`
+    : `<span class="ico">${cfg.ico}</span>`;
 
-  let percent = normalize(s.score,maxScore);
-  let total = budget(s);
+  const priceStr = d.p === 0 ? '✅ Gratuit / Open Source' : `${d.p.toLocaleString('fr-FR')} € / an`;
+  const links = [];
+  if(d.link) links.push(`<a class="blink web" href="${d.link}" target="_blank" rel="noopener">🔗 Site officiel</a>`);
+  if(d.mail) links.push(`<a class="blink mail" href="mailto:${d.mail}">✉️ ${d.mail}</a>`);
 
-  let html = `<div class="card">
-  <h3>${percent}% de pertinence</h3>
+  grid.innerHTML += `
+  <div class="brique ${cfg.cls}">
+    ${i===0?'<div class="winner-badge">⭐ Principal</div>':''}
+    <div class="brique-top">
+      <div class="brique-logo-wrap">${logoHtml}</div>
+      <div class="brique-meta">
+        <div class="brique-cat">${cfg.ico} ${cfg.lbl}</div>
+        <div class="brique-name">${d.n}</div>
+      </div>
+    </div>
+    <div class="brique-body">${d.d}</div>
+    <div class="brique-foot">
+      <span class="brique-price">${priceStr}</span>
+      <div class="brique-links">${links.join('')}</div>
+    </div>
+  </div>`;
 
-  <div class="score-bar">
-    <div class="fill" style="width:${percent}%"></div>
-  </div>
-  `;
+  // Budget detail
+  document.getElementById('budgetDetail').innerHTML +=
+    `<div class="budget-item"><span class="bi-lbl">${cfg.lbl}</span><span class="bi-val">${d.p===0?'Gratuit':d.p.toLocaleString('fr-FR')+' €'}</span></div>`;
+});
 
-  Object.entries(s).forEach(([cat,key])=>{
-    if(DATA[cat] && DATA[cat][key]){
-      let d = DATA[cat][key];
+document.getElementById('totalPrice').textContent = totalAnnuel.toLocaleString('fr-FR') + ' € / an';
 
-      html += `
-        <div class="item">
-          <img src="img/${d.img}">
-          ${d.n}
-        </div>
-      `;
-    }
-  });
+// Contact
+document.getElementById('contactBtn').href =
+  `contact.html${window.location.search}&total=${totalAnnuel}`;
 
-  html += `<div class="price">💰 ${total} € / an</div>`;
+/* ─────────────────────────────────────────────────────────
+   RAISONS — explications métier
+───────────────────────────────────────────────────────── */
+// Ajouter des raisons techniques supplémentaires
+const winLogN = DATA.logiciels[win.logiciels].n;
+const winBaseN= DATA.bases[win.bases].n;
+const winSrvN = DATA.serveurs[win.serveurs].n;
+const winWebN = DATA.web[win.web].n;
+const winImaN = DATA.imagerie[win.imagerie].n;
 
-  html += `</div>`;
+reasons.push(`<strong>${winBaseN}</strong> sélectionné pour le stockage : ${volume==='lourd'?'le seul moteur capable de gérer vos volumes massifs':collab==='solo'?'solution légère et portable parfaite pour un usage individuel':'équilibre optimal entre performance et facilité de déploiement'}.`);
+reasons.push(`<strong>${winSrvN}</strong> recommandé pour l'hébergement : ${souverain==='haute'||souverain==='critique'?'répond à vos contraintes strictes de souveraineté des données':si_exist==='azure'?'cohérent avec votre infrastructure Azure existante':si_exist==='on_premise'?'maintien de vos données on-premise':'rapport coût/performance optimal pour votre profil'}.`);
+reasons.push(`<strong>${winWebN}</strong> retenu pour la diffusion web : ${diffusion==='pro_lizmap'?'portail QGIS métier avec 100% de fidélité cartographique':diffusion==='esri_builder'?'solution Esri native intégrée à votre écosystème':'adapté à votre niveau technique et vos besoins de partage'}.`);
+reasons.push(`<strong>${winImaN}</strong> choisi pour l'imagerie : ${imagerie==='drone'?'précision centimétrique requise pour vos levés':imagerie==='gratuit_local'?'fonds de plan libres et sans coût de diffusion':imagerie==='achat_precision'?'ortho HD nécessaire pour vos études de précision':'couverture satellite fraîche adaptée à votre usage'}.`);
 
-  container.innerHTML += html;
+const rl = document.getElementById('reasonsList');
+reasons.forEach(r => {
+  rl.innerHTML += `<div class="reason-item"><div class="rdot"></div><div>${r}</div></div>`;
+});
 
+/* ─────────────────────────────────────────────────────────
+   ALTERNATIVES — TOUTES les constantes DATA sont visibles ici
+   Chaque option DATA non sélectionnée apparaît dans les alts
+───────────────────────────────────────────────────────── */
+function priceCls(p){ return p===0?'p-free':p<800?'p-paid':'p-big' }
+function priceLabel(p){ return p===0?'Gratuit':p.toLocaleString('fr-FR')+' €/an' }
+function isHorsBudget(p){ return budgetMax !== Infinity && p > budgetMax && p > 0 }
+
+function altCardHTML(cat, key){
+  const d = DATA[cat][key];
+  if(!d) return '';
+  const hb = isHorsBudget(d.p) ? '<span class="hb-tag">Hors budget</span>':'';
+  const logoEl = d.img
+    ? `<img class="alt-logo" src="img/${d.img}" alt="${d.n}" onerror="this.style.display='none'">`
+    : `<div class="alt-ico">📦</div>`;
+  return `<div class="alt-card">
+    ${logoEl}
+    <div>
+      <div class="alt-name">${d.n}${hb}</div>
+      <div class="alt-d">${d.d.substring(0,88)}…</div>
+      <div class="alt-p ${priceCls(d.p)}">${priceLabel(d.p)}</div>
+    </div>
+  </div>`;
+}
+
+const ALT_GROUPS = [
+  {label:'💻 Logiciels SIG',          cat:'logiciels'},
+  {label:'🗄️ Bases de données',       cat:'bases'},
+  {label:'🖧 Hébergement / Serveurs', cat:'serveurs'},
+  {label:'🌐 Diffusion Web',          cat:'web'},
+  {label:'🛰️ Imagerie & Fond de plan',cat:'imagerie'},
+  {label:'📱 Applications Terrain',   cat:'terrain'},
+];
+
+const altContent = document.getElementById('altContent');
+ALT_GROUPS.forEach(g => {
+  const alts = Object.keys(DATA[g.cat]).filter(k => k !== win[g.cat]);
+  if(!alts.length) return;
+  altContent.innerHTML += `
+    <div class="alt-group">
+      <div class="alt-group-title">${g.label}</div>
+      <div class="alt-cards">${alts.map(k=>altCardHTML(g.cat,k)).join('')}</div>
+    </div>`;
 });
 
 </script>
-
 </body>
 </html>
