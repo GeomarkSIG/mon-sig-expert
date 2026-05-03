@@ -428,12 +428,12 @@ switch(budget) {
     addScore('serveurs','vps_ovh',1000,'budget'); addScore('serveurs','render',800,'budget');
     addScore('bases','postgis',1000,'budget'); addScore('bases','supabase',600,'budget');
     addScore('web','lizmap',800,'budget'); addScore('web','geoserver',600,'budget');
-    addScore('logiciels','qgis',800,'budget'); addScore('logiciels','arcgis_pro',400,'budget');
+    addScore('logiciels','autocad',800,'budget'); addScore('logiciels','arcgis_pro',400,'budget');
     addScore('imagerie','sentinel',600,'budget'); addScore('imagerie','dalle_hd',400,'budget');
     reasons.push({dot:'green',txt:"Budget <strong>Intermédiaire (1 000–5 000€)</strong> : open source + hébergement dédié. ArcGIS Pro Standard (820€/an) accessible dans cette enveloppe."});
     break;
   case 'entreprise': budgetMax=999999;
-    addScore('logiciels','arcgis_ent',1800,'budget'); addScore('logiciels','geoconcept',800,'budget'); addScore('logiciels','arcgis_pro_adv',1200,'budget');
+    addScore('logiciels','autocad',1800,'budget');
     addScore('serveurs','aws',1200,'budget'); addScore('serveurs','azure',1100,'budget');
     addScore('bases','arcgis_cloud',1200,'budget'); addScore('bases','postgis',900,'budget');
     addScore('web','ago',1200,'budget'); addScore('web','experience',1400,'budget');
