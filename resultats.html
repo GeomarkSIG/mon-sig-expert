@@ -867,21 +867,6 @@ Object.keys(win).forEach(cat => {
   if(!d) return;
   catPills.innerHTML += `<span class="sc-pill">${catLabels[cat]}: ${d.n.split(' ')[0]}</span>`;
 });
-
-/* ── MATRICE DE SCORING VISIBLE ── */
-const matrixGrid = document.getElementById('matrixGrid');
-const groupMax = Math.max(...Object.values(groupScores).map(g=>g.raw*g.weight));
-Object.entries(groupScores).forEach(([key,g]) => {
-  const weighted = Math.round(g.raw * g.weight);
-  const pctM = groupMax>0?Math.round((weighted/groupMax)*100):0;
-  const impact = g.weight>1.2?'★★★':g.weight>1?'★★':'★';
-  matrixGrid.innerHTML += `<div class="matrix-item">
-    <div class="matrix-label">${g.label} <span style="opacity:.6">${impact}</span></div>
-    <div class="matrix-val">${weighted.toLocaleString('fr-FR')} pts</div>
-    <div class="matrix-bar"><div class="matrix-fill" style="width:${pctM}%"></div></div>
-  </div>`;
-});
-
 /* ── BRIQUES PRINCIPALES ── */
 const agoSelectionne = (win.web==='ago'||win.web==='experience');
 const entSelectionne = (win.logiciels==='arcgis_ent');
