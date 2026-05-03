@@ -32,11 +32,14 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .hero-meta{display:flex;gap:20px;flex-wrap:wrap}
 .hm{display:flex;align-items:center;gap:6px;font-size:.8rem;opacity:.75}
 .hm strong{opacity:1;font-weight:600}
-.score-pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:16px 22px;text-align:center;min-width:130px}
+.score-pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:16px 22px;text-align:center;min-width:140px}
 .score-big{font-family:'DM Mono',monospace;font-size:2.6rem;font-weight:500;color:#5be89e;line-height:1}
 .score-lbl{font-size:.72rem;opacity:.65;margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
 .score-bar-wrap{margin-top:16px;width:100%;background:rgba(255,255,255,.12);height:4px;border-radius:2px;overflow:hidden}
 .score-bar-fill{height:100%;background:linear-gradient(90deg,#2ecc71,#5be89e);border-radius:2px;transition:width .8s ease}
+/* Score breakdown pills */
+.score-cats{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.sc-pill{font-size:.65rem;font-weight:600;padding:2px 8px;border-radius:10px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.8)}
 .wrap{max-width:1180px;margin:0 auto;padding:30px 24px 80px}
 .slabel{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:14px;margin-top:28px;display:flex;align-items:center;gap:8px}
 .slabel::after{content:'';flex:1;height:1px;background:var(--border)}
@@ -45,7 +48,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .brique-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;margin-bottom:8px}
 .brique{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r2);padding:0;display:flex;flex-direction:column;transition:box-shadow .2s,border-color .2s;position:relative;overflow:hidden;animation:fadeUp .45s ease both}
 .brique:hover{box-shadow:0 6px 28px rgba(0,0,0,.08);border-color:#b5c8e0}
-.brique:nth-child(1){animation-delay:.04s}.brique:nth-child(2){animation-delay:.09s}.brique:nth-child(3){animation-delay:.14s}.brique:nth-child(4){animation-delay:.19s}.brique:nth-child(5){animation-delay:.24s}.brique:nth-child(6){animation-delay:.29s}
+.brique:nth-child(1){animation-delay:.04s}.brique:nth-child(2){animation-delay:.09s}.brique:nth-child(3){animation-delay:.14s}.brique:nth-child(4){animation-delay:.19s}.brique:nth-child(5){animation-delay:.24s}.brique:nth-child(6){animation-delay:.29s}.brique:nth-child(7){animation-delay:.34s}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 .brique-top{display:flex;align-items:flex-start;gap:14px;padding:20px 20px 14px}
 .brique-logo-wrap{flex-shrink:0;width:54px;height:54px;border-radius:10px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden}
@@ -69,6 +72,17 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .cat-web .brique-cat{color:var(--green)} .cat-web .brique-price{background:var(--green-l);color:var(--green)} .cat-web{border-top:3px solid var(--green)}
 .cat-ima .brique-cat{color:var(--amber)} .cat-ima .brique-price{background:var(--amber-l);color:var(--amber)} .cat-ima{border-top:3px solid var(--amber)}
 .cat-ter .brique-cat{color:var(--red)} .cat-ter .brique-price{background:var(--red-l);color:var(--red)} .cat-ter{border-top:3px solid var(--red)}
+.cat-opt .brique-cat{color:#555} .cat-opt .brique-price{background:#f0f0f0;color:#555} .cat-opt{border-top:3px solid #ccc}
+/* Score matrix display */
+.matrix-box{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r2);padding:22px;margin-bottom:4px}
+.matrix-title{font-size:.78rem;font-weight:700;color:var(--ink2);margin-bottom:14px}
+.matrix-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.matrix-item{background:var(--surface);border-radius:8px;padding:10px 12px}
+.matrix-label{font-size:.68rem;color:var(--muted);margin-bottom:3px}
+.matrix-val{font-family:'DM Mono',monospace;font-size:.78rem;font-weight:600;color:var(--ink)}
+.matrix-bar{height:3px;border-radius:2px;background:var(--border);margin-top:4px;overflow:hidden}
+.matrix-fill{height:100%;background:var(--green);border-radius:2px}
+/* Budget */
 .budget-box{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r2);padding:26px;margin-bottom:4px;border-left:4px solid var(--green)}
 .budget-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px}
 .budget-total{font-family:'DM Mono',monospace;font-size:2.3rem;font-weight:500;color:var(--green)}
@@ -78,14 +92,16 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .bi-lbl{font-size:.73rem;color:var(--muted)}.bi-val{font-family:'DM Mono',monospace;font-size:.85rem;font-weight:500;color:var(--ink)}
 .bi-note{font-size:.67rem;color:var(--muted)}
 .budget-note{font-size:.73rem;color:var(--muted);margin-top:12px}
+/* Reasons */
 .reasons-box{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r2);padding:24px;margin-bottom:4px}
 .reason-item{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border-radius:8px;background:var(--surface);font-size:.83rem;color:var(--ink2);line-height:1.65;margin-bottom:8px}
 .reason-item:last-child{margin-bottom:0}
-.rdot{width:7px;height:7px;background:var(--green);border-radius:50%;margin-top:7px;flex-shrink:0}
+.rdot{width:7px;height:7px;border-radius:50%;margin-top:7px;flex-shrink:0}
+.rdot-green{background:var(--green)}.rdot-amber{background:var(--amber)}.rdot-blue{background:var(--blue)}.rdot-red{background:var(--red)}
+/* Alt */
 .alt-box{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r2);padding:24px;margin-bottom:4px}
 .alt-intro{font-size:.84rem;color:var(--muted);margin-bottom:18px;line-height:1.65}
-.alt-group{margin-bottom:22px}
-.alt-group:last-child{margin-bottom:0}
+.alt-group{margin-bottom:22px}.alt-group:last-child{margin-bottom:0}
 .alt-group-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--border)}
 .alt-cards{display:flex;flex-wrap:wrap;gap:9px}
 .alt-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;display:flex;align-items:flex-start;gap:10px;flex:1;min-width:210px;max-width:320px;transition:border-color .15s}
@@ -99,8 +115,8 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .alt-p{font-family:'DM Mono',monospace;font-size:.69rem;font-weight:500}
 .p-free{color:var(--green)}.p-paid{color:var(--amber)}.p-big{color:var(--red)}
 .hb-tag{font-size:.62rem;font-weight:700;text-transform:uppercase;background:var(--amber-l);color:var(--amber);padding:2px 6px;border-radius:4px}
-.sup-tag{font-size:.62rem;font-weight:700;background:var(--blue-l);color:var(--blue);padding:2px 6px;border-radius:4px}
 .inf-tag{font-size:.62rem;font-weight:700;background:var(--green-l);color:var(--green);padding:2px 6px;border-radius:4px}
+.sup-tag{font-size:.62rem;font-weight:700;background:var(--blue-l);color:var(--blue);padding:2px 6px;border-radius:4px}
 .actions{display:flex;gap:11px;flex-wrap:wrap;margin-bottom:4px}
 .btn{padding:13px 22px;border-radius:var(--r);font-size:.88rem;font-weight:600;cursor:pointer;transition:all .15s;text-decoration:none;display:inline-flex;align-items:center;gap:7px;border:none;font-family:'DM Sans',sans-serif}
 .btn-primary{background:var(--green);color:#fff;box-shadow:0 2px 14px rgba(26,122,74,.22)}.btn-primary:hover{background:#15643d;text-decoration:none;color:#fff}
@@ -135,8 +151,9 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
         <div class="hm">👤 Client : <strong id="heroClient">—</strong></div>
         <div class="hm">💼 <strong id="heroSecteur">—</strong></div>
         <div class="hm">⚙️ <strong id="heroMode">—</strong></div>
-        <div class="hm">🔢 Scénarios analysés : <strong>500+</strong></div>
+        <div class="hm">🔢 Variables analysées : <strong id="heroVars">—</strong></div>
       </div>
+      <div class="score-cats" id="scoreCats"></div>
     </div>
     <div class="score-pill">
       <div class="score-big" id="scoreNum">—</div>
@@ -151,6 +168,8 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
   <div class="scenario-desc" id="scenarioDesc"></div>
   <div class="slabel">🎯 Architecture recommandée</div>
   <div class="brique-grid" id="resultsGrid"></div>
+  <div class="slabel">🧮 Matrice de scoring détaillée</div>
+  <div class="matrix-box"><div class="matrix-title">Contribution de chaque groupe de paramètres au résultat final</div><div class="matrix-grid" id="matrixGrid"></div></div>
   <div class="slabel">💶 Estimation budgétaire détaillée</div>
   <div class="budget-box">
     <div class="budget-row">
@@ -158,13 +177,13 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
       <div style="text-align:right"><div style="font-size:.78rem;color:var(--muted);margin-bottom:4px">Par utilisateur / an</div><div class="budget-per" id="perUser">—</div></div>
     </div>
     <div class="budget-grid" id="budgetDetail"></div>
-    <div class="budget-note">* Estimation indicative hors prestations, formation et matériel. Les licences ArcGIS incluent un nombre d'utilisateurs — au-delà, prévoir ~250 à 500 €/an par utilisateur supplémentaire. Experience Builder et Field Maps nécessitent ArcGIS Online Creator (inclus dans le prix affiché).</div>
+    <div class="budget-note">* Estimation indicative hors prestations, formation et matériel. Licences ArcGIS : tarif dégressif dès 5 utilisateurs. Experience Builder et Field Maps inclus dans ArcGIS Online Creator. IGN : gratuit secteur public via convention.</div>
   </div>
   <div class="slabel">🧠 Pourquoi cette architecture ?</div>
   <div class="reasons-box"><div id="reasonsList"></div></div>
-  <div class="slabel">🔄 Alternatives proches — budget inférieur &amp; supérieur</div>
+  <div class="slabel">🔄 Alternatives proches — budget inférieur & supérieur</div>
   <div class="alt-box">
-    <p class="alt-intro">Les alternatives les plus pertinentes par catégorie, classées par proximité budgétaire avec votre sélection. <span style="background:var(--green-l);color:var(--green);font-size:.72rem;font-weight:700;padding:1px 6px;border-radius:4px">Budget inf.</span> = moins cher · <span style="background:var(--blue-l);color:var(--blue);font-size:.72rem;font-weight:700;padding:1px 6px;border-radius:4px">Budget sup.</span> = fonctionnalités supérieures · <span style="background:var(--amber-l);color:var(--amber);font-size:.72rem;font-weight:700;padding:1px 6px;border-radius:4px">Hors budget</span> = à titre informatif.</p>
+    <p class="alt-intro">Alternatives triées par proximité budgétaire. <span style="background:var(--green-l);color:var(--green);font-size:.72rem;font-weight:700;padding:1px 6px;border-radius:4px">Budget inf.</span> = moins cher · <span style="background:var(--blue-l);color:var(--blue);font-size:.72rem;font-weight:700;padding:1px 6px;border-radius:4px">Budget sup.</span> = fonctionnalités supérieures · <span style="background:var(--amber-l);color:var(--amber);font-size:.72rem;font-weight:700;padding:1px 6px;border-radius:4px">Hors budget</span> = informatif.</p>
     <div id="altContent"></div>
   </div>
   <div class="slabel">📋 Prochaines étapes</div>
@@ -181,539 +200,767 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 </footer>
 
 <script>
-/* ═══════════════════════════════════════════════════════════
-   DATA — Prix affinés avec dépendances intra-suite & nb users
-   Format prix : { base, par_user (optionnel), inclus_users, note }
-═══════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════════
+   DATA — toutes les briques avec prix réels et paliers documentés
+═══════════════════════════════════════════════════════════════════════ */
 const DATA = {
-
   logiciels: {
-    qgis:        { n:"QGIS Desktop", sub:"Open Source · Gratuit", d:"Le standard mondial open source. Analyse spatiale avancée, 1 000+ plugins, Python/PyQGIS intégré, symbologie professionnelle. Communauté active, mises à jour fréquentes. Pas de licence par utilisateur.", p:0, img:"Qgis.png", link:"https://qgis.org", mail:"office@qgis.org", inclus:null, note:"Gratuit pour tous les utilisateurs" },
-    arcgis_pro:  { n:"ArcGIS Pro (Standard)", sub:"Esri · Licence annuelle · Windows uniquement", d:"Logiciel bureautique Esri de référence pour l'analyse spatiale avancée. Rendu 2D/3D, outils Python, connexion ArcGIS Online native. ⚠️ Windows uniquement (non natif macOS — Parallels requis). Paliers : 1 utilisateur 820 €/an · 2-4 utilisateurs ~700 €/utilisateur/an · 5-9 utilisateurs ~620 €/utilisateur/an · 10+ utilisateurs : contrat volume sur devis Esri France.", p:820, img:"ArcGisPRO.jpg", link:"https://www.esri.com", mail:"contact@esri.com", inclus:1, note:"820 €/an/utilisateur · Dégressif dès 5 utilisateurs · Windows uniquement" },
-    arcgis_pro_adv:{ n:"ArcGIS Pro Advanced", sub:"Esri · Licence avancée · Windows uniquement", d:"Tous les outils ArcGIS Pro Standard + topologie avancée, Network Analyst, Spatial Analyst complet, Image Analyst. Débloque l'intégralité des géotraitements Esri. ⚠️ Windows uniquement. Paliers : 1 utilisateur 3 850 €/an · 2-4 utilisateurs ~3 200 €/utilisateur/an · 5+ utilisateurs : contrat volume Esri France.", p:3850, img:"ArcGisPRO.jpg", link:"https://www.esri.com", mail:"contact@esri.com", inclus:1, note:"3 850 €/an/utilisateur · Dégressif dès 5 utilisateurs · Windows uniquement" },
-    arcgis_ent:  { n:"ArcGIS Enterprise", sub:"Esri · Suite serveur complète", d:"Portail SIG privé + serveur cartographique + data store spatial + ArcGIS Online. Standard industriel pour marchés publics et données sensibles. Paliers : Base 6 200 €/an (5 utilisateurs inclus) · Standard 10 000 €/an (10 utilisateurs) · Avancé 18 000 €/an (25 utilisateurs) · Utilisateurs supplémentaires : ~500 €/utilisateur/an. Inclut Experience Builder, Field Maps et Survey123.", p:6200, img:"ArcGisPRO.jpg", link:"https://www.esri.com", mail:"contact@esri.com", inclus:5, note:"6 200 €/an · 5 utilisateurs inclus · +500 €/utilisateur supplémentaire" },
-    autocad:     { n:"AutoCAD Map 3D", sub:"Autodesk · DAO + SIG · Windows/Mac partiel", d:"Pont indispensable entre DAO et SIG. Lecture/écriture native DWG/DXF, outils de topographie, export GIS direct. Paliers : Map 3D seul ~2 500 €/an/utilisateur · Bundle AEC Collection ~3 600 €/an (inclut Civil 3D, Revit, Navisworks) · Dégressif dès 5 licences (volume licensing Autodesk). ⚠️ AutoCAD Mac existe mais Map 3D n'est disponible que sur Windows.", p:2500, img:"Autocad.jpg", link:"https://www.autodesk.com", mail:"support@autodesk.com", inclus:1, note:"2 500 €/an · Bundle AEC 3 600 €/an · Dégressif 5+ licences · Windows uniquement pour Map 3D" },
-    geoconcept:  { n:"Geoconcept", sub:"Français · Géomarketing · Sur devis", d:"SIG expert français spécialisé en géomarketing, optimisation de tournées et analyse de territoire commercial. Interface accessible, support francophone dédié, hébergement possible en France. Tarification uniquement sur devis — le prix indicatif de 2 800 €/an correspond à une licence monoposte module Standard. Les modules avancés (Enterprise Routing, Fleet Management) et les déploiements multi-postes font l'objet d'une négociation commerciale.", p:2800, img:"Geoconcept.png", link:"https://geoconcept.com", mail:"info@geoconcept.com", inclus:1, note:"~2 800 €/an indicatif · Prix réel sur devis uniquement" },
-    osm_editor:  { n:"JOSM / OSM Editor", sub:"Open Source · Communautaire", d:"Éditeur OpenStreetMap de référence. Idéal pour ONG, humanitaires et projets de cartographie participative mondiale. Contribution à la base de données géographique libre.", p:0, img:"OSM.jpg", link:"https://josm.openstreetmap.de", inclus:null, note:"Gratuit · Données OSM libres" }
+    qgis:           { n:"QGIS Desktop", sub:"Open Source · Gratuit · multiplateforme", d:"Le standard mondial open source. Analyse spatiale avancée, 1 000+ plugins, Python/PyQGIS intégré. Natif Windows, macOS et Linux. Pas de licence par utilisateur. Communauté mondiale très active.", p:0, img:"Qgis.png", link:"https://qgis.org", mail:"office@qgis.org", inclus:null, note:"Gratuit pour tous les utilisateurs" },
+    arcgis_pro:     { n:"ArcGIS Pro (Standard)", sub:"Esri · Windows uniquement", d:"Logiciel bureautique Esri pour l'analyse spatiale avancée. ⚠️ Windows uniquement. Tarif dégressif : 1 user 820€ · 5+ users ~650€/user · 10+ users ~580€/user.", p:820, img:"ArcGisPRO.jpg", link:"https://www.esri.com", mail:"contact@esri.com", inclus:1, note:"820 €/an/utilisateur · Dégressif dès 5 utilisateurs" },
+    arcgis_pro_adv: { n:"ArcGIS Pro Advanced", sub:"Esri · Analyses réseau & 3D · Windows", d:"Tous les outils Standard + Network Analyst, Spatial Analyst complet, Image Analyst, topologie avancée. ⚠️ Windows uniquement. Tarif : 1 user 3 850€ · 5+ users ~3 200€/user.", p:3850, img:"ArcGisPRO.jpg", link:"https://www.esri.com", mail:"contact@esri.com", inclus:1, note:"3 850 €/an/utilisateur · Dégressif dès 5 utilisateurs" },
+    arcgis_ent:     { n:"ArcGIS Enterprise", sub:"Esri · Suite serveur complète", d:"Portail SIG privé + serveur carto + data store + Online. Paliers : 6 200€/an (5 users) · 10 000€ (10 users) · 18 000€ (25 users). Inclut Experience Builder, Field Maps, Survey123.", p:6200, img:"ArcGisPRO.jpg", link:"https://www.esri.com", mail:"contact@esri.com", inclus:5, note:"6 200 €/an · 5 utilisateurs inclus · +500 €/user" },
+    autocad:        { n:"AutoCAD Map 3D", sub:"Autodesk · DAO+SIG · Windows", d:"Pont DAO-SIG indispensable. Lecture/écriture native DWG/DXF. ⚠️ Map 3D uniquement Windows. Paliers : 2 500€/user · Bundle AEC 3 600€ (Civil 3D + Revit inclus) · Dégressif 5+ licences.", p:2500, img:"Autocad.jpg", link:"https://www.autodesk.com", mail:"support@autodesk.com", inclus:1, note:"2 500 €/an · Bundle AEC 3 600 €/an · Windows" },
+    geoconcept:     { n:"Geoconcept", sub:"Français · Géomarketing · Sur devis", d:"SIG expert français pour géomarketing et optimisation de tournées. Support francophone dédié. ~2 800€/an monoposte (indicatif — prix réel sur devis uniquement selon modules).", p:2800, img:"Geoconcept.png", link:"https://geoconcept.com", mail:"info@geoconcept.com", inclus:1, note:"~2 800 €/an indicatif · Prix réel sur devis" },
+    osm_editor:     { n:"JOSM / OSM Editor", sub:"Open Source · Communautaire", d:"Éditeur OpenStreetMap de référence. Standard des ONG et humanitaires (HOT, MSF). Contribution à la base de données géographique libre mondiale.", p:0, img:"OSM.jpg", link:"https://josm.openstreetmap.de", inclus:null, note:"Gratuit · Données OSM libres" }
   },
-
   bases: {
-    postgis:     { n:"PostgreSQL / PostGIS", sub:"Open Source · Moteur spatial", d:"Le moteur spatial open source de référence. Requêtes SQL spatiales avancées, topologie, indexation spatiale, gestion des droits multi-utilisateurs. Pilier de toute infrastructure SIG sérieuse. Scalable jusqu'aux centaines de millions d'objets.", p:0, img:"PostGre_PostGIS.jpg", link:"https://postgis.net", mail:"pgsql-general@postgresql.org", note:"Gratuit · Hébergement serveur requis" },
-    supabase:    { n:"Supabase (PostGIS Managé)", sub:"Cloud · SaaS · RGPD", d:"PostGIS clé en main dans le cloud. API REST auto-générée, authentification intégrée, interface d'administration moderne. Zéro administration serveur. Paliers : Gratuit (500 Mo, 7 j logs) · Pro 25 €/mois (8 Go, 28 j) · Équipe 599 €/mois (illimité). Serveurs US/EU — hors zone France.", p:300, img:"Supabase.png", link:"https://supabase.com", mail:"support@supabase.com", note:"Gratuit à 25€/mois · Évolutif selon usage" },
-    gpkg:        { n:"GeoPackage (.gpkg)", sub:"Format OGC · Fichier unique", d:"Standard OGC ultra-portable : une base spatiale dans un seul fichier SQLite. Compatible QGIS, ArcGIS, GDAL, FME. Pas de serveur nécessaire. Idéal usage solo, transfert terrain, archivage.", p:0, img:"Geopackage.jpg", link:"https://geopackage.org", note:"Gratuit · Limité à usage mono-utilisateur" },
-    spatialite:  { n:"SpatiaLite / SQLite", sub:"Open Source · Embarqué", d:"Base spatiale légère dans un fichier SQLite. Parfaite pour applications mobiles embarquées, projets zéro-config, ou stockage terrain. Taille maximale conseillée : 2 Go.", p:0, img:"Spatialite.jpg", link:"https://gaia-gis.it", note:"Gratuit · Usage fichier uniquement" },
-    arcgis_cloud:{ n:"ArcGIS Online Data Store", sub:"Esri Cloud · Feature Services", d:"Données hébergées dans le Cloud Esri (AWS). Feature Services REST, partage simplifié entre utilisateurs ArcGIS, Field Maps et Experience Builder. Inclus dans l'abonnement ArcGIS Online Creator (5 Go par utilisateur Creator). Stockage supplémentaire : ~1,20 $/Go/mois (~14 €/Go/an) — au-delà de 50 Go de rasters, le coût devient significatif.", p:500, img:"AGOL.png", link:"https://arcgis.com", mail:"support@esri.com", note:"Inclus dans AGO Creator · +14 €/Go/an au-delà de 5 Go inclus" }
+    postgis:      { n:"PostgreSQL / PostGIS", sub:"Open Source · Moteur spatial de référence", d:"Le moteur spatial open source de référence. Requêtes SQL spatiales avancées, topologie, index spatial GIST, multi-utilisateurs, scalable jusqu'aux centaines de millions d'objets. Compatible TimescaleDB pour l'IoT.", p:0, img:"PostGre_PostGIS.jpg", link:"https://postgis.net", mail:"pgsql-general@postgresql.org", note:"Gratuit · Hébergement serveur requis" },
+    supabase:     { n:"Supabase (PostGIS Managé)", sub:"Cloud SaaS · Paliers selon usage", d:"PostGIS clé en main. Paliers : Gratuit (500 Mo, 7j logs) · Pro 25€/mois (8 Go, 28j) · Équipe 599€/mois (illimité). API REST auto-générée. Serveurs US/EU — hors zone France.", p:300, img:"Supabase.png", link:"https://supabase.com", mail:"support@supabase.com", note:"Gratuit à 25€/mois · Hors zone France" },
+    gpkg:         { n:"GeoPackage (.gpkg)", sub:"Format OGC · Fichier unique · Gratuit", d:"Standard OGC portable : une base spatiale dans un seul fichier. Compatible QGIS, ArcGIS, GDAL, FME. Idéal usage solo, terrain, archivage. Synchronisable via OneDrive/Drive/iCloud.", p:0, img:"Geopackage.jpg", link:"https://geopackage.org", note:"Gratuit · Usage mono-utilisateur" },
+    spatialite:   { n:"SpatiaLite / SQLite", sub:"Open Source · Embarqué · Léger", d:"Base spatiale légère dans un fichier SQLite. Applications mobiles, projets zéro-config. Taille max conseillée : 2 Go. Idéal pour le stockage terrain hors-ligne.", p:0, img:"Spatialite.jpg", link:"https://gaia-gis.it", note:"Gratuit · Usage fichier" },
+    arcgis_cloud: { n:"ArcGIS Online Data Store", sub:"Esri Cloud · Feature Services", d:"Données hébergées dans le Cloud Esri. Inclus dans ArcGIS Online Creator (5 Go/user). Stockage supplémentaire ~14€/Go/an. Au-delà de 50 Go de rasters, coût significatif.", p:500, img:"AGOL.png", link:"https://arcgis.com", mail:"support@esri.com", note:"Inclus dans AGO Creator · +14 €/Go/an" }
   },
-
   serveurs: {
-    vps_ovh:     { n:"VPS OVHcloud (France)", sub:"Cloud souverain FR · RGPD", d:"Hébergement souverain français. VPS Linux dédié, centres de données en France (Roubaix, Gravelines, Strasbourg), conformité RGPD native. Paliers : Starter 4 €/mois (2 Go RAM — usage QGIS Cloud léger) · Value 7 €/mois · Essential 14 €/mois (4 Go — recommandé PostGIS + Lizmap) · Comfort 28 €/mois (8 Go — GeoServer + PostGIS + Lizmap) · Elite 56 €/mois (16 Go — multi-services + forte charge).", p:168, img:"OVH.png", link:"https://ovhcloud.com", mail:"support@ovhcloud.com", note:"Dès 4 €/mois · Essential 14 €/mois recommandé pour SIG complet" },
-    aws:         { n:"Amazon Web Services (AWS)", sub:"Cloud mondial · Scalable", d:"Infrastructure cloud mondiale N°1. Scalabilité illimitée, services managés (RDS PostGIS, EC2, S3 spatial), SLA 99,99%. Compatible ArcGIS Enterprise. Paliers indicatifs (région eu-west-3 Paris) : Léger (EC2 t3.micro + RDS t3.micro) ~420 €/an · Standard (t3.medium + RDS t3.small) ~1 200 €/an · Pro (t3.large + RDS t3.medium + S3) ~3 600 €/an · Enterprise ArcGIS : 10 000-30 000 €/an.", p:1200, img:"Amazon_Web_Services.png", link:"https://aws.amazon.com", mail:"aws-support@amazon.com", note:"Variable · Léger ~420 €/an · Standard ~1 200 €/an · Pro ~3 600 €/an" },
-    azure:       { n:"Microsoft Azure", sub:"Cloud Microsoft · Office 365", d:"Cloud Microsoft. Intégration native Office 365, Active Directory SSO et Azure Maps. Option France Central pour souveraineté RGPD. Paliers indicatifs : Léger (B1ms VM + Azure DB PostgreSQL Basic) ~600 €/an · Standard (B2s + PostgreSQL Gen5) ~1 200 €/an · Pro (D2s + PostgreSQL Général) ~3 000 €/an · Azure Maps API : dès 200 €/an selon volume de requêtes cartographiques.", p:1200, img:"Azure.png", link:"https://azure.microsoft.com", mail:"azuresupport@microsoft.com", note:"Variable · Léger ~600 €/an · Standard ~1 200 €/an · France Central dispo" },
-    render:      { n:"Render (Cloud Managé)", sub:"Hébergement moderne · Abordable", d:"Hébergement cloud moderne et abordable. Déploiement PostGIS, GeoServer ou Lizmap via Docker en quelques clics. Paliers : Gratuit (90 j max, mise en veille) · Starter 7 €/mois (usage continu) · Standard 19 €/mois (1 Go RAM, 30 j logs) · Pro 85 €/mois (4 Go, bases persistantes). Serveurs hors zone France.", p:84, img:"Render.png", link:"https://render.com", mail:"support@render.com", note:"Gratuit à 7€/mois · Hors zone FR" },
-    local:       { n:"Serveur Physique Local", sub:"On-Premise · Souveraineté totale", d:"Contrôle total sur vos données. Aucun coût cloud récurrent, données physiquement sur site. Nécessite maintenance interne, onduleur, sauvegardes et compétence Linux/Windows Server.", p:0, img:"Local.png", note:"0€ récurrent · Investissement matériel initial" }
+    vps_ovh:   { n:"VPS OVHcloud (France)", sub:"Cloud souverain FR · RGPD natif", d:"Paliers : Starter 4€/mois (2Go RAM) · Essential 14€/mois (4Go — PostGIS+Lizmap) · Comfort 28€/mois (8Go — GeoServer+PostGIS) · Elite 56€/mois (16Go — multi-services). Centres de données France.", p:168, img:"OVH.png", link:"https://ovhcloud.com", mail:"support@ovhcloud.com", note:"Dès 4€/mois · Essential 14€/mois recommandé" },
+    aws:       { n:"Amazon Web Services (AWS)", sub:"Cloud mondial N°1 · Scalable", d:"Paliers (région eu-west-3 Paris) : Léger ~420€/an · Standard ~1 200€/an · Pro ~3 600€/an · ArcGIS Enterprise : 10 000-30 000€/an. Autoscaling natif. SLA 99,99%.", p:1200, img:"Amazon_Web_Services.png", link:"https://aws.amazon.com", mail:"aws-support@amazon.com", note:"Variable · ~420€ à 3 600€/an selon charge" },
+    azure:     { n:"Microsoft Azure", sub:"Cloud Microsoft · Office 365 · SSO AD", d:"Paliers : Léger ~600€/an · Standard ~1 200€/an · Pro ~3 000€/an. Azure Maps API dès 200€/an. France Central pour la souveraineté. Intégration native AD, Teams, Power BI.", p:1200, img:"Azure.png", link:"https://azure.microsoft.com", mail:"azuresupport@microsoft.com", note:"Variable · France Central disponible · SSO AD" },
+    render:    { n:"Render (Cloud Managé)", sub:"Abordable · Docker facile · Hors FR", d:"Paliers : Gratuit (90j max, mise en veille) · Starter 7€/mois · Standard 19€/mois (1Go RAM) · Pro 85€/mois (4Go persistant). Déploiement Docker sans admin serveur. Serveurs hors France.", p:84, img:"Render.png", link:"https://render.com", mail:"support@render.com", note:"Gratuit à 7€/mois · Hors zone France" },
+    local:     { n:"Serveur Physique Local", sub:"On-Premise · Souveraineté totale", d:"Contrôle total, aucun coût cloud récurrent. Nécessite maintenance interne, onduleur, sauvegardes, compétence Linux/Windows Server. Investissement matériel initial : ~500-5 000€.", p:0, img:"Local.png", note:"0€ récurrent · Investissement matériel initial" }
   },
-
   web: {
-    lizmap:      { n:"Lizmap Web Client", sub:"Open Source · Portail QGIS", d:"Publiez vos projets QGIS sur le web avec fidélité cartographique 100% : symbologie, formulaires de saisie métier, outils de mesure, interrogation d'objets. Standard des collectivités françaises et des SIG territoriaux.", p:0, img:"Lizmap.png", link:"https://www.lizmap.com", mail:"contact@3liz.com", note:"Gratuit · Nécessite un serveur" },
-    openlayers:  { n:"OpenLayers / Leaflet.js", sub:"Open Source · Développement JS", d:"Bibliothèques JavaScript de cartographie web. Cartes interactives sur mesure, légères, personnalisables. Standard des développeurs web-SIG. Leaflet pour les projets simples, OpenLayers pour les flux OGC avancés (WMS, WFS, WMTS).", p:0, img:"Openlayers.png", link:"https://openlayers.org", note:"Gratuit · Nécessite compétences JS" },
-    experience:  { n:"ArcGIS Experience Builder", sub:"Esri · Inclus dans ArcGIS Online Creator", d:"Applications web haut de gamme de la suite Esri. Widgets riches, tableaux de bord temps réel, StoryMaps, formulaires géolocalisés. Inclus dans l'abonnement ArcGIS Online Creator (500 €/an minimum). Non disponible seul — nécessite ArcGIS Online ou Enterprise.", p:500, p_note:"Inclus dans ArcGIS Online Creator (500 €/an)", img:"Experience Builder.jpg", link:"https://experience.arcgis.com", mail:"support@esri.com", note:"Inclus dans ArcGIS Online Creator · Non disponible séparément" },
-    geoserver:   { n:"GeoServer", sub:"Open Source · Standard OGC", d:"Moteur de rendu cartographique OGC open source. Publie vos données PostGIS en flux WMS, WFS, WCS, WMTS standards. Indispensable pour architectures interopérables, big data et flux temps réel. Utilisé par 80% des infrastructures SDI mondiales.", p:0, img:"GeoServer.png", link:"https://geoserver.org", mail:"geoserver-users@lists.sf.net", note:"Gratuit · Serveur requis · Docker disponible" },
-    geonode:     { n:"GeoNode", sub:"Open Source · CMS géospatial", d:"Plateforme complète de gestion et de partage de données géospatiales (CMS). Combine GeoServer, PostGIS et MapStore. Portail open data, gestion des droits d'accès, catalogue de métadonnées ISO 19115.", p:0, img:"GeoNode.png", link:"https://geonode.org", mail:"info@geonode.org", note:"Gratuit · Déploiement Docker recommandé" },
-    felt:        { n:"Felt", sub:"SaaS · Partage rapide", d:"La diffusion web cartographique la plus rapide. Importez SHP/GeoJSON/KML, dessinez, annotez et partagez en quelques secondes. Collaboration temps réel. Paliers : Gratuit (cartes illimitées, partage public) · Pro 10 $/utilisateur/mois (partage privé, branding) · Équipe 15 $/utilisateur/mois (gestion des droits, SSO).", p:0, img:"Felt.png", link:"https://felt.com", note:"Gratuit · Pro ~120 $/utilisateur/an · Équipe ~180 $/an" },
-    qgis_cloud:  { n:"QGIS Cloud", sub:"SaaS · Publication directe · QGIS", d:"Publication directe depuis QGIS Desktop vers le web en un clic. Paliers : Gratuit (100 Mo, 2 projets) · Basic 19 €/mois (500 Mo, 10 projets) · Standard 59 €/mois (2 Go, projets illimités) · Pro 99 €/mois (10 Go). Serveurs en Suisse (Sourcepole). QGIS Desktop requis.", p:700, img:"QgisCloud.png", link:"https://qgiscloud.com", mail:"support@sourcepole.ch", note:"Dès 59€/mois · ~700€/an" },
-    ago:         { n:"ArcGIS Online (AGO)", sub:"Esri · Plateforme SaaS complète", d:"Plateforme SaaS Esri. L'abonnement Creator (500 €/an) inclut : ArcGIS Online, Experience Builder, Field Maps, Survey123, 5 Go de stockage. Viewer gratuit pour la consultation seule. L'abonnement Creator est obligatoire pour utiliser Experience Builder ou Field Maps.", p:500, img:"AGOL.png", link:"https://arcgis.com", mail:"support@esri.com", note:"Dès 500€/an Creator · Viewer gratuit" }
+    lizmap:     { n:"Lizmap Web Client", sub:"Open Source · Portail QGIS fidèle", d:"Publiez vos projets QGIS sur le web : symbologie 100% fidèle, formulaires de saisie métier, outils de mesure, interrogation d'objets. Standard des collectivités françaises.", p:0, img:"Lizmap.png", link:"https://www.lizmap.com", mail:"contact@3liz.com", note:"Gratuit · Serveur requis" },
+    openlayers: { n:"OpenLayers / Leaflet.js", sub:"Open Source · Dev JavaScript", d:"Bibliothèques JS de cartographie web. Cartes sur mesure, légères, flux OGC (WMS, WFS, WMTS). Leaflet pour projets simples, OpenLayers pour architectures avancées.", p:0, img:"Openlayers.png", link:"https://openlayers.org", note:"Gratuit · Compétences JS requises" },
+    experience: { n:"ArcGIS Experience Builder", sub:"Esri · Inclus dans ArcGIS Online Creator", d:"Applications web haut de gamme Esri : dashboards temps réel, StoryMaps, formulaires géolocalisés. Inclus dans ArcGIS Online Creator (500€/an). Non disponible seul.", p:500, img:"Experience Builder.jpg", link:"https://experience.arcgis.com", mail:"support@esri.com", note:"Inclus dans AGO Creator · Non vendu séparément" },
+    geoserver:  { n:"GeoServer", sub:"Open Source · Standard OGC mondial", d:"Moteur OGC de référence. Publie PostGIS en WMS, WFS, WCS, WMTS. Utilisé par 80% des infrastructures SDI mondiales. Indispensable pour l'interopérabilité et les gros volumes.", p:0, img:"GeoServer.png", link:"https://geoserver.org", mail:"geoserver-users@lists.sf.net", note:"Gratuit · Serveur requis · Docker disponible" },
+    geonode:    { n:"GeoNode", sub:"Open Source · CMS géospatial · Open Data", d:"Plateforme de gestion et partage de données géospatiales. Combine GeoServer + PostGIS + MapStore. Portail open data, catalogue de métadonnées ISO 19115 / INSPIRE.", p:0, img:"GeoNode.png", link:"https://geonode.org", mail:"info@geonode.org", note:"Gratuit · Déploiement Docker recommandé" },
+    felt:       { n:"Felt", sub:"SaaS · Partage instantané · Collaboratif", d:"Diffusion web la plus rapide. Paliers : Gratuit (public) · Pro 10$/user/mois (privé, branding) · Équipe 15$/user/mois (SSO, droits). Compatible Google Drive, lien partageable en 1 clic.", p:0, img:"Felt.png", link:"https://felt.com", note:"Gratuit · Pro ~120$/user/an" },
+    qgis_cloud: { n:"QGIS Cloud", sub:"SaaS · Publication QGIS directe · Suisse", d:"Publication directe depuis QGIS Desktop. Paliers : Gratuit (100 Mo, 2 projets) · Basic 19€/mois · Standard 59€/mois (2 Go) · Pro 99€/mois (10 Go). Serveurs en Suisse.", p:700, img:"QgisCloud.png", link:"https://qgiscloud.com", mail:"support@sourcepole.ch", note:"Dès 59€/mois · Suisse (RGPD compatible)" },
+    ago:        { n:"ArcGIS Online (AGO)", sub:"Esri · SaaS complet · Creator 500€/an", d:"Creator (500€/an) inclut : ArcGIS Online, Experience Builder, Field Maps, Survey123, 5 Go stockage. Viewer gratuit (consultation). Creator obligatoire pour éditer ou utiliser Field Maps.", p:500, img:"AGOL.png", link:"https://arcgis.com", mail:"support@esri.com", note:"500€/an Creator · Viewer gratuit" }
   },
-
   imagerie: {
-    osm_gmap:    { n:"OSM / Google Maps", sub:"Gratuit · Standard web", d:"Fonds de plan gratuits et universels. OpenStreetMap : licence ODbL, diffusion libre sans restriction d'usage commercial. Google Maps API : crédit gratuit de 200 $/mois (~28 000 chargements de carte), puis ~7 $ pour 1 000 requêtes supplémentaires — peut devenir coûteux à forte audience. Pour les portails QGIS/Lizmap, le flux XYZ OSM est recommandé.", p:0, img:"GoogleMap.png", note:"OSM gratuit · Google Maps : gratuit jusqu'à 28 000 req/mois" },
-    sentinel:    { n:"Sentinel-2 / Planet", sub:"Satellite multispectral · ESA / Planet", d:"Deux sources complémentaires : Sentinel-2 (ESA/Copernicus) 100% gratuit, résolution 10m, actualisation toutes les 5 jours — idéal agriculture et environnement. Planet Labs (payant) : résolution 3-5m, quotidien. Paliers Planet : Éducation 0 € · Basic ~450 €/an · Business ~2 500 €/an · Enterprise sur devis. Accès via QGIS plugin Sentinel Hub ou API directe.", p:450, img:"sentinel-2.jpg", link:"https://planet.com", note:"Sentinel-2 gratuit · Planet dès 450 €/an" },
-    dalle_hd:    { n:"Dalles Ortho HD / IGN 5 cm", sub:"Précision maximale · France · IGN", d:"Orthophotographies haute définition (5 à 20 cm/pixel). BD ORTHO, BD TOPO, Cadastre vectoriel. Disponible via la Géoplateforme IGN. Paliers : Secteur public (collectivités, État) → gratuit via convention IGN ou flux WMS libres. Secteur privé → facturation à la dalle (50-300 € selon résolution) ou abonnement ~800 €/an. Flux WMS standards gratuits pour tous.", p:800, img:"DalleHD.jpg", note:"Gratuit secteur public · ~800 €/an secteur privé" },
-    drone:       { n:"Imagerie Drone & Photogrammétrie", sub:"Centimétrique · Sur mesure", d:"Levés photogrammétriques par drone. Précision centimétrique, orthophoto et Modèle Numérique de Terrain (MNT) sur votre zone d'étude. Traitement sous OpenDroneMap (gratuit), Agisoft Metashape ou Pix4D.", p:1500, img:"Drones.jpg", link:"https://opendronemap.org", note:"~1 500€/an matériel + traitement" }
+    osm_gmap:  { n:"OSM / Google Maps", sub:"Gratuit · Standard web universel", d:"OSM : licence ODbL, diffusion libre. Google Maps API : gratuit jusqu'à 28 000 chargements/mois (200$/mois crédit), puis ~7$/1 000 requêtes. Pour Lizmap/QGIS, flux XYZ OSM recommandé.", p:0, img:"GoogleMap.png", note:"OSM gratuit · Google Maps : 28 000 req/mois gratuites" },
+    sentinel:  { n:"Sentinel-2 / Planet", sub:"ESA gratuit · Planet payant · Multispec", d:"Sentinel-2 (ESA/Copernicus) : 100% gratuit, 10m, toutes les 5j. Planet Labs : 3-5m, quotidien. Paliers Planet : Éducation 0€ · Basic ~450€/an · Business ~2 500€/an.", p:450, img:"sentinel-2.jpg", link:"https://planet.com", note:"Sentinel-2 gratuit · Planet dès 450€/an" },
+    dalle_hd:  { n:"Dalles Ortho HD / IGN 5 cm", sub:"France · Secteur public gratuit", d:"BD ORTHO, BD TOPO, Cadastre vectoriel. Secteur public : gratuit via convention IGN ou flux WMS libres Géoplateforme. Secteur privé : ~800€/an abonnement ou facturation à la dalle.", p:800, img:"DalleHD.jpg", note:"Gratuit secteur public · ~800€/an privé" },
+    drone:     { n:"Imagerie Drone & Photogrammétrie", sub:"Centimétrique · Sur mesure", d:"Précision centimétrique, orthophoto et MNT sur votre zone. Traitement : OpenDroneMap (gratuit), Metashape ou Pix4D. ~1 500€/an matériel + traitement pour usage régulier.", p:1500, img:"Drones.jpg", link:"https://opendronemap.org", note:"~1 500€/an matériel + traitement" }
   },
-
   terrain: {
-    qfield:      { n:"QField + KoboCollect", sub:"QGIS terrain · Enquêtes · Open Source", d:"Solution combinée : QField synchronise vos projets QGIS (GPS décimétrique, formulaires métier, édition hors-ligne) et KoboCollect / ODK pour les enquêtes socio-économiques avec logique conditionnelle. Standard humanitaire (UNHCR, MSF, OMS). Paliers QFieldCloud : Gratuit (100 Mo, 3 projets, sync. manuelle) · Community 15 €/mois (1 Go, 30 projets, sync. auto) · Pro 30 €/mois (10 Go, illimité) · Enterprise sur devis. KoboCollect : gratuit sans limite.", p:0, img:"Qfield.png", link:"https://qfield.cloud", note:"Gratuit en local · QFieldCloud dès 15 €/mois (sync. cloud)" },
-    fieldmaps:   { n:"ArcGIS Field Maps", sub:"Esri · Terrain — Nécessite ArcGIS Online", d:"Application mobile Esri pour la collecte terrain. Édition en temps réel, travail hors-ligne, formulaires géolocalisés, intégration ArcGIS Online native. Inclut Survey123 pour les enquêtes avancées. App gratuite à télécharger — ArcGIS Online requis (500 €/an Creator) pour fonctionner. Si vous avez déjà ArcGIS Online dans vos résultats, Field Maps n'entraîne aucun surcoût.", p:500, p_note:"App gratuite · ArcGIS Online requis (500 €/an)", img:"ArcGISFieldMaps.jpg", link:"https://www.esri.com", mail:"support@esri.com", note:"App gratuite · ArcGIS Online obligatoire (500 €/an) · Inclus si AGO déjà sélectionné" }
+    qfield:    { n:"QField + KoboCollect", sub:"QGIS terrain · Enquêtes · Open Source", d:"QField synchronise vos projets QGIS (GPS décimétrique, hors-ligne). KoboCollect/ODK pour enquêtes socio-éco. Paliers QFieldCloud : Gratuit (100Mo, 3 projets) · Community 15€/mois · Pro 30€/mois. KoboCollect : gratuit.", p:0, img:"Qfield.png", link:"https://qfield.cloud", note:"Gratuit · QFieldCloud dès 15€/mois" },
+    fieldmaps: { n:"ArcGIS Field Maps", sub:"Esri · Terrain · ArcGIS Online requis", d:"App mobile Esri. Collecte et édition temps réel, hors-ligne, formulaires géolocalisés. App gratuite — ArcGIS Online Creator (500€/an) obligatoire. Survey123 inclus. Si AGO déjà sélectionné : 0€ supplémentaire.", p:500, img:"ArcGISFieldMaps.jpg", link:"https://www.esri.com", mail:"support@esri.com", note:"App gratuite · AGO Creator requis (500€/an)" }
   }
 };
 
-/* ═══════════════════════════════════════════════════════════
-   PARAMÈTRES URL
-═══════════════════════════════════════════════════════════ */
-const P        = new URLSearchParams(window.location.search);
-const nom      = P.get('identite')    || 'Anonyme';
-const email    = P.get('email')       || '';
-const secteur  = P.get('secteur')     || '';
-const budget   = P.get('budget')      || 'zero';
-const volume   = P.get('volume')      || 'leger';
-const collab   = P.get('collaboration')|| 'solo';
-const si_exist = P.get('si_existant') || 'aucun';
-const souverain= P.get('souverainete')|| 'faible';
-const diffusion= P.get('diffusion')   || 'interne';
-const imagerie = P.get('imagerie')    || 'gratuit_local';
-const terrain  = P.get('terrain')     || 'non';
-const mode     = P.get('mode')        || 'simple';
-const crs      = P.get('crs')         || 'wgs84';
+/* ═══════════════════════════════════════════════════════════════════════
+   LECTURE PARAMÈTRES URL
+═══════════════════════════════════════════════════════════════════════ */
+const P = new URLSearchParams(window.location.search);
+const get = (k,d) => P.get(k)||d;
 
-const nbUsersMap={'solo':1,'multi_2_5':3,'multi_10':12,'nsp':1};
-const nbUsers = nbUsersMap[collab] || 1;
+const nom          = get('identite','Anonyme');
+const email        = get('email','');
+const secteur      = get('secteur','');
+const budget       = get('budget','zero');
+const volume       = get('volume','leger');
+const collab       = get('collaboration','solo');
+const mode         = get('mode','simple');
+// Groupe Gouvernance
+const souverain    = get('souverainete','standard');
+const auth_sso     = get('auth_sso','non');
+const classif      = get('classification','public');
+const crs          = get('crs','wgs84');
+// Groupe Compétences
+const competences  = get('competences','intermediaire');
+const maintenance  = get('maintenance','facile');
+const support_fr   = get('support_fr','non');
+const formation    = get('formation','non');
+// Groupe Interopérabilité
+const interop_autocad = P.get('interop_autocad')==='1';
+const interop_erp     = P.get('interop_erp')==='1';
+const interop_bi      = P.get('interop_bi')==='1';
+const interop_iot     = P.get('interop_iot')==='1';
+const interop_opendata= P.get('interop_opendata')==='1';
+const interop_api     = P.get('interop_api')==='1';
+const etl          = get('etl','non');
+// Groupe Fréquence
+const frequence_maj= get('frequence_maj','statique');
+const audience     = get('audience','interne');
+const temps_reel   = get('temps_reel','non');
+const scalabilite  = get('scalabilite','fixe');
+// SI existant + classique
+const si_exist     = get('si_existant','aucun');
+const diffusion    = get('diffusion','interne');
+const imagerie     = get('imagerie','gratuit_local');
+const terrain      = get('terrain','non');
 
-/* ═══════════════════════════════════════════════════════════
-   SCORES
-═══════════════════════════════════════════════════════════ */
-const s={};
-Object.keys(DATA).forEach(cat=>{s[cat]={};Object.keys(DATA[cat]).forEach(k=>s[cat][k]=0)});
-const reasons=[];
+const nbUsersMap   = {solo:1,multi_2_5:3,multi_10:12,nsp:1};
+const nbUsers      = nbUsersMap[collab]||1;
+const isMac        = si_exist==='apple_icloud';
 
-/* ── LABELS ── */
-const SECTEUR_LABELS={
+/* ═══════════════════════════════════════════════════════════════════════
+   INITIALISATION DES SCORES
+   Architecture de la matrice : 7 groupes × N options
+   Chaque groupe dispose d'un POIDS MULTIPLICATEUR
+═══════════════════════════════════════════════════════════════════════ */
+const s = {};
+Object.keys(DATA).forEach(cat => {
+  s[cat] = {};
+  Object.keys(DATA[cat]).forEach(k => s[cat][k] = 0);
+});
+
+// Scores par groupe — pour la matrice de visualisation
+const groupScores = {
+  secteur:         { label:'Secteur métier',       weight:1.0, raw:0 },
+  budget:          { label:'Budget',               weight:1.0, raw:0 },
+  volume_collab:   { label:'Volume & Collaboration',weight:0.9, raw:0 },
+  gouvernance:     { label:'Gouvernance & Sécu.',  weight:1.3, raw:0 },  // ×1.3
+  competences:     { label:'Compétences équipe',   weight:1.2, raw:0 },  // ×1.2
+  interop:         { label:'Interopérabilité',     weight:1.1, raw:0 },  // ×1.1
+  frequence:       { label:'Fréquence & Audience', weight:1.0, raw:0 },
+  si_deps:         { label:'Dépendances SI',       weight:1.0, raw:0 },
+  diffusion_web:   { label:'Diffusion Web',        weight:0.9, raw:0 },
+  terrain_imagerie:{ label:'Terrain & Imagerie',   weight:0.8, raw:0 },
+};
+
+function addScore(cat, key, pts, group) {
+  s[cat][key] += pts;
+  if(group && groupScores[group]) groupScores[group].raw += Math.abs(pts);
+}
+
+const reasons = [];
+
+/* ─────────────────────────────────────────────────────────────────────
+   LABELS SECTEUR
+───────────────────────────────────────────────────────────────────── */
+const SECTEUR_LABELS = {
   collectivite:"Collectivité Territoriale",etat:"État / Établissement public",
-  geometre:"Géomètre-Expert / Topographe",btp:"BTP / Infrastructures",
-  bet_env:"Bureau d'Études Environnement",agriculture:"Agriculture / Agronomie",
+  geometre:"Géomètre-Expert",btp:"BTP / Infrastructures",
+  bet_env:"BET Environnement",agriculture:"Agriculture",
   energie:"Énergie / Réseaux",transport:"Transport / Mobilité",
-  bet:"Bureau d'Études Technique",immobilier:"Immobilier / Foncier",
-  geomarketing:"Géomarketing / Commerce",ong:"Humanitaire / ONG",
+  bet:"Bureau d'Études",immobilier:"Immobilier / Foncier",
+  geomarketing:"Géomarketing",ong:"Humanitaire / ONG",
   etudiant:"Étudiant / Recherche",ne_sait_pas:"Non précisé"
 };
 
-/* ── SECTEUR ── */
-switch(secteur){
-  case 'collectivite':case 'etat':
-    s.logiciels.qgis+=700;s.web.lizmap+=900;s.web.geonode+=400;
-    s.bases.postgis+=600;s.serveurs.vps_ovh+=700;s.serveurs.local+=400;
-    s.imagerie.dalle_hd+=300;s.imagerie.osm_gmap+=250;
-    reasons.push("Secteur <strong>Collectivité / État</strong> : QGIS + Lizmap est la pile standard des SIG territoriaux français (90% des communes). OVHcloud assure la souveraineté des données publiques et la conformité RGPD.");
+/* ─────────────────────────────────────────────────────────────────────
+   GROUPE 0 : SECTEUR MÉTIER
+───────────────────────────────────────────────────────────────────── */
+switch(secteur) {
+  case 'collectivite': case 'etat':
+    addScore('logiciels','qgis',700,'secteur'); addScore('web','lizmap',900,'secteur');
+    addScore('web','geonode',400,'secteur'); addScore('bases','postgis',600,'secteur');
+    addScore('serveurs','vps_ovh',700,'secteur'); addScore('serveurs','local',400,'secteur');
+    addScore('imagerie','dalle_hd',300,'secteur'); addScore('imagerie','osm_gmap',250,'secteur');
+    reasons.push({dot:'green',txt:"Secteur <strong>Collectivité / État</strong> : QGIS + Lizmap est la pile standard des SIG territoriaux français (90% des communes). OVHcloud France garantit la souveraineté RGPD des données publiques."});
     break;
-  case 'geometre':case 'btp':
-    s.logiciels.autocad+=1600;s.logiciels.qgis+=500;
-    s.bases.spatialite+=900;s.bases.gpkg+=700;
-    s.imagerie.drone+=1100;s.imagerie.dalle_hd+=900;
-    s.serveurs.local+=700;s.terrain.qfield+=700;
-    s.logiciels.osm_editor-=500;
-    reasons.push("Secteur <strong>Géomètre / BTP</strong> : AutoCAD Map 3D assure la lecture native DWG/DXF et le pont DAO-SIG. SpatiaLite pour le stockage terrain. Drone et ortho HD pour la précision topographique.");
+  case 'geometre': case 'btp':
+    addScore('logiciels','autocad',1600,'secteur'); addScore('logiciels','qgis',500,'secteur');
+    addScore('bases','spatialite',900,'secteur'); addScore('bases','gpkg',700,'secteur');
+    addScore('imagerie','drone',1100,'secteur'); addScore('imagerie','dalle_hd',900,'secteur');
+    addScore('serveurs','local',700,'secteur'); addScore('terrain','qfield',700,'secteur');
+    addScore('logiciels','osm_editor',-500,'secteur');
+    reasons.push({dot:'green',txt:"Secteur <strong>Géomètre / BTP</strong> : AutoCAD Map 3D assure la lecture native DWG/DXF. SpatiaLite pour le stockage terrain. Drone + ortho HD IGN pour la précision topographique."});
     break;
-  case 'bet':case 'bet_env':
-    s.logiciels.qgis+=800;s.logiciels.arcgis_pro+=400;
-    s.web.geoserver+=700;s.web.lizmap+=500;
-    s.bases.postgis+=700;s.serveurs.vps_ovh+=500;
-    s.imagerie.sentinel+=500;
-    reasons.push("Secteur <strong>Bureau d'Études</strong> : QGIS + GeoServer ou Lizmap pour la production et la diffusion. PostGIS pour les analyses multicouches et le travail en équipe.");
+  case 'bet': case 'bet_env':
+    addScore('logiciels','qgis',800,'secteur'); addScore('logiciels','arcgis_pro',400,'secteur');
+    addScore('web','geoserver',700,'secteur'); addScore('web','lizmap',500,'secteur');
+    addScore('bases','postgis',700,'secteur'); addScore('serveurs','vps_ovh',500,'secteur');
+    addScore('imagerie','sentinel',500,'secteur');
+    reasons.push({dot:'green',txt:"Secteur <strong>Bureau d'Études</strong> : QGIS + GeoServer ou Lizmap pour la production et la diffusion. PostGIS pour les analyses multicouches et le travail en équipe."});
     break;
   case 'agriculture':
-    s.logiciels.qgis+=800;s.bases.postgis+=600;
-    s.imagerie.sentinel+=800;s.imagerie.dalle_hd+=400;
-    s.terrain.qfield+=600;s.serveurs.vps_ovh+=400;
-    reasons.push("Secteur <strong>Agriculture</strong> : Sentinel-2 (ESA, gratuit) est la référence pour le suivi parcellaire et la détection de cultures. QGIS + plugin Orfeo Toolbox pour la télédétection.");
+    addScore('logiciels','qgis',800,'secteur'); addScore('bases','postgis',600,'secteur');
+    addScore('imagerie','sentinel',800,'secteur'); addScore('imagerie','dalle_hd',400,'secteur');
+    addScore('terrain','qfield',600,'secteur'); addScore('serveurs','vps_ovh',400,'secteur');
+    reasons.push({dot:'green',txt:"Secteur <strong>Agriculture</strong> : Sentinel-2 (ESA, gratuit) est la référence pour le suivi parcellaire et la détection de cultures. QGIS + Orfeo Toolbox pour la télédétection."});
     break;
-  case 'energie':case 'transport':
-    s.logiciels.arcgis_pro+=700;s.logiciels.arcgis_ent+=900;
-    s.web.experience+=1100;s.web.ago+=800;
-    s.bases.postgis+=600;s.bases.arcgis_cloud+=700;
-    s.serveurs.aws+=700;s.terrain.fieldmaps+=800;
-    reasons.push("Secteur <strong>Énergie / Réseaux / Transport</strong> : ArcGIS Enterprise + Experience Builder pour la gestion d'actifs réseau. Field Maps pour les équipes terrain avec mise à jour temps réel.");
+  case 'energie': case 'transport':
+    addScore('logiciels','arcgis_pro',700,'secteur'); addScore('logiciels','arcgis_ent',900,'secteur');
+    addScore('web','experience',1100,'secteur'); addScore('web','ago',800,'secteur');
+    addScore('bases','postgis',600,'secteur'); addScore('bases','arcgis_cloud',700,'secteur');
+    addScore('serveurs','aws',700,'secteur'); addScore('terrain','fieldmaps',800,'secteur');
+    reasons.push({dot:'green',txt:"Secteur <strong>Énergie / Réseaux / Transport</strong> : ArcGIS Enterprise + Experience Builder pour la gestion d'actifs réseau. Field Maps pour les équipes terrain avec mise à jour temps réel."});
     break;
   case 'ong':
-    s.logiciels.osm_editor+=1000;s.logiciels.qgis+=900;
-    s.bases.gpkg+=1000;s.bases.spatialite+=500;
-    s.web.felt+=900;s.web.openlayers+=400;
-    s.serveurs.render+=600;s.serveurs.local+=400;
-    s.imagerie.osm_gmap+=900;s.terrain.qfield+=900;
-    s.logiciels.autocad-=2000;s.logiciels.arcgis_ent-=2000;s.logiciels.geoconcept-=2000;
-    reasons.push("Secteur <strong>Humanitaire / ONG</strong> : JOSM + QGIS + OSM est le standard mondial (HOT, MSF, UNHCR). QField + KoboCollect pour la collecte terrain et les enquêtes socio-économiques hors-ligne.");
+    addScore('logiciels','osm_editor',1000,'secteur'); addScore('logiciels','qgis',900,'secteur');
+    addScore('bases','gpkg',1000,'secteur'); addScore('bases','spatialite',500,'secteur');
+    addScore('web','felt',900,'secteur'); addScore('web','openlayers',400,'secteur');
+    addScore('serveurs','render',600,'secteur'); addScore('serveurs','local',400,'secteur');
+    addScore('imagerie','osm_gmap',900,'secteur'); addScore('terrain','qfield',900,'secteur');
+    addScore('logiciels','autocad',-2000,'secteur'); addScore('logiciels','arcgis_ent',-2000,'secteur');
+    reasons.push({dot:'green',txt:"Secteur <strong>Humanitaire / ONG</strong> : JOSM + QGIS + OSM est le standard mondial (HOT, MSF, UNHCR). QField + KoboCollect pour la collecte terrain et les enquêtes socio-éco hors-ligne."});
     break;
-  case 'immobilier':case 'geomarketing':
-    s.logiciels.geoconcept+=1000;s.logiciels.qgis+=500;
-    s.bases.postgis+=600;s.web.ago+=600;
-    s.imagerie.dalle_hd+=700;
-    reasons.push("Secteur <strong>Immobilier / Géomarketing</strong> : Geoconcept excelle pour l'analyse de territoire et l'optimisation commerciale. Ortho HD IGN pour les études foncières précises.");
+  case 'immobilier': case 'geomarketing':
+    addScore('logiciels','geoconcept',1000,'secteur'); addScore('logiciels','qgis',500,'secteur');
+    addScore('bases','postgis',600,'secteur'); addScore('web','ago',600,'secteur');
+    addScore('imagerie','dalle_hd',700,'secteur');
+    reasons.push({dot:'green',txt:"Secteur <strong>Immobilier / Géomarketing</strong> : Geoconcept excelle pour l'analyse de territoire commercial. Ortho HD IGN pour les études foncières précises."});
     break;
   default:
-    s.logiciels.qgis+=500;s.bases.postgis+=300;
-    reasons.push("Profil <strong>généraliste</strong> : QGIS est le choix polyvalent par défaut pour la majorité des usages SIG.");
+    addScore('logiciels','qgis',500,'secteur'); addScore('bases','postgis',300,'secteur');
+    reasons.push({dot:'green',txt:"Profil <strong>généraliste</strong> : QGIS est le choix polyvalent par défaut pour la majorité des usages SIG."});
 }
 
-/* ── BUDGET ── */
-let budgetMax=Infinity,budgetMin=0;
-switch(budget){
-  case 'zero':budgetMax=0;budgetMin=0;
-    s.logiciels.qgis+=2200;s.logiciels.osm_editor+=900;
-    s.bases.gpkg+=1700;s.bases.spatialite+=900;s.bases.postgis+=800;
-    s.serveurs.local+=1700;s.serveurs.render+=800;
-    s.web.openlayers+=1400;s.web.felt+=1100;s.web.lizmap+=1000;s.web.geoserver+=800;s.web.geonode+=600;
-    s.logiciels.arcgis_ent-=6000;s.logiciels.autocad-=6000;s.logiciels.geoconcept-=6000;s.logiciels.arcgis_pro-=3000;s.logiciels.arcgis_pro_adv-=6000;
-    s.serveurs.aws-=5000;s.serveurs.azure-=5000;
-    s.bases.arcgis_cloud-=3500;s.bases.supabase-=500;
-    s.web.ago-=4000;s.web.qgis_cloud-=1500;
-    reasons.push("Budget <strong>0€</strong> : architecture 100% open source. QGIS, PostGIS, GeoPackage, Lizmap, GeoServer et Felt sont tous libres et gratuits.");
+/* ─────────────────────────────────────────────────────────────────────
+   GROUPE 1 : BUDGET
+───────────────────────────────────────────────────────────────────── */
+let budgetMax = Infinity;
+switch(budget) {
+  case 'zero': budgetMax=0;
+    addScore('logiciels','qgis',2200,'budget'); addScore('logiciels','osm_editor',900,'budget');
+    addScore('bases','gpkg',1700,'budget'); addScore('bases','spatialite',900,'budget'); addScore('bases','postgis',800,'budget');
+    addScore('serveurs','local',1700,'budget'); addScore('serveurs','render',800,'budget');
+    addScore('web','openlayers',1400,'budget'); addScore('web','felt',1100,'budget'); addScore('web','lizmap',1000,'budget'); addScore('web','geoserver',800,'budget'); addScore('web','geonode',600,'budget');
+    addScore('logiciels','arcgis_ent',-6000,'budget'); addScore('logiciels','autocad',-6000,'budget'); addScore('logiciels','geoconcept',-6000,'budget'); addScore('logiciels','arcgis_pro',-3000,'budget'); addScore('logiciels','arcgis_pro_adv',-6000,'budget');
+    addScore('serveurs','aws',-5000,'budget'); addScore('serveurs','azure',-5000,'budget');
+    addScore('bases','arcgis_cloud',-3500,'budget'); addScore('bases','supabase',-500,'budget');
+    addScore('web','ago',-4000,'budget'); addScore('web','qgis_cloud',-1500,'budget');
+    reasons.push({dot:'green',txt:"Budget <strong>0€</strong> : architecture 100% open source. QGIS, PostGIS, GeoPackage, Lizmap, GeoServer et Felt sont tous libres et gratuits."});
     break;
-  case 'starter_free':budgetMax=500;budgetMin=0;
-    s.serveurs.render+=1100;s.serveurs.vps_ovh+=700;
-    s.bases.supabase+=1000;s.bases.gpkg+=700;
-    s.web.qgis_cloud+=800;s.web.felt+=700;s.web.lizmap+=600;
-    s.logiciels.qgis+=1000;
-    s.logiciels.arcgis_ent-=4000;s.logiciels.autocad-=3000;s.logiciels.arcgis_pro_adv-=4000;
-    s.serveurs.aws-=3000;s.serveurs.azure-=3000;
-    reasons.push("Budget <strong>Starter (< 500€)</strong> : open source + hébergement abordable. Render (~84€/an) ou OVH VPS (~120€/an) + QGIS + Lizmap forment une pile complète pour moins de 250€/an.");
+  case 'starter_free': budgetMax=500;
+    addScore('serveurs','render',1100,'budget'); addScore('serveurs','vps_ovh',700,'budget');
+    addScore('bases','supabase',1000,'budget'); addScore('bases','gpkg',700,'budget');
+    addScore('web','qgis_cloud',800,'budget'); addScore('web','felt',700,'budget'); addScore('web','lizmap',600,'budget');
+    addScore('logiciels','qgis',1000,'budget');
+    addScore('logiciels','arcgis_ent',-4000,'budget'); addScore('logiciels','autocad',-3000,'budget'); addScore('logiciels','arcgis_pro_adv',-4000,'budget');
+    addScore('serveurs','aws',-3000,'budget'); addScore('serveurs','azure',-3000,'budget');
+    reasons.push({dot:'green',txt:"Budget <strong>Starter (< 500€)</strong> : QGIS + Render ou OVH VPS + Lizmap pour moins de 250€/an."});
     break;
-  case 'inter_pro':budgetMax=5000;budgetMin=500;
-    s.serveurs.vps_ovh+=1000;s.serveurs.render+=800;
-    s.bases.postgis+=1000;s.bases.supabase+=600;
-    s.web.lizmap+=800;s.web.geoserver+=600;
-    s.logiciels.qgis+=800;s.logiciels.arcgis_pro+=400;
-    s.imagerie.sentinel+=600;s.imagerie.dalle_hd+=400;
-    reasons.push("Budget <strong>Intermédiaire (1 000–5 000€)</strong> : combinaison open source + hébergement dédié + imagerie de qualité. ArcGIS Pro Standard (820€/an) est accessible dans cette enveloppe.");
+  case 'inter_pro': budgetMax=5000;
+    addScore('serveurs','vps_ovh',1000,'budget'); addScore('serveurs','render',800,'budget');
+    addScore('bases','postgis',1000,'budget'); addScore('bases','supabase',600,'budget');
+    addScore('web','lizmap',800,'budget'); addScore('web','geoserver',600,'budget');
+    addScore('logiciels','qgis',800,'budget'); addScore('logiciels','arcgis_pro',400,'budget');
+    addScore('imagerie','sentinel',600,'budget'); addScore('imagerie','dalle_hd',400,'budget');
+    reasons.push({dot:'green',txt:"Budget <strong>Intermédiaire (1 000–5 000€)</strong> : open source + hébergement dédié. ArcGIS Pro Standard (820€/an) accessible dans cette enveloppe."});
     break;
-  case 'entreprise':budgetMax=999999;budgetMin=5000;
-    s.logiciels.arcgis_ent+=1800;s.logiciels.geoconcept+=800;s.logiciels.arcgis_pro_adv+=1200;
-    s.serveurs.aws+=1200;s.serveurs.azure+=1100;
-    s.bases.arcgis_cloud+=1200;s.bases.postgis+=900;
-    s.web.ago+=1200;s.web.experience+=1400;
-    s.imagerie.drone+=800;s.imagerie.dalle_hd+=700;
-    s.terrain.fieldmaps+=1000;
-    reasons.push("Budget <strong>Enterprise (+10 000€)</strong> : niveau compatible avec ArcGIS Enterprise (6 200€/an), AWS/Azure et acquisitions d'imagerie HD.");
+  case 'entreprise': budgetMax=999999;
+    addScore('logiciels','arcgis_ent',1800,'budget'); addScore('logiciels','geoconcept',800,'budget'); addScore('logiciels','arcgis_pro_adv',1200,'budget');
+    addScore('serveurs','aws',1200,'budget'); addScore('serveurs','azure',1100,'budget');
+    addScore('bases','arcgis_cloud',1200,'budget'); addScore('bases','postgis',900,'budget');
+    addScore('web','ago',1200,'budget'); addScore('web','experience',1400,'budget');
+    addScore('imagerie','drone',800,'budget'); addScore('imagerie','dalle_hd',700,'budget');
+    addScore('terrain','fieldmaps',1000,'budget');
+    reasons.push({dot:'green',txt:"Budget <strong>Enterprise (+10 000€)</strong> : compatible avec ArcGIS Enterprise (6 200€/an), AWS/Azure et acquisitions d'imagerie HD."});
     break;
-  case 'nsp':budgetMax=500;budgetMin=0;
-    s.logiciels.qgis+=1000;s.bases.gpkg+=800;s.serveurs.render+=500;
-    reasons.push("Budget <strong>non précisé</strong> : orientation vers les solutions open source gratuites par défaut.");
+  case 'nsp': budgetMax=500;
+    addScore('logiciels','qgis',1000,'budget'); addScore('bases','gpkg',800,'budget'); addScore('serveurs','render',500,'budget');
+    reasons.push({dot:'green',txt:"Budget <strong>non précisé</strong> : orientation par défaut vers les solutions open source gratuites."});
     break;
 }
 
-/* ── VOLUME & COLLABORATION ── */
+/* ─────────────────────────────────────────────────────────────────────
+   GROUPE 2 : VOLUME & COLLABORATION
+───────────────────────────────────────────────────────────────────── */
 if(volume==='leger'&&collab==='solo'){
-  s.bases.gpkg+=1700;s.bases.spatialite+=900;s.serveurs.local+=1000;s.logiciels.qgis+=400;
-  reasons.push("Volume <strong>léger + solo</strong> (< 10 000 objets) : GeoPackage dans un fichier unique suffit. Pas de serveur de base de données nécessaire.");
-}else if(volume==='moyen'||collab==='multi_2_5'){
-  s.bases.postgis+=1000;s.bases.supabase+=600;s.serveurs.vps_ovh+=600;s.serveurs.render+=400;
-  reasons.push("Volume <strong>moyen / petite équipe</strong> : PostGIS ou Supabase permettent l'édition simultanée avec gestion des conflits. Serveur partagé nécessaire.");
-}else if(volume==='lourd'||collab==='multi_10'){
-  s.bases.postgis+=3000;s.bases.arcgis_cloud+=1000;
-  s.bases.gpkg-=2500;s.bases.spatialite-=2500;
-  s.serveurs.aws+=800;s.serveurs.azure+=700;s.serveurs.vps_ovh+=700;
-  s.web.geoserver+=1000;
-  reasons.push("Volume <strong>lourd / grande équipe</strong> (+ 1M d'objets ou +10 utilisateurs simultanés) : PostGIS est indispensable. Infrastructure cloud scalable requise.");
+  addScore('bases','gpkg',1700,'volume_collab'); addScore('bases','spatialite',900,'volume_collab');
+  addScore('serveurs','local',1000,'volume_collab'); addScore('logiciels','qgis',400,'volume_collab');
+  reasons.push({dot:'blue',txt:"Volume <strong>léger + solo</strong> : GeoPackage dans un fichier unique suffit. Pas de serveur de base de données nécessaire."});
+} else if(volume==='moyen'||collab==='multi_2_5'){
+  addScore('bases','postgis',1000,'volume_collab'); addScore('bases','supabase',600,'volume_collab');
+  addScore('serveurs','vps_ovh',600,'volume_collab'); addScore('serveurs','render',400,'volume_collab');
+  reasons.push({dot:'blue',txt:"Volume <strong>moyen / petite équipe</strong> : PostGIS ou Supabase pour l'édition simultanée avec gestion des conflits."});
+} else if(volume==='lourd'||collab==='multi_10'){
+  addScore('bases','postgis',3000,'volume_collab'); addScore('bases','arcgis_cloud',1000,'volume_collab');
+  addScore('bases','gpkg',-2500,'volume_collab'); addScore('bases','spatialite',-2500,'volume_collab');
+  addScore('serveurs','aws',800,'volume_collab'); addScore('serveurs','azure',700,'volume_collab'); addScore('serveurs','vps_ovh',700,'volume_collab');
+  addScore('web','geoserver',1000,'volume_collab');
+  reasons.push({dot:'blue',txt:"Volume <strong>lourd / grande équipe</strong> (+1M d'objets ou +10 utilisateurs) : PostGIS indispensable. Infrastructure cloud scalable requise."});
 }
 
-/* ── SOUVERAINETÉ ── */
-switch(souverain){
-  case 'haute':
-    s.serveurs.vps_ovh+=3000;s.serveurs.local+=2000;s.serveurs.azure+=1200;
-    s.serveurs.aws-=5000;s.serveurs.render-=3500;
-    s.bases.arcgis_cloud-=4500;s.web.ago-=4500;
-    reasons.push("Souveraineté <strong>haute (RGPD)</strong> : hébergement France/Europe obligatoire. OVHcloud France ou Azure France Central répondent aux exigences. AWS et Render (serveurs US) exclus.");
+/* ─────────────────────────────────────────────────────────────────────
+   GROUPE 3 : GOUVERNANCE & SÉCURITÉ  (poids ×1.3 → fort impact)
+───────────────────────────────────────────────────────────────────── */
+// 3a. Souveraineté
+switch(souverain) {
+  case 'sensible':
+    addScore('serveurs','vps_ovh',2400*1.3,'gouvernance'); addScore('serveurs','local',1500*1.3,'gouvernance'); addScore('serveurs','azure',900*1.3,'gouvernance');
+    addScore('serveurs','aws',-4000*1.3,'gouvernance'); addScore('serveurs','render',-2500*1.3,'gouvernance');
+    addScore('bases','arcgis_cloud',-3500*1.3,'gouvernance'); addScore('web','ago',-3500*1.3,'gouvernance');
+    reasons.push({dot:'amber',txt:"Souveraineté <strong>Sensible (RGPD)</strong> : hébergement France/Europe obligatoire. OVHcloud France ou Azure France Central. AWS et Render (serveurs US) exclus par ce paramètre."});
     break;
   case 'critique':
-    s.serveurs.local+=5500;s.serveurs.vps_ovh+=1000;
-    s.serveurs.aws-=6000;s.serveurs.azure-=6000;s.serveurs.render-=6000;
-    s.bases.arcgis_cloud-=6000;s.web.ago-=6000;
-    reasons.push("Souveraineté <strong>critique (Air-gapped)</strong> : serveur physique local obligatoire. Aucune donnée ne sort de vos locaux. Architecture intranet totale.");
-    break;
-  case 'nsp':
-    s.serveurs.vps_ovh+=300;s.serveurs.render+=200;
+    addScore('serveurs','local',5000*1.3,'gouvernance'); addScore('serveurs','vps_ovh',800*1.3,'gouvernance');
+    addScore('serveurs','aws',-6000*1.3,'gouvernance'); addScore('serveurs','azure',-6000*1.3,'gouvernance'); addScore('serveurs','render',-6000*1.3,'gouvernance');
+    addScore('bases','arcgis_cloud',-6000*1.3,'gouvernance'); addScore('web','ago',-6000*1.3,'gouvernance');
+    addScore('web','felt',-3000*1.3,'gouvernance'); addScore('web','qgis_cloud',-3000*1.3,'gouvernance');
+    reasons.push({dot:'red',txt:"Souveraineté <strong>Critique (Air-gapped)</strong> : serveur physique local obligatoire. Aucune donnée ne sort des locaux. Tous les SaaS cloud exclus par ce paramètre."});
     break;
   default:
-    s.serveurs.aws+=400;s.serveurs.render+=300;
+    addScore('serveurs','aws',300,'gouvernance'); addScore('serveurs','render',200,'gouvernance');
 }
 
-/* ── SI EXISTANT — DÉPENDANCES SUITES ── */
-switch(si_exist){
-  case 'azure':case 'm365':
-    s.serveurs.azure+=3000;s.logiciels.arcgis_pro+=800;s.logiciels.arcgis_ent+=900;
-    s.bases.arcgis_cloud+=700;s.web.experience+=800;s.bases.gpkg+=300;
-    reasons.push("SI <strong>Microsoft Azure / M365</strong> : intégration native Azure AD + ArcGIS Enterprise. <strong>OneDrive</strong> peut synchroniser vos fichiers GeoPackage et projets QGIS entre postes. Suite Esri recommandée pour exploiter l'écosystème Microsoft existant.");
+// 3b. SSO / Authentification — crée des dépendances fortes
+switch(auth_sso) {
+  case 'ldap':
+    addScore('web','lizmap',400,'gouvernance'); addScore('web','geoserver',400,'gouvernance'); addScore('logiciels','arcgis_ent',300,'gouvernance');
+    addScore('web','felt',-500,'gouvernance'); addScore('web','qgis_cloud',-300,'gouvernance');
+    reasons.push({dot:'amber',txt:"SSO <strong>LDAP / Active Directory</strong> : Lizmap, GeoServer et ArcGIS Enterprise supportent LDAP nativement. Felt et QGIS Cloud ne supportent pas le SSO d'entreprise."});
+    break;
+  case 'azure_ad':
+    addScore('serveurs','azure',800,'gouvernance'); addScore('logiciels','arcgis_ent',600,'gouvernance'); addScore('web','experience',500,'gouvernance');
+    addScore('web','felt',-300,'gouvernance');
+    reasons.push({dot:'amber',txt:"SSO <strong>Azure AD / Entra ID</strong> : ArcGIS Enterprise + Azure = SSO natif. Azure France Central recommandé. Intégration transparente avec Teams et SharePoint."});
+    break;
+  case 'saml':
+    addScore('logiciels','arcgis_ent',400,'gouvernance'); addScore('web','geoserver',300,'gouvernance');
+    reasons.push({dot:'amber',txt:"SSO <strong>SAML générique (Okta, Keycloak)</strong> : ArcGIS Enterprise et GeoServer supportent SAML 2.0. Keycloak (open source) est recommandé pour les architectures on-premise."});
+    break;
+}
+
+// 3c. Classification des données
+switch(classif) {
+  case 'sensible':
+    addScore('serveurs','vps_ovh',500,'gouvernance'); addScore('serveurs','local',400,'gouvernance');
+    addScore('serveurs','render',-800,'gouvernance'); addScore('serveurs','aws',-600,'gouvernance');
+    reasons.push({dot:'amber',txt:"Données <strong>sensibles</strong> : chiffrement au repos (PostgreSQL pgcrypto) et en transit (SSL/TLS) recommandé. Audit des accès via journalisation PostgreSQL."});
+    break;
+  case 'confidentiel':
+    addScore('serveurs','local',2000,'gouvernance'); addScore('serveurs','vps_ovh',-1000,'gouvernance');
+    addScore('serveurs','aws',-3000,'gouvernance'); addScore('serveurs','render',-3000,'gouvernance');
+    addScore('web','felt',-2000,'gouvernance'); addScore('web','ago',-2000,'gouvernance');
+    reasons.push({dot:'red',txt:"Données <strong>Confidentiel Défense (IGI 1300)</strong> : infrastructure physique interne obligatoire, homologation ANSSI requise. Aucun cloud commercial accepté."});
+    break;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   GROUPE 4 : COMPÉTENCES INTERNES  (poids ×1.2)
+───────────────────────────────────────────────────────────────────── */
+switch(competences) {
+  case 'debutant':
+    addScore('web','felt',600*1.2,'competences'); addScore('web','ago',500*1.2,'competences'); addScore('web','qgis_cloud',400*1.2,'competences');
+    addScore('serveurs','render',400*1.2,'competences'); addScore('bases','supabase',500*1.2,'competences');
+    addScore('web','lizmap',-300*1.2,'competences'); addScore('web','geoserver',-400*1.2,'competences'); addScore('bases','postgis',-200*1.2,'competences');
+    reasons.push({dot:'blue',txt:"Niveau <strong>Débutant</strong> : solutions SaaS privilégiées (Felt, ArcGIS Online, Supabase, Render). Zéro configuration serveur. L'équipe peut être opérationnelle en quelques heures."});
+    break;
+  case 'intermediaire':
+    addScore('web','lizmap',300,'competences'); addScore('bases','postgis',400,'competences'); addScore('serveurs','vps_ovh',300,'competences');
+    reasons.push({dot:'blue',txt:"Niveau <strong>Intermédiaire</strong> : QGIS + PostGIS + Lizmap/GeoServer sur VPS OVH. Bonne balance complexité/contrôle."});
+    break;
+  case 'administrateur':
+    addScore('web','lizmap',600*1.2,'competences'); addScore('web','geoserver',500*1.2,'competences'); addScore('bases','postgis',700*1.2,'competences');
+    addScore('serveurs','vps_ovh',600*1.2,'competences'); addScore('serveurs','local',400*1.2,'competences');
+    addScore('web','felt',-200,'competences'); addScore('web','ago',-200,'competences');
+    reasons.push({dot:'blue',txt:"Niveau <strong>Administrateur SIG</strong> : architecture complète PostGIS + GeoServer + Lizmap sur VPS OVH. Contrôle total de la chaîne de diffusion."});
+    break;
+  case 'developpeur':
+    addScore('web','lizmap',500*1.2,'competences'); addScore('web','openlayers',600*1.2,'competences'); addScore('web','geoserver',400*1.2,'competences');
+    addScore('bases','postgis',800*1.2,'competences'); addScore('serveurs','vps_ovh',500*1.2,'competences'); addScore('serveurs','local',300*1.2,'competences');
+    addScore('web','felt',-400,'competences'); addScore('web','ago',-300,'competences');
+    reasons.push({dot:'blue',txt:"Niveau <strong>Développeur</strong> : architecture sur mesure recommandée — PostGIS + GeoServer + OpenLayers + API REST Python. Flexibilité maximale."});
+    break;
+}
+
+// Maintenance serveur
+switch(maintenance) {
+  case 'zero':
+    addScore('web','felt',400,'competences'); addScore('web','ago',400,'competences');
+    addScore('bases','supabase',400,'competences'); addScore('serveurs','render',400,'competences');
+    addScore('serveurs','local',-500,'competences'); addScore('serveurs','vps_ovh',-200,'competences');
+    break;
+  case 'avance':
+    addScore('serveurs','vps_ovh',400,'competences'); addScore('serveurs','local',300,'competences');
+    addScore('bases','postgis',300,'competences'); addScore('web','geoserver',300,'competences');
+    break;
+}
+
+// Support francophone
+if(support_fr==='oui'){
+  addScore('logiciels','qgis',300,'competences'); addScore('web','lizmap',200,'competences'); addScore('logiciels','geoconcept',200,'competences');
+  addScore('logiciels','arcgis_ent',200,'competences');
+  reasons.push({dot:'blue',txt:"Support <strong>francophone requis</strong> : QGIS (communauté FR très active), Lizmap (3liz, FR), Geoconcept (FR), Esri France. Ces solutions disposent de documentation et formations en français."});
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   GROUPE 5 : INTEROPÉRABILITÉ MÉTIER  (poids ×1.1)
+───────────────────────────────────────────────────────────────────── */
+if(interop_autocad){
+  addScore('logiciels','autocad',800*1.1,'interop'); addScore('logiciels','qgis',300*1.1,'interop');
+  addScore('logiciels','arcgis_pro',300*1.1,'interop');
+  reasons.push({dot:'amber',txt:"Interopérabilité <strong>AutoCAD / BIM</strong> : AutoCAD Map 3D lit les DWG nativement (recommandé si déjà licencié). QGIS avec plugin DWG/DXF en alternative gratuite. FME pour les échanges IFC/Revit complexes."});
+}
+if(interop_erp){
+  addScore('bases','postgis',400*1.1,'interop'); addScore('logiciels','arcgis_ent',300*1.1,'interop');
+  addScore('web','ago',200*1.1,'interop');
+  reasons.push({dot:'amber',txt:"Interopérabilité <strong>ERP / CRM</strong> : PostGIS + PostgREST pour une API spatiale personnalisée. ArcGIS Online connecteurs Salesforce/SAP natifs. Connexion Power BI directe via connecteur PostgreSQL."});
+}
+if(interop_bi){
+  addScore('bases','postgis',500*1.1,'interop'); addScore('serveurs','azure',400*1.1,'interop');
+  addScore('web','ago',300*1.1,'interop');
+  reasons.push({dot:'amber',txt:"Interopérabilité <strong>BI / Décisionnel</strong> : PostGIS se connecte nativement à Power BI, Tableau et Grafana. Azure + Power BI Maps = dashboard cartographique natif. ArcGIS Dashboards inclus dans la suite Esri."});
+}
+if(interop_iot){
+  addScore('bases','postgis',600*1.1,'interop'); addScore('serveurs','aws',400*1.1,'interop'); addScore('serveurs','azure',300*1.1,'interop');
+  addScore('bases','gpkg',-800*1.1,'interop'); addScore('bases','spatialite',-800*1.1,'interop');
+  reasons.push({dot:'amber',txt:"Interopérabilité <strong>IoT / Capteurs SCADA</strong> : PostgreSQL + TimescaleDB (extension PostGIS) pour les séries temporelles. MQTT comme protocole. Grafana pour la visualisation en temps réel. GeoPackage exclu (pas de support flux temps réel)."});
+}
+if(interop_opendata){
+  addScore('web','geonode',600*1.1,'interop'); addScore('web','geoserver',400*1.1,'interop');
+  addScore('bases','postgis',300*1.1,'interop');
+  reasons.push({dot:'amber',txt:"Interopérabilité <strong>Open Data / INSPIRE</strong> : GeoNode = plateforme de référence avec catalogue de métadonnées ISO 19115 et INSPIRE intégré. GeoServer publie les flux WMS/WFS standards OGC."});
+}
+if(interop_api){
+  addScore('bases','postgis',400*1.1,'interop'); addScore('web','geoserver',300*1.1,'interop');
+  addScore('bases','supabase',300*1.1,'interop');
+  reasons.push({dot:'amber',txt:"Interopérabilité <strong>API REST / Webhooks</strong> : Supabase génère des API REST automatiquement. PostGIS + PostgREST pour une API spatiale personnalisée. GeoServer publie les standards WFS/WMS/WCS."});
+}
+
+// ETL
+switch(etl) {
+  case 'qgis_modeler':
+    addScore('logiciels','qgis',400,'interop');
+    reasons.push({dot:'amber',txt:"ETL <strong>Modélisateur QGIS</strong> : gratuit, intégré à QGIS. Automatise les traitements répétitifs (reprojection, nettoyage, jointures). Suffisant pour les workflows standards."});
+    break;
+  case 'python_gdal':
+    addScore('logiciels','qgis',300,'interop'); addScore('bases','postgis',200,'interop');
+    reasons.push({dot:'amber',txt:"ETL <strong>Python / GDAL</strong> : scripts sur mesure avec GDAL/OGR, Geopandas, Shapely. Gratuit et puissant. Idéal pour les développeurs qui veulent automatiser sans licence."});
+    break;
+  case 'fme':
+    addScore('logiciels','arcgis_pro',200,'interop'); addScore('logiciels','arcgis_ent',200,'interop');
+    reasons.push({dot:'amber',txt:"ETL <strong>Safe FME</strong> : leader de la conversion géospatiale (~3 500€/an). Transforme n'importe quel format vers n'importe quel format. Indispensable pour les environnements multi-formats complexes."});
+    break;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   GROUPE 6 : FRÉQUENCE & AUDIENCE
+───────────────────────────────────────────────────────────────────── */
+switch(frequence_maj) {
+  case 'periodique':
+    addScore('bases','postgis',400,'frequence'); addScore('serveurs','vps_ovh',300,'frequence');
+    break;
+  case 'temps_reel':
+    addScore('bases','postgis',800,'frequence'); addScore('serveurs','aws',500,'frequence'); addScore('serveurs','azure',400,'frequence');
+    addScore('bases','gpkg',-1500,'frequence'); addScore('bases','spatialite',-1500,'frequence');
+    addScore('web','geoserver',400,'frequence');
+    reasons.push({dot:'blue',txt:"Fréquence <strong>Temps réel</strong> : PostgreSQL + TimescaleDB pour les séries temporelles. GeoServer pour les flux WFS dynamiques. Infrastructure cloud scalable requise (AWS/Azure). GeoPackage exclu."});
+    break;
+}
+
+switch(audience) {
+  case 'partenaires':
+    addScore('web','felt',300,'frequence'); addScore('web','lizmap',200,'frequence');
+    break;
+  case 'public_moyen':
+    addScore('web','felt',400,'frequence'); addScore('web','geonode',300,'frequence');
+    addScore('serveurs','vps_ovh',300,'frequence'); addScore('serveurs','render',200,'frequence');
+    addScore('serveurs','local',-400,'frequence');
+    reasons.push({dot:'blue',txt:"Audience <strong>grand public modéré</strong> : éviter les serveurs locaux (bande passante limitée). VPS OVH Essential suffisant pour quelques centaines de visites/mois."});
+    break;
+  case 'public_large':
+    addScore('serveurs','aws',600,'frequence'); addScore('serveurs','azure',500,'frequence');
+    addScore('web','felt',400,'frequence'); addScore('web','geonode',300,'frequence');
+    addScore('serveurs','local',-1500,'frequence'); addScore('serveurs','render',-500,'frequence');
+    reasons.push({dot:'blue',txt:"Audience <strong>grand public large (+10 000 visites/mois)</strong> : infrastructure cloud scalable obligatoire (AWS/Azure). Un serveur local ou un petit VPS sera saturé. CDN recommandé pour les tuiles cartographiques."});
+    break;
+}
+
+switch(temps_reel) {
+  case 'suivi_vehicule':
+    addScore('bases','postgis',600,'frequence'); addScore('serveurs','aws',400,'frequence');
+    addScore('web','ago',300,'frequence'); addScore('web','experience',300,'frequence');
+    reasons.push({dot:'blue',txt:"Temps réel <strong>suivi véhicules</strong> : PostGIS + protocole MQTT/WebSocket. ArcGIS Online + Velocity pour la visualisation en temps réel des flottes. AWS IoT Core pour l'ingestion de flux GPS."});
+    break;
+  case 'capteurs_iot':
+    addScore('bases','postgis',800,'frequence'); addScore('serveurs','aws',600,'frequence'); addScore('serveurs','azure',500,'frequence');
+    addScore('bases','gpkg',-1000,'frequence');
+    reasons.push({dot:'blue',txt:"Temps réel <strong>IoT / SCADA</strong> : PostGIS + TimescaleDB pour les séries temporelles géolocalisées. MQTT comme protocole de transport. Grafana pour les tableaux de bord temps réel. AWS IoT ou Azure IoT Hub pour l'ingestion."});
+    break;
+}
+
+switch(scalabilite) {
+  case 'pics':
+    addScore('serveurs','aws',500,'frequence'); addScore('serveurs','azure',400,'frequence');
+    addScore('serveurs','local',-600,'frequence'); addScore('serveurs','vps_ovh',-200,'frequence');
+    reasons.push({dot:'blue',txt:"Scalabilité <strong>pics d'audience</strong> : AWS ou Azure avec autoscaling. Un VPS OVH à capacité fixe ne peut pas absorber une montée en charge soudaine. Considérer un CDN (Cloudflare) pour les tuiles statiques."});
+    break;
+  case 'elastique':
+    addScore('serveurs','aws',800,'frequence'); addScore('serveurs','azure',700,'frequence');
+    addScore('serveurs','local',-1000,'frequence'); addScore('serveurs','render',-300,'frequence');
+    reasons.push({dot:'blue',txt:"Scalabilité <strong>élastique / autoscaling</strong> : AWS Auto Scaling Groups ou Azure VMSS obligatoires. Kubernetes pour les architectures microservices. Infrastructure as Code (Terraform) recommandée."});
+    break;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   GROUPE 7 : SI EXISTANT — DÉPENDANCES SUITES
+───────────────────────────────────────────────────────────────────── */
+switch(si_exist) {
+  case 'azure': case 'm365':
+    addScore('serveurs','azure',3000,'si_deps'); addScore('logiciels','arcgis_pro',800,'si_deps'); addScore('logiciels','arcgis_ent',900,'si_deps');
+    addScore('bases','arcgis_cloud',700,'si_deps'); addScore('web','experience',800,'si_deps'); addScore('bases','gpkg',300,'si_deps');
+    reasons.push({dot:'green',txt:"SI <strong>Microsoft Azure / M365</strong> : ArcGIS Enterprise s'intègre nativement avec Azure AD (SSO). OneDrive synchronise vos GeoPackage. Power BI Maps pour les tableaux de bord spatiaux."});
     break;
   case 'aws':
-    s.serveurs.aws+=3000;s.bases.supabase+=700;s.bases.postgis+=600;
-    reasons.push("SI <strong>Amazon AWS</strong> : RDS PostGIS sur AWS + GeoServer EC2. Supabase est une alternative managée compatible AWS moins coûteuse.");
+    addScore('serveurs','aws',3000,'si_deps'); addScore('bases','supabase',700,'si_deps'); addScore('bases','postgis',600,'si_deps');
+    reasons.push({dot:'green',txt:"SI <strong>Amazon AWS</strong> : RDS PostGIS sur AWS (eu-west-3 Paris). GeoServer sur EC2. Supabase compatible AWS. S3 pour le stockage raster volumique."});
     break;
-  case 'google':case 'google_workspace':
-    s.serveurs.render+=900;s.bases.supabase+=500;s.web.felt+=400;s.bases.gpkg+=300;
-    reasons.push("SI <strong>Google Cloud / Workspace</strong> : <strong>Google Drive</strong> synchronise vos fichiers GeoPackage et projets QGIS entre postes. Felt s'exporte en lien Google-compatible. BigQuery GIS pour analyses spatiales à grande échelle.");
+  case 'google': case 'google_workspace':
+    addScore('serveurs','render',900,'si_deps'); addScore('bases','supabase',500,'si_deps'); addScore('web','felt',400,'si_deps'); addScore('bases','gpkg',300,'si_deps');
+    reasons.push({dot:'green',txt:"SI <strong>Google Cloud / Workspace</strong> : Google Drive synchronise vos GeoPackage. Felt exporte en lien Google-compatible. BigQuery GIS pour les analyses spatiales à grande échelle."});
     break;
   case 'apple_icloud':
-    s.logiciels.qgis+=800;s.bases.gpkg+=700;s.terrain.qfield+=600;s.serveurs.local+=400;
-    s.logiciels.arcgis_pro-=1500;s.logiciels.arcgis_pro_adv-=1500;
-    reasons.push("SI <strong>Apple / iCloud Drive</strong> : ⚠️ ArcGIS Pro ne fonctionne pas nativement sur Mac (Windows requis ou Parallels). QGIS est 100% natif macOS. QField iOS pour le terrain. Vos projets QGIS et GeoPackage peuvent être synchronisés via <strong>iCloud Drive</strong> — compatible avec QGIS macOS et QField iOS.");
+    addScore('logiciels','qgis',800,'si_deps'); addScore('bases','gpkg',700,'si_deps'); addScore('terrain','qfield',600,'si_deps'); addScore('serveurs','local',400,'si_deps');
+    addScore('logiciels','arcgis_pro',-1500,'si_deps'); addScore('logiciels','arcgis_pro_adv',-1500,'si_deps');
+    reasons.push({dot:'red',txt:"SI <strong>Apple / iCloud</strong> : ⚠️ ArcGIS Pro et AutoCAD Map 3D sont Windows uniquement. QGIS est 100% natif macOS. iCloud Drive synchronise vos GeoPackage entre Mac et QField iOS."});
     break;
   case 'on_premise':
-    s.serveurs.local+=3000;s.web.geoserver+=1000;s.bases.postgis+=1300;
-    reasons.push("SI <strong>On-Premise</strong> : PostGIS + GeoServer sur serveur interne. Zéro cloud, données sur site, zéro coût récurrent cloud.");
+    addScore('serveurs','local',3000,'si_deps'); addScore('web','geoserver',1000,'si_deps'); addScore('bases','postgis',1300,'si_deps');
+    reasons.push({dot:'green',txt:"SI <strong>On-Premise</strong> : PostGIS + GeoServer sur serveur interne. Souveraineté totale, zéro coût cloud récurrent."});
     break;
   case 'autocad_si':
-    s.logiciels.autocad+=800;s.logiciels.qgis+=400;
-    reasons.push("SI <strong>AutoCAD déjà licencié</strong> : AutoCAD Map 3D exploite vos fichiers DWG existants. QGIS avec plugin DWG en alternative gratuite.");
+    addScore('logiciels','autocad',800,'si_deps'); addScore('logiciels','qgis',400,'si_deps');
+    reasons.push({dot:'green',txt:"SI <strong>AutoCAD déjà licencié</strong> : AutoCAD Map 3D exploite vos fichiers DWG existants. QGIS avec plugin DWG en alternative gratuite."});
     break;
   case 'arcgis_si':
-    s.logiciels.arcgis_ent+=800;s.logiciels.arcgis_pro+=800;s.logiciels.arcgis_pro_adv+=600;
-    s.web.experience+=700;s.web.ago+=600;s.terrain.fieldmaps+=600;
-    reasons.push("SI <strong>ArcGIS déjà licencié</strong> : exploitez votre investissement Esri — ArcGIS Pro + Online + Field Maps + Experience Builder forment une suite cohérente sans surcoût majeur.");
+    addScore('logiciels','arcgis_ent',800,'si_deps'); addScore('logiciels','arcgis_pro',800,'si_deps');
+    addScore('web','experience',700,'si_deps'); addScore('web','ago',600,'si_deps'); addScore('terrain','fieldmaps',600,'si_deps');
+    reasons.push({dot:'green',txt:"SI <strong>Licences Esri existantes</strong> : ArcGIS Pro + Online + Field Maps + Experience Builder — suite cohérente sans surcoût majeur."});
     break;
   case 'cloud_tier':
-    s.serveurs.vps_ovh+=1500;s.bases.postgis+=500;s.web.lizmap+=400;
-    reasons.push("SI <strong>Cloud souverain</strong> : OVHcloud, Scaleway ou Hetzner. PostGIS + Lizmap ou GeoServer s'y déploient via Docker en moins d'1h.");
+    addScore('serveurs','vps_ovh',1500,'si_deps'); addScore('bases','postgis',500,'si_deps'); addScore('web','lizmap',400,'si_deps');
+    reasons.push({dot:'green',txt:"SI <strong>Cloud souverain</strong> : OVHcloud, Scaleway ou Hetzner. PostGIS + Lizmap ou GeoServer en Docker en moins d'1h."});
     break;
   case 'bureautique_cloud':
-    s.serveurs.aws+=400;s.serveurs.azure+=400;s.bases.supabase+=300;
-    reasons.push("Forte <strong>consommation data (> 90 jours)</strong> : stockage objet dédié recommandé (S3 / OVH Object Storage) pour vos rasters volumineuses.");
+    addScore('serveurs','aws',400,'si_deps'); addScore('serveurs','azure',400,'si_deps'); addScore('bases','supabase',300,'si_deps');
+    reasons.push({dot:'green',txt:"Forte <strong>consommation data (+90j)</strong> : stockage objet dédié recommandé (S3 / OVH Object Storage) pour vos rasters volumineux."});
     break;
 }
 
-/* ── COMPATIBILITÉ MAC / STOCKAGE CLOUD ── */
-// Stockage cloud bureautique → recommande GeoPackage synchronisé
-const storageCloud = {'m365':'OneDrive','google_workspace':'Google Drive','apple_icloud':'iCloud Drive','google':'Google Drive'};
-const storageLabel = storageCloud[si_exist] || null;
+// Stockage cloud bureautique → GeoPackage
+const STORAGE_CLOUD = {'m365':'OneDrive','google_workspace':'Google Drive','apple_icloud':'iCloud Drive','google':'Google Drive'};
+const storageLabel = STORAGE_CLOUD[si_exist];
 if(storageLabel){
-  // Renforcer GeoPackage car compatible avec tous ces storages
-  s.bases.gpkg += 400;
-  reasons.push("Stockage <strong>" + storageLabel + " détecté</strong> : vos fichiers GeoPackage (.gpkg) peuvent être synchronisés automatiquement via " + storageLabel + " et ouverts dans QGIS sur tous vos postes. Compatible Windows, macOS et iOS (QField).");
-}
-// Mac uniquement : ArcGIS Pro Windows only
-const isMac = (si_exist === 'apple_icloud');
-if(isMac){
-  // Déjà pénalisé dans le bloc apple_icloud, on ajoute une raison d'alerte
-  reasons.push("⚠️ <strong>Compatibilité macOS</strong> : ArcGIS Pro et AutoCAD Map 3D sont des logiciels Windows. Sur Mac, QGIS est la seule solution SIG native. ArcGIS Pro peut fonctionner via Parallels Desktop ou Boot Camp mais avec des performances réduites.");
+  addScore('bases','gpkg',400,'si_deps');
+  reasons.push({dot:'green',txt:"Stockage <strong>"+storageLabel+" détecté</strong> : vos fichiers GeoPackage (.gpkg) se synchronisent automatiquement via "+storageLabel+". Compatible QGIS (Windows/macOS), QField (iOS/Android)."});
 }
 
-/* ── DIFFUSION WEB ── */
-switch(diffusion){
+/* ─────────────────────────────────────────────────────────────────────
+   GROUPE 8 : DIFFUSION WEB
+───────────────────────────────────────────────────────────────────── */
+switch(diffusion) {
   case 'interne':
-    s.logiciels.qgis+=1000;s.bases.gpkg+=1500;s.serveurs.local+=1200;
-    s.web.ago-=2000;s.web.felt-=1500;s.web.qgis_cloud-=1000;
-    reasons.push("Usage <strong>interne uniquement</strong> : priorité au stockage local (GeoPackage) et au logiciel desktop. Aucun portail web nécessaire.");
+    addScore('logiciels','qgis',1000,'diffusion_web'); addScore('bases','gpkg',1500,'diffusion_web'); addScore('serveurs','local',1200,'diffusion_web');
+    addScore('web','ago',-2000,'diffusion_web'); addScore('web','felt',-1500,'diffusion_web'); addScore('web','qgis_cloud',-1000,'diffusion_web');
+    reasons.push({dot:'green',txt:"Usage <strong>interne uniquement</strong> : priorité au stockage local (GeoPackage) et au logiciel desktop. Aucun portail web nécessaire."});
     break;
   case 'simple_web':
-    s.web.felt+=1700;s.web.qgis_cloud+=1300;s.web.ago+=900;
-    reasons.push("Diffusion <strong>web simple</strong> : Felt est la solution la plus rapide (lien partageable en 1 clic). QGIS Cloud pour publier un projet QGIS existant sans coder.");
+    addScore('web','felt',1700,'diffusion_web'); addScore('web','qgis_cloud',1300,'diffusion_web'); addScore('web','ago',900,'diffusion_web');
+    reasons.push({dot:'green',txt:"Diffusion <strong>web simple</strong> : Felt est la solution la plus rapide (lien partageable en 1 clic). QGIS Cloud pour publier un projet QGIS existant sans coder."});
     break;
   case 'collaboratif':
-    s.web.lizmap+=2200;s.web.experience+=1700;s.web.felt+=900;
-    s.bases.postgis+=1700;s.serveurs.vps_ovh+=1100;
-    reasons.push("Diffusion <strong>collaborative</strong> : PostGIS est indispensable pour gérer les droits d'édition simultanée. Lizmap (QGIS) ou Experience Builder (Esri) pour le portail d'édition.");
+    addScore('web','lizmap',2200,'diffusion_web'); addScore('web','experience',1700,'diffusion_web'); addScore('web','felt',900,'diffusion_web');
+    addScore('bases','postgis',1700,'diffusion_web'); addScore('serveurs','vps_ovh',1100,'diffusion_web');
+    reasons.push({dot:'green',txt:"Diffusion <strong>collaborative</strong> : PostGIS pour les droits d'édition simultanée. Lizmap (QGIS) ou Experience Builder (Esri) pour le portail d'édition."});
     break;
   case 'portail_metier':
-    s.web.lizmap+=2800;s.web.geoserver+=1500;s.web.geonode+=1000;
-    s.bases.postgis+=1800;s.serveurs.vps_ovh+=1200;
-    reasons.push("Portail <strong>métier</strong> : Lizmap publie vos formulaires QGIS sur le web avec 100% de fidélité. GeoServer pour les flux OGC standards. PostGIS pour la gestion des données.");
+    addScore('web','lizmap',2800,'diffusion_web'); addScore('web','geoserver',1500,'diffusion_web'); addScore('web','geonode',1000,'diffusion_web');
+    addScore('bases','postgis',1800,'diffusion_web'); addScore('serveurs','vps_ovh',1200,'diffusion_web');
+    reasons.push({dot:'green',txt:"Portail <strong>métier</strong> : Lizmap publie vos formulaires QGIS avec 100% de fidélité. GeoServer pour les flux OGC. PostGIS pour la gestion des données."});
     break;
   case 'grand_public':
-    s.web.geonode+=2000;s.web.openlayers+=1200;s.web.felt+=800;
-    s.bases.postgis+=1000;
-    reasons.push("Diffusion <strong>grand public / open data</strong> : GeoNode pour le portail de données ouvertes avec catalogue et métadonnées. OpenLayers pour une intégration légère dans un site existant.");
-    break;
-  case 'nsp':
-    s.web.felt+=600;s.web.qgis_cloud+=400;
+    addScore('web','geonode',2000,'diffusion_web'); addScore('web','openlayers',1200,'diffusion_web'); addScore('web','felt',800,'diffusion_web');
+    addScore('bases','postgis',1000,'diffusion_web');
+    reasons.push({dot:'green',txt:"Diffusion <strong>grand public / open data</strong> : GeoNode pour le portail de données ouvertes avec catalogue INSPIRE. OpenLayers pour une intégration légère dans un site existant."});
     break;
 }
 
-/* ── IMAGERIE ── */
-switch(imagerie){
-  case 'gratuit_local':s.imagerie.osm_gmap+=2400;break;
-  case 'payant_mensuel':s.imagerie.sentinel+=2400;break;
-  case 'achat_precision':s.imagerie.dalle_hd+=2400;break;
-  case 'drone':s.imagerie.drone+=2400;break;
-  case 'nsp':s.imagerie.osm_gmap+=1000;break;
+/* ─────────────────────────────────────────────────────────────────────
+   GROUPE 9 : TERRAIN & IMAGERIE
+───────────────────────────────────────────────────────────────────── */
+switch(imagerie) {
+  case 'gratuit_local':  addScore('imagerie','osm_gmap',2400,'terrain_imagerie'); break;
+  case 'payant_mensuel': addScore('imagerie','sentinel',2400,'terrain_imagerie'); break;
+  case 'achat_precision':addScore('imagerie','dalle_hd',2400,'terrain_imagerie'); break;
+  case 'drone':          addScore('imagerie','drone',2400,'terrain_imagerie'); break;
+  case 'nsp':            addScore('imagerie','osm_gmap',1000,'terrain_imagerie'); break;
 }
 
-/* ── TERRAIN ── */
 const besoinTerrain = (terrain!=='non' && terrain!=='nsp');
-switch(terrain){
-  case 'qfield':s.terrain.qfield+=1400;s.logiciels.qgis+=500;break;
-  case 'kobo':s.terrain.qfield+=1400;s.logiciels.qgis+=400;
-    reasons.push("KoboCollect <strong>inclus dans QField + KoboCollect</strong> : les deux outils sont complémentaires — QField pour la carto précise, KoboCollect pour les enquêtes socio-économiques à analyse statistique.");
+switch(terrain) {
+  case 'qfield':
+    addScore('terrain','qfield',1400,'terrain_imagerie'); addScore('logiciels','qgis',500,'terrain_imagerie');
     break;
-  case 'fieldmaps':s.terrain.fieldmaps+=1400;s.logiciels.arcgis_pro+=500;s.logiciels.arcgis_ent+=400;break;
-  case 'nsp':s.terrain.qfield+=300;break;
-  case 'non':break;
+  case 'kobo':
+    addScore('terrain','qfield',1400,'terrain_imagerie'); addScore('logiciels','qgis',400,'terrain_imagerie');
+    reasons.push({dot:'green',txt:"KoboCollect <strong>intégré dans QField + KoboCollect</strong> : les deux outils sont complémentaires — QField pour la carto précise, KoboCollect pour les enquêtes socio-éco avec analyses statistiques."});
+    break;
+  case 'fieldmaps':
+    addScore('terrain','fieldmaps',1400,'terrain_imagerie'); addScore('logiciels','arcgis_pro',500,'terrain_imagerie'); addScore('logiciels','arcgis_ent',400,'terrain_imagerie');
+    break;
 }
 
-/* ── WINNER ── */
-function getWinner(cat){return Object.keys(s[cat]).reduce((a,b)=>s[cat][a]>=s[cat][b]?a:b)}
-function getTop(cat,n){return Object.entries(s[cat]).sort((a,b)=>b[1]-a[1]).slice(0,n).map(e=>e[0])}
-const win={logiciels:getWinner('logiciels'),bases:getWinner('bases'),serveurs:getWinner('serveurs'),web:getWinner('web'),imagerie:getWinner('imagerie'),terrain:getWinner('terrain')};
+/* ═══════════════════════════════════════════════════════════════════════
+   CALCUL DES SCORES FINAUX — Application des poids de groupe
+═══════════════════════════════════════════════════════════════════════ */
+// Le score brut de chaque catégorie est déjà pondéré via addScore
+// On calcule maintenant le winner par catégorie
+function getWinner(cat){ return Object.keys(s[cat]).reduce((a,b) => s[cat][a]>=s[cat][b]?a:b) }
+function getTop(cat,n){ return Object.entries(s[cat]).sort((a,b)=>b[1]-a[1]).slice(0,n).map(e=>e[0]) }
 
-/* ── SCORE ── */
-function maxCat(c){return Math.max(1,...Object.values(s[c]))}
-const totalScore=Object.keys(win).reduce((a,c)=>a+Math.max(0,s[c][win[c]]),0);
-const totalMax=Object.keys(win).reduce((a,c)=>a+maxCat(c),0);
-const pct=Math.min(99,Math.max(44,Math.round((totalScore/totalMax)*100)));
+const win = {
+  logiciels: getWinner('logiciels'),
+  bases:     getWinner('bases'),
+  serveurs:  getWinner('serveurs'),
+  web:       getWinner('web'),
+  imagerie:  getWinner('imagerie'),
+  terrain:   getWinner('terrain')
+};
 
-/* ── TITRE ── */
+/* Score de pertinence global — normalisé 44–99 */
+function maxCat(c){ return Math.max(1,...Object.values(s[c])) }
+const totalScore = Object.keys(win).reduce((a,c)=>a+Math.max(0,s[c][win[c]]),0);
+const totalMax   = Object.keys(win).reduce((a,c)=>a+maxCat(c),0);
+const pct = Math.min(99, Math.max(44, Math.round((totalScore/totalMax)*100)));
+
+/* ── META PAGE ── */
 function buildTitle(){
-  const m={lizmap:`Architecture ${DATA.logiciels[win.logiciels].n} + Lizmap — Portail métier souverain`,experience:'Suite Esri — Écosystème Enterprise intégré',ago:'ArcGIS Online — Plateforme SaaS Esri',felt:`Diffusion web rapide — ${DATA.logiciels[win.logiciels].n} + Felt`,geoserver:`Infrastructure OGC ouverte — GeoServer + PostGIS`,geonode:'Plateforme open data — GeoNode',openlayers:`Web-SIG sur mesure — ${DATA.logiciels[win.logiciels].n} + JavaScript`,qgis_cloud:`Publication rapide — QGIS Cloud + ${DATA.serveurs[win.serveurs].n}`};
+  const m={
+    lizmap:`Architecture ${DATA.logiciels[win.logiciels].n} + Lizmap — Portail métier souverain`,
+    experience:'Suite Esri — Écosystème Enterprise intégré',
+    ago:'ArcGIS Online — Plateforme SaaS Esri complète',
+    felt:`Diffusion web rapide — ${DATA.logiciels[win.logiciels].n} + Felt`,
+    geoserver:`Infrastructure OGC ouverte — GeoServer + PostGIS`,
+    geonode:'Plateforme open data — GeoNode + PostGIS',
+    openlayers:`Web-SIG sur mesure — ${DATA.logiciels[win.logiciels].n} + JavaScript`,
+    qgis_cloud:`Publication rapide — QGIS Cloud + ${DATA.serveurs[win.serveurs].n}`
+  };
   return m[win.web]||`Architecture SIG — ${DATA.logiciels[win.logiciels].n} + ${DATA.web[win.web].n}`;
 }
 function buildDesc(){
   const t=[];
   if(budget==='zero')t.push("100% open source, 0€ de licence.");
-  if(souverain==='haute')t.push("Données hébergées France/Europe (RGPD).");
+  if(souverain==='sensible')t.push("Données hébergées France/Europe (RGPD).");
   if(souverain==='critique')t.push("Architecture air-gapped, intranet total.");
   if(collab==='multi_10')t.push("Dimensionné pour +10 utilisateurs simultanés.");
-  if(volume==='lourd')t.push("Optimisé pour les gros volumes.");
+  if(volume==='lourd')t.push("Optimisé pour les gros volumes de données.");
   if(si_exist==='azure'||si_exist==='m365')t.push("Intégré à votre infrastructure Microsoft.");
   if(si_exist==='aws')t.push("Compatible vos services AWS.");
-  if(si_exist==='arcgis_si')t.push("Suite Esri cohérente avec vos licences existantes.");
+  if(si_exist==='arcgis_si')t.push("Suite Esri cohérente avec vos licences.");
+  if(competences==='debutant')t.push("Solutions clé-en-main pour équipe débutante.");
+  if(interop_iot)t.push("Conçu pour l'intégration IoT temps réel.");
   if(!t.length)t.push("Architecture équilibrée adaptée à votre profil et contraintes.");
   return t.join(" · ");
 }
 
-/* ── META ── */
-document.getElementById('heroTitle').textContent=buildTitle();
-document.getElementById('heroSub').textContent=buildDesc();
-document.getElementById('heroClient').textContent=nom;
-document.getElementById('heroSecteur').textContent=SECTEUR_LABELS[secteur]||'Non précisé';
-document.getElementById('heroMode').textContent=mode==='expert'?'Mode Expert Professionnel':'Mode Standard';
-document.getElementById('headerBadge').textContent='Client : '+nom;
-document.getElementById('scenarioTitle').textContent=buildTitle();
-document.getElementById('scenarioDesc').textContent=buildDesc();
-document.getElementById('scoreNum').textContent=pct+'%';
-document.getElementById('scoreFill').style.width=pct+'%';
+/* Compter le nb de variables actives */
+let varsCount = 3; // secteur, budget, volume toujours actifs
+if(mode==='expert') varsCount += [souverain!=='standard',auth_sso!=='non',classif!=='public',
+  competences!=='intermediaire',maintenance!=='facile',support_fr==='oui',
+  interop_autocad,interop_erp,interop_bi,interop_iot,interop_opendata,interop_api,
+  etl!=='non',frequence_maj!=='statique',audience!=='interne',temps_reel!=='non',
+  scalabilite!=='fixe',si_exist!=='aucun',diffusion!=='interne'].filter(Boolean).length;
 
-/* ── BRIQUES ── */
-const CONFIG=[
+document.getElementById('heroTitle').textContent    = buildTitle();
+document.getElementById('heroSub').textContent      = buildDesc();
+document.getElementById('heroClient').textContent   = nom;
+document.getElementById('heroSecteur').textContent  = SECTEUR_LABELS[secteur]||'Non précisé';
+document.getElementById('heroMode').textContent     = mode==='expert'?'Mode Expert Professionnel':'Mode Standard';
+document.getElementById('headerBadge').textContent  = 'Client : '+nom;
+document.getElementById('scenarioTitle').textContent= buildTitle();
+document.getElementById('scenarioDesc').textContent = buildDesc();
+document.getElementById('scoreNum').textContent     = pct+'%';
+document.getElementById('scoreFill').style.width    = pct+'%';
+document.getElementById('heroVars').textContent     = varsCount+' variables actives';
+
+/* Score cats pills */
+const catPills = document.getElementById('scoreCats');
+const catLabels = {logiciels:'Logiciel',bases:'Base',serveurs:'Serveur',web:'Diffusion',imagerie:'Imagerie',terrain:'Terrain'};
+Object.keys(win).forEach(cat => {
+  const d = DATA[cat][win[cat]];
+  if(!d) return;
+  catPills.innerHTML += `<span class="sc-pill">${catLabels[cat]}: ${d.n.split(' ')[0]}</span>`;
+});
+
+/* ── MATRICE DE SCORING VISIBLE ── */
+const matrixGrid = document.getElementById('matrixGrid');
+const groupMax = Math.max(...Object.values(groupScores).map(g=>g.raw*g.weight));
+Object.entries(groupScores).forEach(([key,g]) => {
+  const weighted = Math.round(g.raw * g.weight);
+  const pctM = groupMax>0?Math.round((weighted/groupMax)*100):0;
+  const impact = g.weight>1.2?'★★★':g.weight>1?'★★':'★';
+  matrixGrid.innerHTML += `<div class="matrix-item">
+    <div class="matrix-label">${g.label} <span style="opacity:.6">${impact}</span></div>
+    <div class="matrix-val">${weighted.toLocaleString('fr-FR')} pts</div>
+    <div class="matrix-bar"><div class="matrix-fill" style="width:${pctM}%"></div></div>
+  </div>`;
+});
+
+/* ── BRIQUES PRINCIPALES ── */
+const agoSelectionne = (win.web==='ago'||win.web==='experience');
+const entSelectionne = (win.logiciels==='arcgis_ent');
+
+const CONFIG = [
   {cat:'logiciels',key:win.logiciels,cls:'cat-log',lbl:'Logiciel SIG Desktop',ico:'💻',primary:true},
-  {cat:'bases',key:win.bases,cls:'cat-base',lbl:'Base de données spatiale',ico:'🗄️'},
-  {cat:'serveurs',key:win.serveurs,cls:'cat-srv',lbl:'Infrastructure / Serveur',ico:'🖧'},
-  {cat:'web',key:win.web,cls:'cat-web',lbl:'Diffusion Web & Portail',ico:'🌐'},
-  {cat:'imagerie',key:win.imagerie,cls:'cat-ima',lbl:'Fond de plan / Imagerie',ico:'🛰️'},
+  {cat:'bases',    key:win.bases,    cls:'cat-base',lbl:'Base de données spatiale',ico:'🗄️'},
+  {cat:'serveurs', key:win.serveurs, cls:'cat-srv', lbl:'Infrastructure / Serveur',ico:'🖧'},
+  {cat:'web',      key:win.web,      cls:'cat-web', lbl:'Diffusion Web & Portail',ico:'🌐'},
+  {cat:'imagerie', key:win.imagerie, cls:'cat-ima', lbl:'Fond de plan / Imagerie',ico:'🛰️'},
 ];
-// Terrain seulement si besoin
 if(besoinTerrain) CONFIG.push({cat:'terrain',key:win.terrain,cls:'cat-ter',lbl:'Application Terrain',ico:'📱'});
 
-const grid=document.getElementById('resultsGrid');
-let totalAnnuel=0;
+const grid = document.getElementById('resultsGrid');
+let totalAnnuel = 0;
 
-// Détecter si AGO ou ArcGIS Enterprise est dans la sélection (anti-double-comptage)
-const agoSelectionne = (win.web === 'ago' || win.web === 'experience');
-const entSelectionne = (win.logiciels === 'arcgis_ent');
+CONFIG.forEach((cfg,i) => {
+  const d = DATA[cfg.cat][cfg.key];
+  if(!d) return;
+  let prix = d.p, prixNote = d.note||'';
 
-CONFIG.forEach((cfg,i)=>{
-  const d=DATA[cfg.cat][cfg.key];
-  if(!d)return;
-  // Prix ajusté selon nombre d'utilisateurs
-  let prixAffiche=d.p;
-  let prixNote=d.note||'';
-
-  // ── VOLUME LICENSING LOGICIELS ───────────────────────
-  // ArcGIS Pro Standard : dégressif selon nbUsers
-  if(cfg.key==='arcgis_pro' && nbUsers>1){
-    let prixUnit=820;
-    if(nbUsers>=10)prixUnit=580;
-    else if(nbUsers>=5)prixUnit=650;
-    else if(nbUsers>=2)prixUnit=720;
-    prixAffiche=prixUnit*nbUsers;
-    prixNote=`${prixUnit.toLocaleString('fr-FR')} €/utilisateur/an × ${nbUsers} = ${prixAffiche.toLocaleString('fr-FR')} €/an (tarif dégressif)`;
+  // Volume licensing ArcGIS
+  if(cfg.key==='arcgis_pro'&&nbUsers>1){
+    let u=820;if(nbUsers>=10)u=580;else if(nbUsers>=5)u=650;else if(nbUsers>=2)u=720;
+    prix=u*nbUsers; prixNote=`${u.toLocaleString('fr-FR')} €/user × ${nbUsers} = ${prix.toLocaleString('fr-FR')} €/an (dégressif)`;
+  } else if(cfg.key==='arcgis_pro_adv'&&nbUsers>1){
+    let u=3850;if(nbUsers>=5)u=3200;else if(nbUsers>=2)u=3500;
+    prix=u*nbUsers; prixNote=`${u.toLocaleString('fr-FR')} €/user × ${nbUsers} = ${prix.toLocaleString('fr-FR')} €/an`;
+  } else if(cfg.key==='arcgis_ent'){
+    if(nbUsers<=5){prix=6200;prixNote='6 200 €/an — 5 utilisateurs inclus';}
+    else if(nbUsers<=10){prix=10000;prixNote='10 000 €/an — 10 utilisateurs inclus';}
+    else if(nbUsers<=25){prix=18000;prixNote='18 000 €/an — 25 utilisateurs inclus';}
+    else{prix=18000+((nbUsers-25)*500);prixNote=`18 000 € + ${((nbUsers-25)*500).toLocaleString('fr-FR')} € pour ${nbUsers-25} users supplémentaires`;}
+  } else if(cfg.key==='ago'&&nbUsers>1){
+    prix=500*nbUsers; prixNote=`500 €/user Creator × ${nbUsers} = ${prix.toLocaleString('fr-FR')} €/an`;
+  } else if(cfg.key==='autocad'&&nbUsers>1){
+    let u=2500;if(nbUsers>=10)u=1900;else if(nbUsers>=5)u=2100;else if(nbUsers>=2)u=2300;
+    prix=u*nbUsers; prixNote=`${u.toLocaleString('fr-FR')} €/user × ${nbUsers} (volume Autodesk)`;
+  } else if(cfg.key==='geoconcept'&&nbUsers>1){
+    prix=2800+(nbUsers-1)*1800; prixNote=`Estimation ~${prix.toLocaleString('fr-FR')} €/an pour ${nbUsers} postes · Sur devis`;
   }
-  // ArcGIS Pro Advanced : dégressif
-  else if(cfg.key==='arcgis_pro_adv' && nbUsers>1){
-    let prixUnit=3850;
-    if(nbUsers>=5)prixUnit=3200;
-    else if(nbUsers>=2)prixUnit=3500;
-    prixAffiche=prixUnit*nbUsers;
-    prixNote=`${prixUnit.toLocaleString('fr-FR')} €/utilisateur/an × ${nbUsers} = ${prixAffiche.toLocaleString('fr-FR')} €/an`;
-  }
-  // ArcGIS Enterprise : palier selon nbUsers
-  else if(cfg.key==='arcgis_ent'){
-    if(nbUsers<=5){ prixAffiche=6200; prixNote='6 200 €/an — 5 utilisateurs inclus'; }
-    else if(nbUsers<=10){ prixAffiche=10000; prixNote='10 000 €/an — 10 utilisateurs inclus'; }
-    else if(nbUsers<=25){ prixAffiche=18000; prixNote='18 000 €/an — 25 utilisateurs inclus'; }
-    else { prixAffiche=18000+((nbUsers-25)*500); prixNote=`18 000 € + ${((nbUsers-25)*500).toLocaleString('fr-FR')} € pour ${nbUsers-25} utilisateurs supplémentaires`; }
-  }
-  // ArcGIS Online : multiplier par nbUsers Creator
-  else if(cfg.key==='ago' && nbUsers>1){
-    prixAffiche=500*nbUsers;
-    prixNote=`500 €/utilisateur Creator/an × ${nbUsers} = ${prixAffiche.toLocaleString('fr-FR')} €/an`;
-  }
-  // AutoCAD : dégressif volume
-  else if(cfg.key==='autocad' && nbUsers>1){
-    let prixUnit=2500;
-    if(nbUsers>=10)prixUnit=1900;
-    else if(nbUsers>=5)prixUnit=2100;
-    else if(nbUsers>=2)prixUnit=2300;
-    prixAffiche=prixUnit*nbUsers;
-    prixNote=`${prixUnit.toLocaleString('fr-FR')} €/utilisateur/an × ${nbUsers} (tarif volume Autodesk)`;
-  }
-  // Geoconcept : estimation sur devis
-  else if(cfg.key==='geoconcept' && nbUsers>1){
-    prixAffiche=2800+(nbUsers-1)*1800;
-    prixNote=`Estimation indicative ~${prixAffiche.toLocaleString('fr-FR')} €/an pour ${nbUsers} postes · Prix réel sur devis`;
-  }
-  // ── ANTI-DOUBLE-COMPTAGE ──────────────────────────────
-  // Experience Builder inclus dans AGO Creator ou Enterprise → 0€ si déjà compté
-  else if(cfg.key==='experience' && (agoSelectionne || entSelectionne)){
-    prixAffiche=0;
-    prixNote='Inclus dans votre abonnement ArcGIS Online / Enterprise — sans surcoût';
-  }
-  // Field Maps inclus dans AGO → 0€ si AGO déjà sélectionné
-  else if(cfg.key==='fieldmaps' && agoSelectionne){
-    prixAffiche=0;
-    prixNote='Inclus dans ArcGIS Online Creator — sans surcoût supplémentaire';
-  }
-  // ArcGIS Online Data Store inclus dans AGO → 0€ si AGO web sélectionné
-  else if(cfg.key==='arcgis_cloud' && agoSelectionne){
-    prixAffiche=0;
-    prixNote='Inclus dans ArcGIS Online Creator (5 Go/utilisateur)';
-  }
-  // QFieldCloud : ajustement selon volume de données
+  // Anti-double-comptage Esri
+  else if(cfg.key==='experience'&&(agoSelectionne||entSelectionne)){prix=0;prixNote='Inclus dans votre abonnement ArcGIS Online / Enterprise';}
+  else if(cfg.key==='fieldmaps'&&agoSelectionne){prix=0;prixNote='Inclus dans ArcGIS Online Creator — sans surcoût';}
+  else if(cfg.key==='arcgis_cloud'&&agoSelectionne){prix=0;prixNote='Inclus dans AGO Creator (5 Go/utilisateur)';}
+  // QFieldCloud selon volume
   else if(cfg.key==='qfield'){
-    if(volume==='leger'||volume==='nsp'){
-      prixAffiche=0;
-      prixNote='Gratuit en local ou plan Community (100 Mo, 3 projets)';
-    } else if(volume==='moyen'){
-      prixAffiche=180;
-      prixNote='QFieldCloud Community 15 €/mois (1 Go, 30 projets) — sync. automatique';
-    } else if(volume==='lourd'){
-      prixAffiche=360;
-      prixNote='QFieldCloud Pro 30 €/mois (10 Go, projets illimités)';
-    }
+    if(volume==='leger'||volume==='nsp'){prix=0;prixNote='Gratuit (local ou plan Community 100 Mo, 3 projets)';}
+    else if(volume==='moyen'){prix=180;prixNote='QFieldCloud Community 15€/mois (1 Go, 30 projets)';}
+    else if(volume==='lourd'){prix=360;prixNote='QFieldCloud Pro 30€/mois (10 Go, illimité)';}
   }
-  // Felt Pro si usage collaboratif ou portail métier
+  // Felt Pro si collaboratif
   else if(cfg.key==='felt'){
-    if(diffusion==='collaboratif'||diffusion==='portail_metier'){
-      const feltPro=Math.round(nbUsers*120);
-      prixAffiche=feltPro;
-      prixNote=`Plan Pro ~120 $/utilisateur/an × ${nbUsers} utilisateur(s) — partage privé et branding`;
-    } else {
-      prixAffiche=0;
-      prixNote='Plan Gratuit — cartes illimitées, partage public';
-    }
+    if(diffusion==='collaboratif'||diffusion==='portail_metier'){const fp=Math.round(nbUsers*120);prix=fp;prixNote=`Plan Pro ~120$/user/an × ${nbUsers} user(s)`;}
+    else{prix=0;prixNote='Plan Gratuit — cartes illimitées, partage public';}
   }
-  // IGN dalles HD : gratuit si secteur public
-  else if(cfg.key==='dalle_hd'){
-    if(secteur==='collectivite'||secteur==='etat'){
-      prixAffiche=0;
-      prixNote='Gratuit via convention IGN (secteur public) — flux WMS BD ORTHO libres';
-    }
-  }
-  // OVH : ajuster selon charge réelle
+  // IGN gratuit secteur public
+  else if(cfg.key==='dalle_hd'&&(secteur==='collectivite'||secteur==='etat')){prix=0;prixNote='Gratuit via convention IGN (secteur public)';}
+  // OVH selon charge
   else if(cfg.key==='vps_ovh'){
-    if(volume==='leger'&&collab==='solo'){
-      prixAffiche=84;
-      prixNote='VPS Starter 4 €/mois (2 Go RAM) — suffisant pour un usage QGIS Cloud léger';
-    } else if(volume==='lourd'||collab==='multi_10'){
-      prixAffiche=336;
-      prixNote='VPS Comfort 28 €/mois (8 Go RAM) — recommandé pour GeoServer + PostGIS + forte charge';
-    } else {
-      prixAffiche=168;
-      prixNote='VPS Essential 14 €/mois (4 Go RAM) — recommandé pour PostGIS + Lizmap';
-    }
+    if(volume==='leger'&&collab==='solo'){prix=84;prixNote='VPS Starter 4€/mois (2 Go RAM)';}
+    else if(volume==='lourd'||collab==='multi_10'){prix=336;prixNote='VPS Comfort 28€/mois (8 Go RAM)';}
+    else{prix=168;prixNote='VPS Essential 14€/mois (4 Go RAM) — recommandé';}
   }
-  // ── FALLBACK MULTI-UTILISATEURS ──────────────────────
-  // Pour tout autre logiciel non géré ci-dessus avec un nombre d'utilisateurs inclus
-  else if(d.inclus && nbUsers>d.inclus && !['arcgis_pro','arcgis_pro_adv','arcgis_ent','ago','autocad','geoconcept'].includes(cfg.key)){
-    const extra=(nbUsers-d.inclus);
-    const surcout=extra*400;
-    prixAffiche+=surcout;
-    prixNote=`${d.p.toLocaleString('fr-FR')} € base + ${surcout.toLocaleString('fr-FR')} € pour ${nbUsers} utilisateurs`;
+  else if(d.inclus&&nbUsers>d.inclus&&!['arcgis_pro','arcgis_pro_adv','arcgis_ent','ago','autocad','geoconcept'].includes(cfg.key)){
+    prix+=((nbUsers-d.inclus)*400); prixNote=`${d.p.toLocaleString('fr-FR')} € + surcout multi-users`;
   }
 
-  totalAnnuel+=prixAffiche;
+  totalAnnuel += prix;
 
-  const logoHtml=d.img?`<img src="img/${d.img}" alt="${d.n}" style="width:42px;height:42px;object-fit:contain" onerror="this.style.display='none';this.nextSibling.style.display='flex'"><span class="ico" style="display:none">${cfg.ico}</span>`:`<span class="ico">${cfg.ico}</span>`;
-  const priceStr=prixAffiche===0?'✅ Gratuit / Open Source':`${prixAffiche.toLocaleString('fr-FR')} € / an`;
-  const links=[];
-  if(d.link)links.push(`<a class="blink web" href="${d.link}" target="_blank" rel="noopener">🔗 Site officiel</a>`);
-  if(d.mail)links.push(`<a class="blink mail" href="mailto:${d.mail}">✉️ ${d.mail}</a>`);
+  const logoHtml = d.img
+    ? `<img src="img/${d.img}" alt="${d.n}" style="width:42px;height:42px;object-fit:contain" onerror="this.style.display='none';this.nextSibling.style.display='flex'"><span class="ico" style="display:none">${cfg.ico}</span>`
+    : `<span class="ico">${cfg.ico}</span>`;
+  const priceStr = prix===0?'✅ Gratuit / Open Source':`${prix.toLocaleString('fr-FR')} € / an`;
+  const links = [];
+  if(d.link) links.push(`<a class="blink web" href="${d.link}" target="_blank" rel="noopener">🔗 Site officiel</a>`);
+  if(d.mail) links.push(`<a class="blink mail" href="mailto:${d.mail}">✉️ ${d.mail}</a>`);
 
-  grid.innerHTML+=`<div class="brique ${cfg.cls}">
+  grid.innerHTML += `<div class="brique ${cfg.cls}">
     ${i===0?'<div class="winner-badge">⭐ Principal</div>':''}
     <div class="brique-top">
       <div class="brique-logo-wrap">${logoHtml}</div>
@@ -730,65 +977,62 @@ CONFIG.forEach((cfg,i)=>{
     </div>
   </div>`;
 
-  document.getElementById('budgetDetail').innerHTML+=`<div class="budget-item"><span class="bi-lbl">${cfg.lbl}</span><span class="bi-val">${prixAffiche===0?'Gratuit':prixAffiche.toLocaleString('fr-FR')+' €'}</span>${prixNote?`<span class="bi-note">${prixNote}</span>`:''}</div>`;
+  document.getElementById('budgetDetail').innerHTML += `<div class="budget-item">
+    <span class="bi-lbl">${cfg.lbl}</span>
+    <span class="bi-val">${prix===0?'Gratuit':prix.toLocaleString('fr-FR')+' €'}</span>
+    ${prixNote?`<span class="bi-note">${prixNote}</span>`:''}
+  </div>`;
 });
 
-document.getElementById('totalPrice').textContent=totalAnnuel.toLocaleString('fr-FR')+' € / an';
-document.getElementById('perUser').textContent=nbUsers>1?Math.round(totalAnnuel/nbUsers).toLocaleString('fr-FR')+' € / utilisateur / an':'—';
-document.getElementById('contactBtn').href=`contact.html${window.location.search}&total=${totalAnnuel}`;
+document.getElementById('totalPrice').textContent = totalAnnuel.toLocaleString('fr-FR')+' € / an';
+document.getElementById('perUser').textContent = nbUsers>1?Math.round(totalAnnuel/nbUsers).toLocaleString('fr-FR')+' € / utilisateur / an':'—';
+document.getElementById('contactBtn').href = `contact.html${window.location.search}&total=${totalAnnuel}`;
 
-/* ── ALERTES COMPATIBILITÉ & PALIERS ── */
-// Alerte Mac si ArcGIS Pro ou AutoCAD recommandés sur Mac
-if(isMac && (win.logiciels==='arcgis_pro'||win.logiciels==='arcgis_pro_adv'||win.logiciels==='autocad')){
-  reasons.push("⚠️ <strong>Attention macOS</strong> : " + DATA.logiciels[win.logiciels].n + " est un logiciel Windows. Sur votre environnement Apple, l'utilisation nécessite Parallels Desktop (~100 €/an) ou Boot Camp. <strong>QGIS</strong> est la seule alternative SIG native macOS.");
+/* ── ALERTES CONTEXTUELLES ── */
+if(isMac&&(win.logiciels==='arcgis_pro'||win.logiciels==='arcgis_pro_adv'||win.logiciels==='autocad')){
+  reasons.push({dot:'red',txt:`⚠️ <strong>Attention macOS</strong> : ${DATA.logiciels[win.logiciels].n} est Windows uniquement. Sur Mac, nécessite Parallels Desktop (~100€/an) ou Boot Camp. <strong>QGIS</strong> est la seule alternative SIG 100% native macOS.`});
 }
-// Alerte si Sentinel sélectionné : rappel gratuité ESA
 if(win.imagerie==='sentinel'){
-  reasons.push("💡 <strong>Sentinel-2 (ESA)</strong> est disponible gratuitement via Copernicus Open Access Hub — aucun abonnement Planet n'est nécessaire si une résolution de 10m et une fréquence de 5 jours vous convient. Planet est utile uniquement pour un besoin de résolution 3m ou de fréquence quotidienne.");
+  reasons.push({dot:'blue',txt:"💡 <strong>Sentinel-2 (ESA)</strong> est disponible gratuitement via Copernicus. Planet n'est utile que si vous avez besoin de 3m de résolution ou d'une fréquence quotidienne."});
 }
-// Alerte si IGN dalles et secteur public
-if(win.imagerie==='dalle_hd' && (secteur==='collectivite'||secteur==='etat')){
-  reasons.push("💡 <strong>IGN / Géoplateforme</strong> : en tant que structure publique, vos données BD ORTHO, BD TOPO et cadastre sont accessibles gratuitement via convention IGN. Le coût estimé de 800 €/an ne s'applique qu'au secteur privé.");
+if(win.imagerie==='dalle_hd'&&(secteur==='collectivite'||secteur==='etat')){
+  reasons.push({dot:'blue',txt:"💡 <strong>IGN / Géoplateforme</strong> : en tant que structure publique, BD ORTHO, BD TOPO et cadastre sont accessibles gratuitement via convention IGN. Le coût de 800€/an ne s'applique qu'au secteur privé."});
 }
-// Alerte double-comptage Esri si Experience Builder ou Field Maps dans sélection
-if(agoSelectionne && besoinTerrain && win.terrain==='fieldmaps'){
-  reasons.push("💡 <strong>ArcGIS Field Maps</strong> : inclus sans surcoût dans votre abonnement ArcGIS Online Creator. Le prix affiché pour le terrain est ramené à 0 € car il est déjà compris dans le poste Diffusion Web.");
+if(agoSelectionne&&besoinTerrain&&win.terrain==='fieldmaps'){
+  reasons.push({dot:'blue',txt:"💡 <strong>ArcGIS Field Maps</strong> : inclus sans surcoût dans votre ArcGIS Online Creator. Le prix terrain est ramené à 0€."});
 }
-// Volume licensing rappel
-if(nbUsers>=5 && (win.logiciels==='arcgis_pro'||win.logiciels==='arcgis_pro_adv'||win.logiciels==='autocad')){
-  reasons.push("💰 <strong>Tarif volume</strong> : avec " + nbUsers + " utilisateurs, vous bénéficiez d'un tarif dégressif Esri/Autodesk. Le prix affiché intègre déjà cette réduction. Pour 10+ utilisateurs, un contrat Enterprise négocié directement avec Esri France ou un revendeur agréé est recommandé.");
+if(nbUsers>=5&&(win.logiciels==='arcgis_pro'||win.logiciels==='autocad')){
+  reasons.push({dot:'blue',txt:`💰 <strong>Tarif volume</strong> : avec ${nbUsers} utilisateurs, vous bénéficiez du tarif dégressif (déjà intégré dans le prix affiché). Pour 10+ utilisateurs, contrat Enterprise Esri/Autodesk recommandé.`});
 }
 
-/* ── RAISONS SUPPLÉMENTAIRES ── */
-reasons.push(`<strong>${DATA.bases[win.bases].n}</strong> pour le stockage : ${volume==='lourd'?'seul moteur capable de gérer vos volumes massifs':collab==='solo'?'léger et portable, parfait usage individuel':'équilibre performance et facilité de déploiement'}.`);
-reasons.push(`<strong>${DATA.serveurs[win.serveurs].n}</strong> pour l'hébergement : ${souverain==='haute'||souverain==='critique'?'répond à vos exigences de souveraineté':si_exist==='azure'||si_exist==='m365'?'cohérent avec votre infrastructure Microsoft':si_exist==='on_premise'?'données on-premise, aucune dépendance cloud':'rapport coût/performance optimal'}.`);
-reasons.push(`<strong>${DATA.web[win.web].n}</strong> pour la diffusion : ${diffusion==='portail_metier'?'portail métier avec 100% de fidélité cartographique':diffusion==='collaboratif'?'édition multi-utilisateur avec gestion des droits':diffusion==='interne'?'usage interne uniquement, aucun portail web':'adapté à votre profil et vos besoins de partage'}.`);
-const rl=document.getElementById('reasonsList');
-reasons.forEach(r=>{rl.innerHTML+=`<div class="reason-item"><div class="rdot"></div><div>${r}</div></div>`;});
+// Raisons automatiques sur les catégories gagnantes
+reasons.push({dot:'green',txt:`<strong>${DATA.bases[win.bases].n}</strong> pour le stockage : ${volume==='lourd'?'seul moteur capable de gérer vos volumes massifs':collab==='solo'?'léger et portable, parfait pour un usage individuel':'équilibre performance et facilité de déploiement'}.`});
+reasons.push({dot:'green',txt:`<strong>${DATA.serveurs[win.serveurs].n}</strong> pour l'hébergement : ${souverain==='sensible'||souverain==='critique'?'répond à vos exigences de souveraineté':si_exist==='azure'||si_exist==='m365'?'cohérent avec votre infrastructure Microsoft':si_exist==='on_premise'?'données on-premise, aucune dépendance cloud':'rapport coût/performance optimal pour votre profil'}.`});
+reasons.push({dot:'green',txt:`<strong>${DATA.web[win.web].n}</strong> pour la diffusion : ${diffusion==='portail_metier'?'portail métier avec 100% de fidélité cartographique':diffusion==='collaboratif'?'édition multi-utilisateur avec gestion des droits':diffusion==='interne'?'usage interne, aucun portail web nécessaire':'adapté à votre profil technique et vos besoins de partage'}.`});
 
-/* ── ALTERNATIVES filtrées et ordonnées par proximité budgétaire ── */
+const rl = document.getElementById('reasonsList');
+const DOT_COLORS = {green:'--green',amber:'--amber',blue:'--blue',red:'--red'};
+reasons.forEach(r => {
+  rl.innerHTML += `<div class="reason-item"><div class="rdot rdot-${r.dot}"></div><div>${r.txt}</div></div>`;
+});
+
+/* ── ALTERNATIVES ── */
 function priceCls(p){return p===0?'p-free':p<800?'p-paid':'p-big'}
 function priceLabel(p){return p===0?'Gratuit':p.toLocaleString('fr-FR')+'€/an'}
-const winPrice=CONFIG.reduce((t,c)=>t+(DATA[c.cat][c.key]?.p||0),0);
-
+const winPrice = CONFIG.reduce((t,c)=>t+(DATA[c.cat][c.key]?.p||0),0);
 function budgetTag(p){
-  if(p===0||p<winPrice)return '<span class="inf-tag">Budget inf.</span>';
-  if(p>winPrice&&(budgetMax===Infinity||p<=budgetMax*1.5))return '<span class="sup-tag">Budget sup.</span>';
-  if(p>budgetMax)return '<span class="hb-tag">Hors budget</span>';
+  if(p===0||p<winPrice) return '<span class="inf-tag">Budget inf.</span>';
+  if(p>winPrice&&(budgetMax===Infinity||p<=budgetMax*1.5)) return '<span class="sup-tag">Budget sup.</span>';
+  if(p>budgetMax) return '<span class="hb-tag">Hors budget</span>';
   return '';
 }
-
 function altCardHTML(cat,key){
-  const d=DATA[cat][key];
-  if(!d)return '';
-  // Masquer AutoCAD si pas géomètre/BTP
+  const d=DATA[cat][key]; if(!d)return '';
   if(key==='autocad'&&secteur!=='geometre'&&secteur!=='btp')return '';
-  // Masquer terrain si pas de besoin terrain
   if(cat==='terrain'&&!besoinTerrain)return '';
   const logoEl=d.img?`<img class="alt-logo" src="img/${d.img}" alt="${d.n}" onerror="this.style.display='none'">`:`<div class="alt-ico">📦</div>`;
   return `<div class="alt-card">${logoEl}<div class="alt-body"><div class="alt-name">${d.n}</div><div class="alt-d">${d.d}</div><div class="alt-foot"><span class="alt-p ${priceCls(d.p)}">${priceLabel(d.p)}</span>${budgetTag(d.p)}</div></div></div>`;
 }
-
 const ALT_GROUPS=[
   {label:'💻 Logiciels SIG',cat:'logiciels'},
   {label:'🗄️ Bases de données',cat:'bases'},
@@ -796,25 +1040,19 @@ const ALT_GROUPS=[
   {label:'🌐 Diffusion Web',cat:'web'},
   {label:'🛰️ Imagerie',cat:'imagerie'},
 ];
-if(besoinTerrain)ALT_GROUPS.push({label:'📱 Terrain',cat:'terrain'});
-
+if(besoinTerrain) ALT_GROUPS.push({label:'📱 Terrain',cat:'terrain'});
 const altContent=document.getElementById('altContent');
 ALT_GROUPS.forEach(g=>{
-  // Alternatives triées par proximité prix
-  const winK=win[g.cat];
-  const winP=DATA[g.cat][winK]?.p||0;
+  const winK=win[g.cat], winP=DATA[g.cat][winK]?.p||0;
   const alts=Object.keys(DATA[g.cat])
     .filter(k=>k!==winK)
-    .filter(k=>{
-      if(k==='autocad'&&secteur!=='geometre'&&secteur!=='btp')return false;
-      if(g.cat==='terrain'&&!besoinTerrain)return false;
-      return true;
-    })
+    .filter(k=>{ if(k==='autocad'&&secteur!=='geometre'&&secteur!=='btp')return false; if(g.cat==='terrain'&&!besoinTerrain)return false; return true; })
     .sort((a,b)=>Math.abs((DATA[g.cat][a].p||0)-winP)-Math.abs((DATA[g.cat][b].p||0)-winP))
-    .slice(0,4); // max 4 alternatives
+    .slice(0,4);
   if(!alts.length)return;
   altContent.innerHTML+=`<div class="alt-group"><div class="alt-group-title">${g.label}</div><div class="alt-cards">${alts.map(k=>altCardHTML(g.cat,k)).join('')}</div></div>`;
 });
 </script>
 </body>
 </html>
+
