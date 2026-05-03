@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diagnostic SIG Expert — GeomarkSIG</title>
+<title>Diagnostic SIG Expert — Geomark SIG</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -11,19 +11,22 @@
   --green:#1a7a4a;--green-l:#e6f5ee;--green-d:#15643d;
   --blue:#1a56e8;--blue-l:#e8effd;
   --amber:#c9720c;--amber-l:#fef3e2;
+  --purple:#6c3483;--purple-l:#f5eef8;
+  --teal:#0e7490;--teal-l:#e0f2f7;
+  --coral:#c0392b;--coral-l:#fdf0ef;
   --r:10px;--r2:16px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink);line-height:1.6}
 .page-header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200}
-.header-inner{max-width:900px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:12px 24px}
+.header-inner{max-width:940px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:12px 24px}
 .logo-area{display:flex;align-items:center;gap:10px}
 .logo-area img{height:38px;border-radius:6px}
 .logo-text{font-weight:700;font-size:1rem;color:var(--green)}
 .logo-sub{font-size:.68rem;color:var(--muted);display:block}
 .hero{background:linear-gradient(135deg,#0c1a10 0%,#0f2820 55%,#1a6040 100%);color:#fff;padding:40px 24px 36px;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 80%,rgba(26,122,74,.15) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(26,86,232,.1) 0%,transparent 50%)}
-.hero-inner{max-width:900px;margin:auto;position:relative}
+.hero-inner{max-width:940px;margin:auto;position:relative}
 .hero-tag{display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:.7rem;font-weight:600;letter-spacing:.6px;text-transform:uppercase;padding:4px 13px;border-radius:20px;margin-bottom:14px}
 .hero h1{font-size:1.7rem;font-weight:700;margin-bottom:8px}
 .hero-sub{font-size:.9rem;opacity:.72;max-width:540px;line-height:1.6}
@@ -31,10 +34,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink)
 .mode-btn{padding:10px 22px;border-radius:30px;border:2px solid rgba(255,255,255,.3);color:rgba(255,255,255,.8);background:transparent;cursor:pointer;font-size:.88rem;font-weight:600;font-family:'DM Sans',sans-serif;transition:all .2s}
 .mode-btn.active{background:var(--white);color:var(--green);border-color:var(--white)}
 .mode-btn:not(.active):hover{border-color:rgba(255,255,255,.7);color:#fff}
-.wrap{max-width:900px;margin:0 auto;padding:28px 24px 80px}
+.wrap{max-width:940px;margin:0 auto;padding:28px 24px 80px}
 .slabel{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:12px;margin-top:26px;display:flex;align-items:center;gap:8px}
 .slabel::after{content:'';flex:1;height:1px;background:var(--border)}
 .card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r2);padding:22px;margin-bottom:14px}
+.card-gov{border-color:#c3b1e1;background:linear-gradient(to bottom right,#fff,#fdf9ff)}
+.card-skills{border-color:#86d4e8;background:linear-gradient(to bottom right,#fff,#f7fdff)}
+.card-interop{border-color:#f0a07a;background:linear-gradient(to bottom right,#fff,#fffaf7)}
+.card-freq{border-color:#82d9a2;background:linear-gradient(to bottom right,#fff,#f7fff9)}
 .card.expert-card{border-color:#f0c070}
 .field{margin-bottom:14px}
 .field:last-child{margin-bottom:0}
@@ -44,29 +51,40 @@ body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink)
 .field input:focus,.field select:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(26,122,74,.1)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:600px){.grid2{grid-template-columns:1fr}}
-
 /* Tooltip */
 .tip{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;background:var(--border);color:var(--muted);font-size:.65rem;font-weight:700;cursor:help;flex-shrink:0;position:relative}
 .tip:hover .tip-box,.tip:focus .tip-box{display:block}
-.tip-box{display:none;position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 8px);background:var(--ink);color:#fff;font-size:.73rem;font-weight:400;line-height:1.5;padding:9px 13px;border-radius:8px;width:250px;z-index:500;white-space:normal;text-align:left;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.25)}
+.tip-box{display:none;position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 8px);background:var(--ink);color:#fff;font-size:.73rem;font-weight:400;line-height:1.5;padding:9px 13px;border-radius:8px;width:260px;z-index:500;white-space:normal;text-align:left;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.25)}
 .tip-box::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink)}
-
 /* Expert zone */
 .expert-zone{display:none}
 .expert-zone.visible{display:block;animation:fadeIn .35s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .expert-badge{background:var(--amber-l);border:1px solid #f0c070;border-radius:8px;padding:9px 13px;font-size:.78rem;color:#8a5400;margin-bottom:14px;display:flex;align-items:center;gap:8px;line-height:1.5}
-
+/* Group badges */
+.gb{display:inline-flex;align-items:center;gap:5px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:10px;margin-bottom:12px}
+.gb-gov{background:var(--purple-l);color:var(--purple)}
+.gb-skills{background:var(--teal-l);color:var(--teal)}
+.gb-interop{background:var(--amber-l);color:var(--amber)}
+.gb-freq{background:var(--green-l);color:var(--green)}
 /* Suite hint */
 .suite-hint{display:none;border-radius:8px;padding:9px 13px;font-size:.78rem;margin-top:10px;line-height:1.55}
 .suite-hint.show{display:flex;gap:8px;align-items:flex-start}
-
-/* Terrain note */
-.terrain-note{display:none;background:var(--green-l);border:1px solid #82e0aa;border-radius:8px;padding:8px 12px;font-size:.76rem;color:var(--green);margin-top:8px;line-height:1.5}
-.terrain-note.show{display:block}
-
+/* Contextual note */
+.ctx-note{display:none;border-radius:8px;padding:8px 12px;font-size:.76rem;margin-top:8px;line-height:1.5;border:1px solid}
+.ctx-note.show{display:block}
+/* Checkboxes */
+.cb-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.cb-item{position:relative}
+.cb-item input[type=checkbox]{position:absolute;opacity:0;width:0;height:0}
+.cb-item label{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.82rem;font-weight:500;color:var(--ink2);transition:all .15s;background:var(--white)}
+.cb-item label:hover{border-color:var(--green);background:var(--green-l);color:var(--green)}
+.cb-item input:checked+label{border-color:var(--green);background:var(--green-l);color:var(--green)}
+.cb-box{width:15px;height:15px;border:1.5px solid var(--border);border-radius:4px;flex-shrink:0;transition:all .15s;display:flex;align-items:center;justify-content:center;background:#fff}
+.cb-item input:checked+label .cb-box{background:var(--green);border-color:var(--green)}
+.cb-item input:checked+label .cb-box::after{content:'✓';color:#fff;font-size:.62rem;font-weight:700}
 /* Submit */
-.btn-submit{width:100%;padding:16px;margin-top:6px;background:linear-gradient(135deg,var(--green) 0%,#2ecc71 100%);color:#fff;border:none;border-radius:var(--r2);font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:opacity .2s,transform .1s;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 18px rgba(26,122,74,.28);letter-spacing:.2px}
+.btn-submit{width:100%;padding:16px;margin-top:6px;background:linear-gradient(135deg,var(--green) 0%,#2ecc71 100%);color:#fff;border:none;border-radius:var(--r2);font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:opacity .2s,transform .1s;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 18px rgba(26,122,74,.28)}
 .btn-submit:hover{opacity:.92}
 .btn-submit:active{transform:scale(.99)}
 .submit-note{text-align:center;font-size:.73rem;color:var(--muted);margin-top:8px}
@@ -77,15 +95,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink)
 </style>
 </head>
 <body>
-
 <header class="page-header">
   <div class="header-inner">
     <div class="logo-area">
       <img src="img/Gemini_Generated_Image_d7fwz8d7fwz8d7fw.png" alt="GeomarkSIG" onerror="this.style.display='none';document.getElementById('lf').style.display='block'">
-      <div>
-        <span class="logo-text" id="lf" style="display:none">GeomarkSIG</span>
-        <span class="logo-sub">Diagnostic SIG Expert</span>
-      </div>
+      <div><span class="logo-text" id="lf" style="display:none">GeomarkSIG</span><span class="logo-sub">Diagnostic SIG Expert</span></div>
     </div>
     <div style="background:var(--green-l);color:var(--green);padding:4px 13px;border-radius:20px;font-size:.75rem;font-weight:600">🗺️ Configurateur</div>
   </div>
@@ -95,7 +109,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink)
   <div class="hero-inner">
     <div class="hero-tag">GeomarkSIG · Diagnostic multicritères</div>
     <h1>🗺️ Diagnostic SIG Geomark</h1>
-    <p class="hero-sub">Expertise multicritères pour architectures SIG complexes. Votre recommandation parmi 500+ scénarios analysés.</p>
+    <p class="hero-sub">Expertise multicritères pour architectures SIG complexes. Votre recommandation personnalisée parmi 500+ scénarios analysés.</p>
     <div class="mode-row">
       <button type="button" class="mode-btn active" id="btnSimple" onclick="toggleMode('simple')">⚡ Mode Standard</button>
       <button type="button" class="mode-btn" id="btnExpert" onclick="toggleMode('expert')">🔬 Mode Expert Professionnel</button>
@@ -107,63 +121,34 @@ body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink)
 <form action="resultats.html" method="GET">
 <input type="hidden" name="mode" id="inputMode" value="simple">
 
+<!-- IDENTITÉ -->
 <div class="slabel">🏷️ Votre identité</div>
 <div class="card">
   <div class="grid2">
-    <div class="field">
-      <label>Nom / Entreprise</label>
-      <input type="text" name="identite" placeholder="Ex: Cabinet Topo Géo 974" required>
-    </div>
-    <div class="field">
-      <label>Email professionnel</label>
-      <input type="email" name="email" placeholder="contact@domaine.com">
-    </div>
+    <div class="field"><label>Nom / Entreprise</label><input type="text" name="identite" placeholder="Ex: Cabinet Topo Géo 974" required></div>
+    <div class="field"><label>Email professionnel</label><input type="email" name="email" placeholder="contact@domaine.com"></div>
   </div>
 </div>
 
+<!-- PROFIL & DOMAINE -->
 <div class="slabel">💼 Profil & Domaine d'activité</div>
 <div class="card">
   <div class="grid2">
     <div class="field">
-      <label>Votre secteur métier
-        <span class="tip" tabindex="0">ℹ<span class="tip-box">Votre domaine oriente directement le logiciel SIG, les formats de données et les outils terrain recommandés. Le secteur "Géomètre" active AutoCAD dans les suggestions.</span></span>
-      </label>
+      <label>Votre secteur métier <span class="tip" tabindex="0">ℹ<span class="tip-box">Oriente le logiciel SIG, les formats et les outils terrain. "Géomètre" active AutoCAD. "ONG" privilégie les solutions 100% gratuites. "Énergie" active le temps réel.</span></span></label>
       <select name="secteur" id="secteurSel" onchange="onSecteurChange()">
         <option value="">— Sélectionnez —</option>
-        <optgroup label="🏛️ Secteur public">
-          <option value="collectivite">Collectivité Territoriale (mairie, département, région)</option>
-          <option value="etat">État / Établissement public (IGN, ONF, agences)</option>
-        </optgroup>
-        <optgroup label="📐 Géomètre & DAO">
-          <option value="geometre">Géomètre-Expert / Topographe</option>
-          <option value="btp">BTP / Infrastructures / VRD</option>
-        </optgroup>
-        <optgroup label="🌿 Environnement & Agriculture">
-          <option value="bet_env">Bureau d'Études Environnement / Écologie</option>
-          <option value="agriculture">Agriculture / Agronomie / Viticulture</option>
-        </optgroup>
-        <optgroup label="⚡ Énergie & Réseaux">
-          <option value="energie">Énergie / Réseaux (ENEDIS, télécom, eau)</option>
-          <option value="transport">Transport / Mobilité / Logistique</option>
-        </optgroup>
-        <optgroup label="🏢 Secteur privé">
-          <option value="bet">Bureau d'Études Technique / Conseil</option>
-          <option value="immobilier">Immobilier / Foncier / Promotion</option>
-          <option value="geomarketing">Géomarketing / Commerce / Retail</option>
-        </optgroup>
-        <optgroup label="🤝 Humanitaire & Santé">
-          <option value="ong">Humanitaire / ONG / Santé publique</option>
-        </optgroup>
-        <optgroup label="❓ Autre">
-          <option value="etudiant">Étudiant / Formation / Recherche</option>
-          <option value="ne_sait_pas">Je ne sais pas / Autre domaine</option>
-        </optgroup>
+        <optgroup label="🏛️ Secteur public"><option value="collectivite">Collectivité Territoriale</option><option value="etat">État / Établissement public</option></optgroup>
+        <optgroup label="📐 Géomètre & DAO"><option value="geometre">Géomètre-Expert / Topographe</option><option value="btp">BTP / Infrastructures / VRD</option></optgroup>
+        <optgroup label="🌿 Environnement"><option value="bet_env">Bureau d'Études Environnement / Écologie</option><option value="agriculture">Agriculture / Agronomie / Viticulture</option></optgroup>
+        <optgroup label="⚡ Énergie & Réseaux"><option value="energie">Énergie / Réseaux (ENEDIS, télécom, eau)</option><option value="transport">Transport / Mobilité / Logistique</option></optgroup>
+        <optgroup label="🏢 Secteur privé"><option value="bet">Bureau d'Études Technique / Conseil</option><option value="immobilier">Immobilier / Foncier / Promotion</option><option value="geomarketing">Géomarketing / Commerce / Retail</option></optgroup>
+        <optgroup label="🤝 Humanitaire"><option value="ong">Humanitaire / ONG / Santé publique</option></optgroup>
+        <optgroup label="❓ Autre"><option value="etudiant">Étudiant / Formation / Recherche</option><option value="ne_sait_pas">Je ne sais pas / Autre</option></optgroup>
       </select>
     </div>
     <div class="field">
-      <label>Budget annuel global
-        <span class="tip" tabindex="0">ℹ<span class="tip-box">Logiciels + hébergement + abonnements cloud. Hors prestation de service, formation et matériel terrain. "Je ne sais pas" oriente vers les solutions open source.</span></span>
-      </label>
+      <label>Budget annuel global <span class="tip" tabindex="0">ℹ<span class="tip-box">Logiciels + hébergement + abonnements cloud. Hors prestation, formation et matériel terrain.</span></span></label>
       <select name="budget">
         <option value="zero">0 € — Logiciels libres uniquement</option>
         <option value="starter_free">Starter · 50 – 500 €/an</option>
@@ -175,13 +160,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink)
   </div>
 </div>
 
+<!-- DONNÉES & COLLABORATION -->
 <div class="slabel">📊 Données & Collaboration</div>
 <div class="card">
   <div class="grid2">
     <div class="field">
-      <label>Volume de données
-        <span class="tip" tabindex="0">ℹ<span class="tip-box">Nombre d'objets géographiques (points, lignes, polygones). Moins de 10 000 → GeoPackage suffit. Plus d'1 million → PostGIS obligatoire.</span></span>
-      </label>
+      <label>Volume de données <span class="tip" tabindex="0">ℹ<span class="tip-box">Moins de 10 000 → GeoPackage suffit. Plus d'1 million → PostGIS obligatoire. LiDAR/Rasters HD → stockage objet dédié.</span></span></label>
       <select name="volume">
         <option value="leger">Léger · moins de 10 000 objets</option>
         <option value="moyen">Moyen · 10 000 à 500 000 objets</option>
@@ -190,9 +174,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink)
       </select>
     </div>
     <div class="field">
-      <label>Nombre d'utilisateurs SIG
-        <span class="tip" tabindex="0">ℹ<span class="tip-box">Personnes qui éditent ou consultent les données SIG. Impact sur le dimensionnement serveur et le prix des licences multi-utilisateurs ArcGIS.</span></span>
-      </label>
+      <label>Nombre d'utilisateurs SIG <span class="tip" tabindex="0">ℹ<span class="tip-box">Impact sur le dimensionnement serveur et le prix des licences. ArcGIS Pro et AutoCAD appliquent des tarifs dégressifs dès 5 utilisateurs.</span></span></label>
       <select name="collaboration">
         <option value="solo">Solo — 1 utilisateur</option>
         <option value="multi_2_5">Petite équipe — 2 à 5 éditeurs</option>
@@ -203,126 +185,239 @@ body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink)
   </div>
 </div>
 
-<!-- ─── ZONE EXPERT ─── -->
+<!-- ZONE EXPERT -->
 <div class="expert-zone" id="expertZone">
-  <div class="expert-badge">🔬 Paramètres avancés — ces réponses affinent votre architecture parmi 500+ scénarios. Laissez "Je ne sais pas" si vous n'êtes pas sûr.</div>
+<div class="expert-badge">🔬 Paramètres avancés — ces réponses affinent votre architecture parmi 500+ scénarios. "Je ne sais pas" = valeur neutre.</div>
 
-  <div class="slabel">🖥️ Architecture SI existante</div>
-  <div class="card expert-card">
+<!-- SI EXISTANT -->
+<div class="slabel">🖥️ Architecture SI existante</div>
+<div class="card expert-card">
+  <div class="field">
+    <label>Votre infrastructure ou cloud actuel <span class="tip" tabindex="0">ℹ<span class="tip-box">Si vous avez déjà Azure, AWS ou Apple iCloud, le SIG s'y intégrera pour réduire coûts et complexité. Ce choix active des dépendances de suite (Esri ↔ Azure, QGIS ↔ iCloud…)</span></span></label>
+    <select name="si_existant" id="siSel" onchange="onSiChange()">
+      <option value="aucun">Aucun — On part de zéro</option>
+      <optgroup label="☁️ Microsoft"><option value="azure">Microsoft Azure (VM, SQL Server, Active Directory)</option><option value="m365">Microsoft 365 / Office 365 (Teams, SharePoint)</option></optgroup>
+      <optgroup label="🟠 Amazon"><option value="aws">Amazon Web Services · AWS (EC2, S3, RDS)</option></optgroup>
+      <optgroup label="🔵 Google"><option value="google">Google Cloud Platform · GCP (BigQuery, Maps API)</option><option value="google_workspace">Google Workspace (Gmail, Drive, Meet)</option></optgroup>
+      <optgroup label="🍎 Apple"><option value="apple_icloud">Apple iCloud / Apple Business Essentials</option></optgroup>
+      <optgroup label="🏠 Physique"><option value="on_premise">Serveurs physiques internes (On-Premise)</option></optgroup>
+      <optgroup label="📐 Métier déjà licencié"><option value="autocad_si">AutoCAD / Autodesk (déjà licencié)</option><option value="arcgis_si">ArcGIS / Esri (déjà licencié)</option></optgroup>
+      <optgroup label="☁️ Cloud souverain / Autre"><option value="cloud_tier">Cloud souverain (OVH, Scaleway, Hetzner…)</option><option value="bureautique_cloud">Bureautique Cloud + forte conso data (+90j)</option><option value="nsp_si">Je ne sais pas</option></optgroup>
+    </select>
+    <div class="suite-hint" id="suiteHint"></div>
+  </div>
+</div>
+
+<!-- GROUPE 1 : GOUVERNANCE & SÉCURITÉ -->
+<div class="slabel">🛡️ Gouvernance & Sécurité</div>
+<div class="card card-gov">
+  <span class="gb gb-gov">🛡️ Gouvernance</span>
+  <div class="grid2">
     <div class="field">
-      <label>Votre infrastructure ou cloud actuel
-        <span class="tip" tabindex="0">ℹ<span class="tip-box">Si vous avez déjà Azure, AWS ou Apple iCloud, le SIG s'y intégrera pour réduire coûts et complexité. "Je ne sais pas" = architecture from scratch recommandée.</span></span>
-      </label>
-      <select name="si_existant" id="siSel" onchange="onSiChange()">
-        <option value="aucun">Aucun — On part de zéro</option>
-        <optgroup label="☁️ Microsoft">
-          <option value="azure">Microsoft Azure (VM, SQL Server, Active Directory)</option>
-          <option value="m365">Microsoft 365 / Office 365 (Teams, SharePoint)</option>
-        </optgroup>
-        <optgroup label="🟠 Amazon">
-          <option value="aws">Amazon Web Services · AWS (EC2, S3, RDS)</option>
-        </optgroup>
-        <optgroup label="🔵 Google">
-          <option value="google">Google Cloud Platform · GCP (BigQuery, Maps API)</option>
-          <option value="google_workspace">Google Workspace (Gmail, Drive, Meet)</option>
-        </optgroup>
-        <optgroup label="🍎 Apple">
-          <option value="apple_icloud">Apple iCloud / Apple Business Essentials</option>
-        </optgroup>
-        <optgroup label="🏠 Physique">
-          <option value="on_premise">Serveurs physiques internes (On-Premise)</option>
-        </optgroup>
-        <optgroup label="📐 Outils métier déjà licenciés">
-          <option value="autocad_si">AutoCAD / Autodesk (déjà licencié)</option>
-          <option value="arcgis_si">ArcGIS / Esri (déjà licencié)</option>
-        </optgroup>
-        <optgroup label="☁️ Cloud souverain / Autre">
-          <option value="cloud_tier">Cloud souverain (OVH, Scaleway, Hetzner…)</option>
-          <option value="bureautique_cloud">Bureautique Cloud + forte conso data (+90 jours)</option>
-          <option value="nsp_si">Je ne sais pas</option>
-        </optgroup>
+      <label>Niveau de souveraineté & RGPD <span class="tip" tabindex="0">ℹ<span class="tip-box">Standard : Cloud US acceptable. Sensible : données en Europe/France (RGPD). Critique : Hébergement interne obligatoire (air-gapped, défense, secret). Ce paramètre a un poids ×3 dans la matrice.</span></span></label>
+      <select name="souverainete">
+        <option value="standard">Standard — Cloud US acceptable (Esri, Felt, AWS)</option>
+        <option value="sensible">Sensible — Cloud Europe/France requis (OVH, Azure FR)</option>
+        <option value="critique">Critique — Hébergement interne / Intranet total</option>
+        <option value="nsp">Je ne sais pas</option>
       </select>
-      <div class="suite-hint" id="suiteHint"></div>
     </div>
-  </div>
-
-  <div class="slabel">🔒 Souveraineté & Projection</div>
-  <div class="card expert-card">
-    <div class="grid2">
-      <div class="field">
-        <label>Exigence de souveraineté
-          <span class="tip" tabindex="0">ℹ<span class="tip-box">Détermine où vos fichiers SIG sont physiquement stockés. Pour les collectivités et données sensibles, l'hébergement France est souvent légalement obligatoire (RGPD, RGS, référentiel SecNumCloud).</span></span>
-        </label>
-        <select name="souverainete">
-          <option value="faible">Standard — Hébergement mondial accepté</option>
-          <option value="haute">Haute — France / Europe requis (RGPD)</option>
-          <option value="critique">Critique — Intranet / Air-gapped (défense, secret)</option>
-          <option value="nsp">Je ne sais pas</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Système de Projection (CRS)
-          <span class="tip" tabindex="0">ℹ<span class="tip-box">RGR92 est le référentiel légal de La Réunion (EPSG:2975). Lambert 93 pour la France métropole. WGS84 pour le GPS et les cartes web. Ce choix évite des erreurs d'affichage décalé.</span></span>
-        </label>
-        <select name="crs">
-          <option value="wgs84">WGS 84 — Mondial / Web / GPS</option>
-          <option value="lambert93">Lambert 93 — France Métropole</option>
-          <option value="rgr92">RGR92 / UTM-40S — La Réunion</option>
-          <option value="autre">Autre (DOM-TOM, international, local)</option>
-          <option value="nsp">Je ne sais pas</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <div class="slabel">🌐 Diffusion Web & Portail</div>
-  <div class="card expert-card">
     <div class="field">
-      <label>Que souhaitez-vous faire avec vos cartes ?
-        <span class="tip" tabindex="0">ℹ<span class="tip-box">"En interne" = pas de portail web nécessaire. "Portail métier" = Lizmap ou GeoServer avec formulaires d'édition. "Grand public" = open data, atlas territorial consultable par tous.</span></span>
-      </label>
-      <select name="diffusion">
-        <option value="interne">🔒 En interne — Pas de partage externe</option>
-        <option value="simple_web">🔗 Partage simple — Un lien carte (lecture seule)</option>
-        <option value="collaboratif">✏️ Collaboratif — Partage + édition en équipe</option>
-        <option value="portail_metier">⚙️ Portail métier — Application web + formulaires métier</option>
-        <option value="grand_public">🌍 Grand public — Open data, atlas territorial</option>
+      <label>Authentification & Annuaire (SSO) <span class="tip" tabindex="0">ℹ<span class="tip-box">Si vos utilisateurs se connectent via Active Directory, Azure AD ou LDAP, le SIG doit s'y intégrer. ArcGIS Enterprise et GeoServer supportent LDAP. Felt et QGIS Cloud ne supportent pas le SSO d'entreprise.</span></span></label>
+      <select name="auth_sso">
+        <option value="non">Non — Comptes locaux, gestion manuelle</option>
+        <option value="ldap">LDAP / Active Directory interne</option>
+        <option value="azure_ad">Azure AD / Entra ID (SSO Microsoft)</option>
+        <option value="saml">SAML / SSO générique (Okta, Keycloak…)</option>
+        <option value="nsp">Je ne sais pas</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Classification des données <span class="tip" tabindex="0">ℹ<span class="tip-box">Données de réseaux critiques (eau, électricité) ou RH peuvent être "sensibles" sans être classifiées défense. Ce niveau influe sur le chiffrement et l'audit des accès requis.</span></span></label>
+      <select name="classification">
+        <option value="public">Publiques / open data</option>
+        <option value="interne">Internes (non publiables)</option>
+        <option value="sensible">Sensibles (RH, santé, réseaux critiques)</option>
+        <option value="confidentiel">Confidentiel Défense / IGI 1300</option>
+        <option value="nsp">Je ne sais pas</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Système de Projection (CRS) <span class="tip" tabindex="0">ℹ<span class="tip-box">RGR92 = Réunion (EPSG:2975). Lambert 93 = France métropole. WGS84 = GPS et web. Ce choix évite les erreurs d'affichage décalé et est obligatoire pour les échanges IGN.</span></span></label>
+      <select name="crs">
+        <option value="wgs84">WGS 84 — Mondial / Web / GPS</option>
+        <option value="lambert93">Lambert 93 — France Métropole</option>
+        <option value="rgr92">RGR92 / UTM-40S — La Réunion</option>
+        <option value="autre">Autre (DOM-TOM, international, local)</option>
         <option value="nsp">Je ne sais pas</option>
       </select>
     </div>
   </div>
+</div>
 
-  <div class="slabel">🛰️ Terrain & Imagerie</div>
-  <div class="card expert-card">
-    <div class="grid2">
-      <div class="field">
-        <label>Source des fonds de plan & imagerie
-          <span class="tip" tabindex="0">ℹ<span class="tip-box">OSM gratuit mais non mis à jour sur commande. Sentinel-2 (ESA) est gratuit pour la télédétection. Le drone vous donne une précision centimétrique sur votre zone.</span></span>
-        </label>
-        <select name="imagerie">
-          <option value="gratuit_local">Gratuit / OSM (flux standards, actualisés par la communauté)</option>
-          <option value="payant_mensuel">Abonnement mensuel (Sentinel-2 ESA, Planet, flux premium)</option>
-          <option value="achat_precision">Achat précision (Ortho HD 5 cm, Cadastre IGN vectoriel)</option>
-          <option value="drone">Drone / Aérien (sur mesure, précision centimétrique)</option>
-          <option value="nsp">Je ne sais pas</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Outil de saisie terrain mobile
-          <span class="tip" tabindex="0">ℹ<span class="tip-box">QField : synchronise vos projets QGIS (GPS décimétrique). KoboCollect : standard humanitaire pour enquêtes socio-économiques offline. Field Maps : intégré ArcGIS Online.</span></span>
-        </label>
-        <select name="terrain" id="terrainSel" onchange="onTerrainChange()">
-          <option value="non">Pas de besoin terrain mobile</option>
-          <option value="qfield">QField / Mergin Maps — SIG pro hors-ligne (QGIS)</option>
-          <option value="kobo">KoboCollect / ODK — Enquêtes & formulaires socio-éco</option>
-          <option value="fieldmaps">ArcGIS Field Maps — Solution Esri terrain</option>
-          <option value="nsp">Je ne sais pas</option>
-        </select>
-        <div class="terrain-note" id="terrainNote"></div>
-      </div>
+<!-- GROUPE 2 : COMPÉTENCES INTERNES -->
+<div class="slabel">🧠 Compétences & Maintenance</div>
+<div class="card card-skills">
+  <span class="gb gb-skills">👥 Compétences</span>
+  <div class="grid2">
+    <div class="field">
+      <label>Niveau technique de l'équipe SIG <span class="tip" tabindex="0">ℹ<span class="tip-box">Facteur humain décisif. Débutant = SaaS (Felt, ArcGIS Online). Administrateur = PostGIS+GeoServer. Développeur = scripts Python, API REST, Docker. Ce paramètre a un poids ×2 dans la matrice.</span></span></label>
+      <select name="competences">
+        <option value="debutant">Débutant — Clé-en-main, zéro code</option>
+        <option value="intermediaire">Intermédiaire — Maîtrise QGIS/ArcGIS, SQL basique</option>
+        <option value="administrateur">Administrateur SIG — PostGIS, GeoServer, Docker</option>
+        <option value="developpeur">Développeur — Python, SQL avancé, API REST</option>
+        <option value="nsp">Je ne sais pas / Équipe mixte</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Capacité de maintenance serveur <span class="tip" tabindex="0">ℹ<span class="tip-box">"Zéro maintenance" = SaaS cloud uniquement. "Serveur managé" = VPS avec panneau de contrôle. "Admin Linux" = contrôle total avec Docker, Nginx, sauvegardes manuelles.</span></span></label>
+      <select name="maintenance">
+        <option value="zero">Zéro maintenance — SaaS uniquement</option>
+        <option value="facile">Serveur managé — Interface graphique</option>
+        <option value="avance">Admin Linux — Docker, CLI, sauvegardes manuelles</option>
+        <option value="nsp">Je ne sais pas</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Besoin de support francophone <span class="tip" tabindex="0">ℹ<span class="tip-box">QGIS, Lizmap et Geoconcept disposent d'excellents supports en français. ArcGIS a un support Esri France. AWS et Supabase sont principalement en anglais.</span></span></label>
+      <select name="support_fr">
+        <option value="non">Non — Documentation anglaise acceptée</option>
+        <option value="oui">Oui — Support et documentation en français requis</option>
+        <option value="nsp">Je ne sais pas</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Besoin de formation <span class="tip" tabindex="0">ℹ<span class="tip-box">Esri propose des formations certifiantes payantes. QGIS a une documentation et communauté riches gratuites. Ce paramètre peut influer sur le TCO (Total Cost of Ownership) réel.</span></span></label>
+      <select name="formation">
+        <option value="non">Pas besoin — Équipe déjà formée</option>
+        <option value="auto">Auto-formation — Tutoriels en ligne</option>
+        <option value="intra">Formation intra-entreprise</option>
+        <option value="certif">Certification souhaitée (Esri, QGIS…)</option>
+        <option value="nsp">Je ne sais pas</option>
+      </select>
     </div>
   </div>
 </div>
+
+<!-- GROUPE 3 : INTEROPÉRABILITÉ MÉTIER -->
+<div class="slabel">🔌 Interopérabilité Métier</div>
+<div class="card card-interop">
+  <span class="gb gb-interop">⚙️ Interopérabilité</span>
+  <div class="field">
+    <label>Logiciels métier à connecter au SIG <span class="tip" tabindex="0">ℹ<span class="tip-box">Cochez tout ce qui s'applique. AutoCAD/Revit → le SIG doit lire DWG. ERP/CRM → connexion API ou FME. BI → PostGIS se connecte à Power BI et Tableau. IoT → base temporelle (TimescaleDB). Ces choix impactent directement le scoring ETL et la base de données.</span></span></label>
+    <div class="cb-grid">
+      <div class="cb-item"><input type="checkbox" name="interop_autocad" value="1" id="ic1"><label for="ic1"><span class="cb-box"></span>📐 AutoCAD / Revit / BIM</label></div>
+      <div class="cb-item"><input type="checkbox" name="interop_erp" value="1" id="ic2"><label for="ic2"><span class="cb-box"></span>🏢 ERP / CRM (SAP, Salesforce…)</label></div>
+      <div class="cb-item"><input type="checkbox" name="interop_bi" value="1" id="ic3"><label for="ic3"><span class="cb-box"></span>📊 BI / Décisionnel (Power BI, Tableau)</label></div>
+      <div class="cb-item"><input type="checkbox" name="interop_iot" value="1" id="ic4"><label for="ic4"><span class="cb-box"></span>📡 IoT / Capteurs / SCADA temps réel</label></div>
+      <div class="cb-item"><input type="checkbox" name="interop_opendata" value="1" id="ic5"><label for="ic5"><span class="cb-box"></span>🌍 Open Data / INSPIRE / WMS publics</label></div>
+      <div class="cb-item"><input type="checkbox" name="interop_api" value="1" id="ic6"><label for="ic6"><span class="cb-box"></span>🔌 API REST / Webhooks personnalisés</label></div>
+    </div>
+    <div class="ctx-note" id="interopNote" style="background:var(--amber-l);color:#7a4a00;border-color:#f0c070"></div>
+  </div>
+  <div class="field" style="margin-top:14px">
+    <label>Besoin ETL / conversion automatique de données <span class="tip" tabindex="0">ℹ<span class="tip-box">FME est le leader (3 500 €/an) mais transforme n'importe quel format. Le Modélisateur QGIS est gratuit pour les workflows simples. Python/GDAL pour les développeurs confirmés.</span></span></label>
+    <select name="etl">
+      <option value="non">Pas besoin — Formats simples (SHP, GPKG, GeoJSON)</option>
+      <option value="qgis_modeler">Modélisateur QGIS — Automatisation gratuite</option>
+      <option value="python_gdal">Python / GDAL / OGR — Scripts sur mesure</option>
+      <option value="fme">Safe FME — ETL géospatial professionnel</option>
+      <option value="nsp">Je ne sais pas</option>
+    </select>
+  </div>
+</div>
+
+<!-- GROUPE 4 : FRÉQUENCE & VOLUME D'AUDIENCE -->
+<div class="slabel">📈 Fréquence & Volume d'Audience</div>
+<div class="card card-freq">
+  <span class="gb gb-freq">⚡ Fréquence</span>
+  <div class="grid2">
+    <div class="field">
+      <label>Fréquence de mise à jour des données <span class="tip" tabindex="0">ℹ<span class="tip-box">Des données temps réel (capteurs IoT, GPS) imposent une base temporelle (TimescaleDB) et un serveur scalable. Une mise à jour mensuelle peut se faire avec de simples fichiers GeoPackage.</span></span></label>
+      <select name="frequence_maj">
+        <option value="statique">Statique — Ponctuel / annuel</option>
+        <option value="periodique">Périodique — Quotidien / hebdomadaire</option>
+        <option value="temps_reel">Temps réel — Capteurs IoT, GPS live, flux continu</option>
+        <option value="nsp">Je ne sais pas</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Audience de la carte web (si diffusion) <span class="tip" tabindex="0">ℹ<span class="tip-box">Une carte pour 10 agents ≠ une carte pour 10 000 visiteurs/jour. L'audience détermine si vous avez besoin d'un CDN, d'un autoscaling cloud ou d'un simple SaaS. Ce paramètre pénalise les petits serveurs locaux à forte audience.</span></span></label>
+      <select name="audience">
+        <option value="interne">Interne — Quelques agents</option>
+        <option value="partenaires">Partenaires — Quelques dizaines d'utilisateurs</option>
+        <option value="public_moyen">Grand public modéré — Quelques centaines/mois</option>
+        <option value="public_large">Grand public large — +10 000 visites/mois</option>
+        <option value="nsp">Je ne sais pas</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Besoin temps réel / IoT <span class="tip" tabindex="0">ℹ<span class="tip-box">Suivi de véhicules ou capteurs = protocole MQTT ou WebSocket, base temporelle (TimescaleDB, InfluxDB), tableau de bord Grafana. Ce besoin exclut les solutions fichiers (GeoPackage, SpatiaLite).</span></span></label>
+      <select name="temps_reel">
+        <option value="non">Non — Données statiques ou périodiques</option>
+        <option value="suivi_vehicule">Suivi de véhicules / flottes GPS</option>
+        <option value="capteurs_iot">Capteurs IoT / stations / réseaux SCADA</option>
+        <option value="nsp">Je ne sais pas</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Scalabilité souhaitée <span class="tip" tabindex="0">ℹ<span class="tip-box">Charge fixe = VPS OVH suffisant. Pics d'audience ou événements = autoscaling cloud (AWS, Azure). Un serveur local ne peut pas s'adapter dynamiquement à une montée en charge soudaine.</span></span></label>
+      <select name="scalabilite">
+        <option value="fixe">Charge fixe — Utilisateurs stables</option>
+        <option value="croissance">Croissance progressive — Projet en développement</option>
+        <option value="pics">Pics d'audience — Usage ponctuel intense</option>
+        <option value="elastique">Élastique — Autoscaling cloud requis</option>
+        <option value="nsp">Je ne sais pas</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- DIFFUSION WEB -->
+<div class="slabel">🌐 Diffusion Web & Portail</div>
+<div class="card expert-card">
+  <div class="field">
+    <label>Que souhaitez-vous faire avec vos cartes ? <span class="tip" tabindex="0">ℹ<span class="tip-box">"En interne" = pas de portail web. "Portail métier" = Lizmap ou GeoServer avec formulaires d'édition. "Grand public" = open data avec catalogue INSPIRE.</span></span></label>
+    <select name="diffusion">
+      <option value="interne">🔒 En interne — Pas de partage externe</option>
+      <option value="simple_web">🔗 Partage simple — Un lien carte (lecture seule)</option>
+      <option value="collaboratif">✏️ Collaboratif — Partage + édition en équipe</option>
+      <option value="portail_metier">⚙️ Portail métier — Application web + formulaires</option>
+      <option value="grand_public">🌍 Grand public — Open data, atlas territorial</option>
+      <option value="nsp">Je ne sais pas</option>
+    </select>
+  </div>
+</div>
+
+<!-- TERRAIN & IMAGERIE -->
+<div class="slabel">🛰️ Terrain & Imagerie</div>
+<div class="card expert-card">
+  <div class="grid2">
+    <div class="field">
+      <label>Source des fonds de plan & imagerie <span class="tip" tabindex="0">ℹ<span class="tip-box">OSM gratuit. Sentinel-2 (ESA) gratuit pour la télédétection. IGN gratuit pour le secteur public via convention. Drone = précision centimétrique sur votre zone.</span></span></label>
+      <select name="imagerie">
+        <option value="gratuit_local">Gratuit / OSM (flux standards)</option>
+        <option value="payant_mensuel">Abonnement (Sentinel-2, Planet, flux premium)</option>
+        <option value="achat_precision">Achat précision (Ortho HD 5 cm, IGN)</option>
+        <option value="drone">Drone / Aérien (précision centimétrique)</option>
+        <option value="nsp">Je ne sais pas</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Outil de saisie terrain mobile <span class="tip" tabindex="0">ℹ<span class="tip-box">QField : synchronise vos projets QGIS (GPS décimétrique, hors-ligne). KoboCollect : standard humanitaire pour enquêtes socio-éco. Field Maps : nécessite ArcGIS Online (500€/an).</span></span></label>
+      <select name="terrain" id="terrainSel" onchange="onTerrainChange()">
+        <option value="non">Pas de besoin terrain mobile</option>
+        <option value="qfield">QField / Mergin Maps — SIG pro hors-ligne (QGIS)</option>
+        <option value="kobo">KoboCollect / ODK — Enquêtes & formulaires socio-éco</option>
+        <option value="fieldmaps">ArcGIS Field Maps — Solution Esri terrain</option>
+        <option value="nsp">Je ne sais pas</option>
+      </select>
+      <div class="ctx-note" id="terrainNote" style="background:var(--green-l);color:var(--green);border-color:#82e0aa"></div>
+    </div>
+  </div>
+</div>
+</div><!-- fin expert-zone -->
 
 <button type="submit" class="btn-submit">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -344,50 +439,63 @@ function toggleMode(m){
   if(m==='expert'){z.classList.add('visible');i.value='expert';be.classList.add('active');bs.classList.remove('active');}
   else{z.classList.remove('visible');i.value='simple';bs.classList.add('active');be.classList.remove('active');}
 }
-
-const SUITE_HINTS={
-  azure:{bg:'#e8effd',col:'#1a3a8a',msg:'☁️ <strong>Azure détecté</strong> — ArcGIS Enterprise s\'intègre nativement avec Azure AD. Recommandé : Azure France Central + Experience Builder + ArcGIS Online.'},
-  m365:{bg:'#e8effd',col:'#1a3a8a',msg:'📧 <strong>Microsoft 365 détecté</strong> — Intégration possible dans Teams/SharePoint via ArcGIS for Microsoft 365 ou Power BI Maps Spatial.'},
-  aws:{bg:'#fef3e2',col:'#7a3a00',msg:'🟠 <strong>AWS détecté</strong> — RDS PostGIS sur AWS + GeoServer EC2 recommandés. Supabase est une alternative managée compatible AWS moins coûteuse.'},
-  google:{bg:'#e8f0fe',col:'#1a4080',msg:'🔵 <strong>Google Cloud détecté</strong> — Google Maps Platform pour les flux cartographiques. BigQuery GIS pour analyses spatiales à grande échelle.'},
-  google_workspace:{bg:'#e8f0fe',col:'#1a4080',msg:'📅 <strong>Google Workspace détecté</strong> — Felt s\'exporte en lien Google-compatible. Data Studio (Looker) pour la BI spatiale connectée à PostGIS.'},
-  apple_icloud:{bg:'#f5f5f7',col:'#444',msg:'🍎 <strong>Apple / iCloud détecté</strong> — QGIS est natif macOS. QField iOS pour le terrain. GeoPackage stocké sur iCloud Drive pour le partage entre appareils Apple.'},
-  on_premise:{bg:'#e6f5ee',col:'#1a5a3a',msg:'🏠 <strong>Infrastructure locale détectée</strong> — PostGIS + GeoServer sur serveur interne. Zéro cloud, données sur site, zéro coût récurrent.'},
-  autocad_si:{bg:'#f5eef8',col:'#5a1a7a',msg:'📐 <strong>AutoCAD / Autodesk déjà licencié</strong> — Exploitez vos licences : AutoCAD Map 3D pour le pont DAO-SIG. QGIS lit aussi les DWG via plugin.'},
-  arcgis_si:{bg:'#e8effd',col:'#1a3a8a',msg:'🗺️ <strong>Licences ArcGIS existantes</strong> — Suite complète : ArcGIS Pro + ArcGIS Online + Field Maps + Experience Builder. Pas besoin de changer d\'écosystème.'},
-  cloud_tier:{bg:'#e6f5ee',col:'#1a5a3a',msg:'🇫🇷 <strong>Cloud souverain détecté</strong> — OVHcloud, Scaleway ou Hetzner : excellents pour le RGPD. PostGIS + Lizmap ou GeoServer s\'y déploient en Docker en moins d\'1h.'},
-  bureautique_cloud:{bg:'#fef3e2',col:'#8a4a00',msg:'📆 <strong>Forte consommation data (+90 jours)</strong> — Prévoir un stockage objet dédié (S3 / OVH Object Storage) pour vos rasters. Plan cloud payant conseillé dès 100 Go.'},
-};
-
-function onSiChange(){
-  const v=document.getElementById('siSel').value;
-  const h=document.getElementById('suiteHint');
-  const d=SUITE_HINTS[v];
-  if(d){h.style.background=d.bg;h.style.color=d.col;h.style.border='1px solid '+d.col+'44';h.innerHTML=d.msg;h.classList.add('show');}
-  else{h.classList.remove('show');}
-}
-
-const TERRAIN_NOTES={
-  qfield:'🟢 <strong>QField</strong> synchronise directement vos projets QGIS via QFieldCloud. Compatible Android & iOS. GPS centimétrique possible avec antenne externe.',
-  kobo:'📋 <strong>KoboCollect / ODK</strong> : idéal pour enquêtes socio-économiques, recensements et formulaires complexes hors-ligne. Standard des ONG (UNHCR, MSF, Croix-Rouge). Analyses statistiques intégrées.',
-  fieldmaps:'🔵 <strong>ArcGIS Field Maps</strong> : nécessite un abonnement ArcGIS Online (à partir de 500€/an). Intégration native avec tous les outils Esri. Collecte + édition en temps réel.',
-};
-function onTerrainChange(){
-  const v=document.getElementById('terrainSel').value;
-  const n=document.getElementById('terrainNote');
-  if(TERRAIN_NOTES[v]){n.innerHTML=TERRAIN_NOTES[v];n.classList.add('show');}
-  else{n.classList.remove('show');}
-}
-
 function onSecteurChange(){
-  // Si géomètre → activer mode expert automatiquement
   const v=document.getElementById('secteurSel').value;
-  if(v==='geometre'||v==='btp'){
+  if(['geometre','btp','energie','transport','energie'].includes(v)){
     document.getElementById('expertZone').classList.add('visible');
     document.getElementById('inputMode').value='expert';
     document.getElementById('btnExpert').classList.add('active');
     document.getElementById('btnSimple').classList.remove('active');
   }
+  if(v==='geometre'||v==='btp'){document.getElementById('ic1').checked=true;onInteropChange();}
+  if(v==='energie'||v==='transport'){document.getElementById('ic4').checked=true;onInteropChange();}
+  if(v==='ong'){document.getElementById('ic5').checked=true;onInteropChange();}
+}
+const SUITE_HINTS={
+  azure:{bg:'#e8effd',col:'#1a3a8a',msg:'☁️ <strong>Azure détecté</strong> — ArcGIS Enterprise + Azure AD = SSO natif. Azure France Central pour le RGPD. OneDrive synchronise vos GeoPackage.'},
+  m365:{bg:'#e8effd',col:'#1a3a8a',msg:'📧 <strong>Microsoft 365 détecté</strong> — Intégration Teams/SharePoint via ArcGIS for Microsoft 365. Power BI Maps pour les tableaux de bord spatiaux.'},
+  aws:{bg:'#fef3e2',col:'#7a3a00',msg:'🟠 <strong>AWS détecté</strong> — RDS PostGIS + GeoServer EC2. Supabase compatible AWS. S3 pour le stockage raster volumique.'},
+  google:{bg:'#e8f0fe',col:'#1a4080',msg:'🔵 <strong>GCP détecté</strong> — BigQuery GIS pour les analyses spatiales à grande échelle. Cloud Maps Platform pour les fonds de plan.'},
+  google_workspace:{bg:'#e8f0fe',col:'#1a4080',msg:'📅 <strong>Google Workspace détecté</strong> — Google Drive synchronise vos GeoPackage. Felt exporte en lien Google-compatible. Looker Studio pour la BI spatiale.'},
+  apple_icloud:{bg:'#f5f5f7',col:'#444',msg:'🍎 <strong>Apple / iCloud détecté</strong> — ⚠️ ArcGIS Pro = Windows uniquement. QGIS natif macOS recommandé. iCloud Drive synchronise vos GeoPackage entre Mac et QField iOS.'},
+  on_premise:{bg:'#e6f5ee',col:'#1a5a3a',msg:'🏠 <strong>On-Premise détecté</strong> — PostGIS + GeoServer sur serveur interne. Zéro cloud, souveraineté totale, coût récurrent nul.'},
+  autocad_si:{bg:'#f5eef8',col:'#5a1a7a',msg:'📐 <strong>AutoCAD déjà licencié</strong> — AutoCAD Map 3D lit les DWG nativement. QGIS avec plugin DWG en alternative gratuite.'},
+  arcgis_si:{bg:'#e8effd',col:'#1a3a8a',msg:'🗺️ <strong>Licences Esri existantes</strong> — Exploitez vos licences : ArcGIS Pro + Online + Field Maps + Experience Builder. Pas besoin de changer d\'écosystème.'},
+  cloud_tier:{bg:'#e6f5ee',col:'#1a5a3a',msg:'🇫🇷 <strong>Cloud souverain détecté</strong> — OVHcloud, Scaleway ou Hetzner. PostGIS + Lizmap ou GeoServer en Docker en moins d\'1h. RGPD natif.'},
+  bureautique_cloud:{bg:'#fef3e2',col:'#8a4a00',msg:'📆 <strong>Forte conso data (+90j)</strong> — Stockage objet dédié requis (S3 / OVH Object Storage) pour vos rasters. Plan cloud payant dès 100 Go.'},
+};
+function onSiChange(){
+  const v=document.getElementById('siSel').value,h=document.getElementById('suiteHint'),d=SUITE_HINTS[v];
+  if(d){h.style.background=d.bg;h.style.color=d.col;h.style.border='1px solid '+d.col+'44';h.innerHTML=d.msg;h.classList.add('show');}
+  else h.classList.remove('show');
+}
+const INTEROP_NOTES={
+  interop_autocad:'📐 <strong>AutoCAD/BIM</strong> : ArcGIS Pro et AutoCAD Map 3D lisent les DWG nativement. QGIS via plugin DWG gratuit. FME pour les échanges BIM avancés (IFC, RVT).',
+  interop_erp:'🏢 <strong>ERP/CRM</strong> : connexion SIG↔ERP via API REST ou ETL FME. ArcGIS Online connecteurs Salesforce/SAP natifs. PostGIS via PostgREST pour API personnalisée.',
+  interop_bi:'📊 <strong>BI/Décisionnel</strong> : PostGIS se connecte nativement à Power BI, Tableau et Grafana. ArcGIS Dashboards intégré à la suite Esri. Grafana idéal pour les données IoT.',
+  interop_iot:'📡 <strong>IoT/Capteurs</strong> : base temporelle TimescaleDB (extension PostGIS) ou InfluxDB recommandée. MQTT comme protocole. Grafana pour la visualisation temps réel.',
+  interop_opendata:'🌍 <strong>Open Data/INSPIRE</strong> : GeoNode = plateforme de référence avec catalogue INSPIRE intégré. GeoServer publie les flux WMS/WFS standards.',
+  interop_api:'🔌 <strong>API REST</strong> : GeoServer publie WFS/WMS standards. Supabase génère des API REST automatiquement. PostGIS + PostgREST pour API spatiale personnalisée.',
+};
+function onInteropChange(){
+  const notes=[];
+  Object.keys(INTEROP_NOTES).forEach(k=>{const el=document.querySelector('input[name="'+k+'"]');if(el&&el.checked)notes.push(INTEROP_NOTES[k]);});
+  const n=document.getElementById('interopNote');
+  if(notes.length){n.innerHTML=notes.join('<hr style="border:none;border-top:1px solid #f0c07055;margin:5px 0">');n.classList.add('show');}
+  else n.classList.remove('show');
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  Object.keys(INTEROP_NOTES).forEach(k=>{const el=document.querySelector('input[name="'+k+'"]');if(el)el.addEventListener('change',onInteropChange);});
+});
+const TERRAIN_NOTES={
+  qfield:'🟢 <strong>QField</strong> : synchronise vos projets QGIS via QFieldCloud. Android & iOS. GPS centimétrique avec antenne externe. KoboCollect pour les enquêtes complémentaires.',
+  kobo:'📋 <strong>KoboCollect / ODK</strong> : formulaires hors-ligne complexes, logique conditionnelle. Standard ONG (UNHCR, MSF). Analyses statistiques intégrées. Gratuit.',
+  fieldmaps:'🔵 <strong>ArcGIS Field Maps</strong> : nécessite ArcGIS Online Creator (500€/an). Collecte + édition temps réel. Survey123 inclus pour les enquêtes avancées.',
+};
+function onTerrainChange(){
+  const v=document.getElementById('terrainSel').value,n=document.getElementById('terrainNote');
+  if(TERRAIN_NOTES[v]){n.innerHTML=TERRAIN_NOTES[v];n.classList.add('show');}
+  else n.classList.remove('show');
 }
 </script>
 </body>
