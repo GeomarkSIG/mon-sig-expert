@@ -89,7 +89,10 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .blink{font-size:.7rem;font-weight:500;padding:3px 8px;border-radius:5px;transition:background .15s}
 .blink.web{color:var(--blue);background:var(--blue-l)}.blink.web:hover{background:#c8d8fa;text-decoration:none}
 .blink.mail{color:var(--green);background:var(--green-l)}.blink.mail:hover{background:#b8e8cc;text-decoration:none}
-.winner-badge{position:absolute;top:10px;right:10px;background:var(--green);color:#fff;font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 7px;border-radius:8px}
+.winner-badge{position:absolute;top:10px;right:10px;background:var(--green);color:#fff;font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 7px;border-radius:8px;
+ word-wrap: break-word;       /* Coupe les mots trop longs */
+ overflow-wrap: anywhere;     /* Sécurité supplémentaire pour le responsive */
+ display: block;}
 
 /* Cat colors */
 .cat-log .brique-cat{color:var(--blue)} .cat-log .brique-price{background:var(--blue-l);color:var(--blue)} .cat-log{border-top:3px solid var(--blue)}
