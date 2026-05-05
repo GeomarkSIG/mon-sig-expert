@@ -77,11 +77,18 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .brique-cat{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:2px}
 .brique-name{font-size:.95rem;font-weight:700;color:var(--ink);line-height:1.2}
 .brique-sub{font-size:.7rem;color:var(--muted);margin-top:2px}
-.brique-body{font-size:.82rem;color:var(--muted);line-height:1.65;padding:0 18px 6px;flex:1}
+.brique-body{font-size:.82rem;color:var(--muted);line-height:1.65;padding:0 18px 6px;flex:1;
+ display: block;                 /* Assure un comportement de bloc standard */
+ -webkit-line-clamp: none !important; /* Désactive la limite de lignes */
+ overflow: visible;              /* Affiche tout le texte */
+ height: auto;                   /* S'adapte au contenu */}
 .brique-sector{font-size:.75rem;background:var(--surface);border-top:1px dashed var(--border);margin:4px 18px 12px;padding:8px 10px;border-radius:8px;color:var(--ink2);line-height:1.55;
  word-wrap: break-word;       /* Coupe les mots trop longs */
  overflow-wrap: anywhere;     /* Sécurité supplémentaire pour le responsive */
- display: block;}
+ display: block;,white-space: normal; !important; /* Force le retour à la ligne */
+ overflow: visible !important;   /* Empêche de cacher le texte */
+ text-overflow: clip;            /* Supprime les points de suspension */
+ height: auto;                   /* Laisse le bloc s'agrandir */}
 .brique-sector strong{color:var(--ink);display:block;margin-bottom:3px;font-size:.7rem;text-transform:uppercase;letter-spacing:.5px}
 .brique-foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;padding:10px 18px;border-top:1px solid var(--border);background:var(--surface);margin-top:auto}
 .brique-price{font-family:'DM Mono',monospace;font-size:.76rem;font-weight:500;padding:3px 9px;border-radius:6px}
@@ -89,10 +96,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .blink{font-size:.7rem;font-weight:500;padding:3px 8px;border-radius:5px;transition:background .15s}
 .blink.web{color:var(--blue);background:var(--blue-l)}.blink.web:hover{background:#c8d8fa;text-decoration:none}
 .blink.mail{color:var(--green);background:var(--green-l)}.blink.mail:hover{background:#b8e8cc;text-decoration:none}
-.winner-badge{position:absolute;top:10px;right:10px;background:var(--green);color:#fff;font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 7px;border-radius:8px;
- word-wrap: break-word;       /* Coupe les mots trop longs */
- overflow-wrap: anywhere;     /* Sécurité supplémentaire pour le responsive */
- display: block;}
+.winner-badge{position:absolute;top:10px;right:10px;background:var(--green);color:#fff;font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 7px;border-radius:8px}
 
 /* Cat colors */
 .cat-log .brique-cat{color:var(--blue)} .cat-log .brique-price{background:var(--blue-l);color:var(--blue)} .cat-log{border-top:3px solid var(--blue)}
