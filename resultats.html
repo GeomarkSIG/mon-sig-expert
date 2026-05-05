@@ -16,14 +16,29 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink);line-height:1.6}
 a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
-.page-header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+
+/* ── HEADER ── */
+.page-header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200}
 .header-inner{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:14px 24px}
 .logo-area{display:flex;align-items:center;gap:10px}
 .logo-area img{height:40px;border-radius:6px}
 .logo-text{font-weight:700;font-size:1rem;color:var(--green)}
 .logo-sub{font-size:.7rem;color:var(--muted);display:block}
 .header-badge{background:var(--green-l);color:var(--green);padding:5px 14px;border-radius:20px;font-size:.78rem;font-weight:600}
-/* HERO */
+
+/* ── ALERTS POPUP ── */
+#alertOverlay{display:none;position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:1000;width:min(680px,95vw)}
+.alert-popup{background:#fff;border:2px solid var(--red);border-radius:14px;padding:18px 22px;box-shadow:0 8px 40px rgba(192,57,43,.18);animation:slideDown .3s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+.alert-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.alert-title{display:flex;align-items:center;gap:8px;font-weight:700;font-size:.92rem;color:var(--red)}
+.alert-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.1rem;padding:2px 6px;border-radius:5px;transition:background .15s}
+.alert-close:hover{background:var(--red-l)}
+.alert-item{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border-radius:8px;background:var(--red-l);font-size:.82rem;color:var(--ink2);line-height:1.65;margin-bottom:8px}
+.alert-item:last-child{margin-bottom:0}
+.alert-ico{font-size:1rem;flex-shrink:0;margin-top:1px}
+
+/* ── HERO ── */
 .hero{background:linear-gradient(135deg,#0c1a10 0%,#0f2820 55%,#1a6040 100%);color:#fff;padding:48px 24px 40px;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 80%,rgba(26,122,74,.15) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(26,86,232,.1) 0%,transparent 50%)}
 .hero-inner{max-width:1180px;margin:auto;position:relative;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start}
@@ -33,35 +48,38 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .hero-meta{display:flex;gap:18px;flex-wrap:wrap}
 .hm{font-size:.8rem;opacity:.75;display:flex;align-items:center;gap:5px}
 .hm strong{opacity:1;font-weight:600}
-/* Score pill */
 .score-pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:18px 22px;text-align:center;min-width:130px;flex-shrink:0}
 .score-big{font-family:'DM Mono',monospace;font-size:2.6rem;font-weight:500;color:#5be89e;line-height:1}
 .score-lbl{font-size:.7rem;opacity:.6;margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
 .score-bar-wrap{margin-top:12px;width:100%;background:rgba(255,255,255,.12);height:4px;border-radius:2px;overflow:hidden}
 .score-bar-fill{height:100%;background:linear-gradient(90deg,#2ecc71,#5be89e);border-radius:2px;transition:width .9s ease}
-/* WRAP */
+.default-note{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:8px 16px;font-size:.75rem;opacity:.8;margin-top:10px;display:inline-block}
+
+/* ── WRAP ── */
 .wrap{max-width:1180px;margin:0 auto;padding:28px 24px 80px}
 .slabel{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:12px;margin-top:26px;display:flex;align-items:center;gap:8px}
 .slabel::after{content:'';flex:1;height:1px;background:var(--border)}
 .scenario-name{font-size:1.3rem;font-weight:700;color:var(--ink);margin-bottom:4px}
 .scenario-desc{color:var(--muted);font-size:.87rem;margin-bottom:20px;line-height:1.65}
-/* Scénario badge */
 .scenario-badge{display:inline-flex;align-items:center;gap:6px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 12px;border-radius:20px;margin-bottom:12px;background:var(--green-l);color:var(--green)}
-/* BRIQUES */
-.brique-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-bottom:8px}
+
+/* ── BRIQUES ── */
+.brique-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(305px,1fr));gap:14px;margin-bottom:8px}
 .brique{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r2);display:flex;flex-direction:column;transition:box-shadow .2s,border-color .2s;position:relative;overflow:hidden;animation:fadeUp .4s ease both}
-.brique:nth-child(1){animation-delay:.04s}.brique:nth-child(2){animation-delay:.08s}.brique:nth-child(3){animation-delay:.12s}.brique:nth-child(4){animation-delay:.16s}.brique:nth-child(5){animation-delay:.20s}.brique:nth-child(6){animation-delay:.24s}.brique:nth-child(7){animation-delay:.28s}
+.brique:nth-child(1){animation-delay:.04s}.brique:nth-child(2){animation-delay:.09s}.brique:nth-child(3){animation-delay:.14s}.brique:nth-child(4){animation-delay:.19s}.brique:nth-child(5){animation-delay:.24s}.brique:nth-child(6){animation-delay:.29s}.brique:nth-child(7){animation-delay:.34s}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 .brique:hover{box-shadow:0 6px 24px rgba(0,0,0,.08);border-color:#b5c8e0}
 .brique-top{display:flex;align-items:flex-start;gap:12px;padding:18px 18px 12px}
-.brique-logo-wrap{flex-shrink:0;width:50px;height:50px;border-radius:10px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.brique-logo-wrap img{width:38px;height:38px;object-fit:contain}
-.brique-logo-wrap .ico{font-size:1.4rem}
+.brique-logo-wrap{flex-shrink:0;width:52px;height:52px;border-radius:10px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.brique-logo-wrap img{width:40px;height:40px;object-fit:contain}
+.brique-logo-wrap .ico{font-size:1.5rem}
 .brique-meta{flex:1}
 .brique-cat{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:2px}
 .brique-name{font-size:.95rem;font-weight:700;color:var(--ink);line-height:1.2}
 .brique-sub{font-size:.7rem;color:var(--muted);margin-top:2px}
-.brique-body{font-size:.82rem;color:var(--muted);line-height:1.65;padding:0 18px 12px;flex:1}
+.brique-body{font-size:.82rem;color:var(--muted);line-height:1.65;padding:0 18px 6px;flex:1}
+.brique-sector{font-size:.75rem;background:var(--surface);border-top:1px dashed var(--border);margin:4px 18px 12px;padding:8px 10px;border-radius:8px;color:var(--ink2);line-height:1.55}
+.brique-sector strong{color:var(--ink);display:block;margin-bottom:3px;font-size:.7rem;text-transform:uppercase;letter-spacing:.5px}
 .brique-foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;padding:10px 18px;border-top:1px solid var(--border);background:var(--surface);margin-top:auto}
 .brique-price{font-family:'DM Mono',monospace;font-size:.76rem;font-weight:500;padding:3px 9px;border-radius:6px}
 .brique-links{display:flex;gap:5px;flex-wrap:wrap}
@@ -69,14 +87,16 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .blink.web{color:var(--blue);background:var(--blue-l)}.blink.web:hover{background:#c8d8fa;text-decoration:none}
 .blink.mail{color:var(--green);background:var(--green-l)}.blink.mail:hover{background:#b8e8cc;text-decoration:none}
 .winner-badge{position:absolute;top:10px;right:10px;background:var(--green);color:#fff;font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 7px;border-radius:8px}
-/* Couleurs par catégorie */
+
+/* Cat colors */
 .cat-log .brique-cat{color:var(--blue)} .cat-log .brique-price{background:var(--blue-l);color:var(--blue)} .cat-log{border-top:3px solid var(--blue)}
 .cat-base .brique-cat{color:var(--purple)} .cat-base .brique-price{background:var(--purple-l);color:var(--purple)} .cat-base{border-top:3px solid var(--purple)}
 .cat-srv .brique-cat{color:var(--teal)} .cat-srv .brique-price{background:var(--teal-l);color:var(--teal)} .cat-srv{border-top:3px solid var(--teal)}
 .cat-pub .brique-cat{color:var(--green)} .cat-pub .brique-price{background:var(--green-l);color:var(--green)} .cat-pub{border-top:3px solid var(--green)}
 .cat-ima .brique-cat{color:var(--amber)} .cat-ima .brique-price{background:var(--amber-l);color:var(--amber)} .cat-ima{border-top:3px solid var(--amber)}
 .cat-ter .brique-cat{color:var(--red)} .cat-ter .brique-price{background:var(--red-l);color:var(--red)} .cat-ter{border-top:3px solid var(--red)}
-/* BUDGET */
+
+/* ── BUDGET ── */
 .budget-box{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r2);padding:24px;margin-bottom:4px;border-left:4px solid var(--green)}
 .budget-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px}
 .budget-total{font-family:'DM Mono',monospace;font-size:2.2rem;font-weight:500;color:var(--green)}
@@ -86,13 +106,15 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .bi-lbl{font-size:.71rem;color:var(--muted)}.bi-val{font-family:'DM Mono',monospace;font-size:.82rem;font-weight:500;color:var(--ink)}
 .bi-note{font-size:.65rem;color:var(--muted);line-height:1.4}
 .budget-note{font-size:.71rem;color:var(--muted);margin-top:10px;line-height:1.5}
-/* RAISONS */
+
+/* ── RAISONS ── */
 .reasons-box{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r2);padding:22px;margin-bottom:4px}
 .reason-item{display:flex;gap:9px;align-items:flex-start;padding:9px 11px;border-radius:8px;background:var(--surface);font-size:.82rem;color:var(--ink2);line-height:1.65;margin-bottom:7px}
 .reason-item:last-child{margin-bottom:0}
 .rdot{width:7px;height:7px;border-radius:50%;margin-top:7px;flex-shrink:0}
 .rdot-g{background:var(--green)}.rdot-a{background:var(--amber)}.rdot-b{background:var(--blue)}.rdot-r{background:var(--red)}
-/* ALT */
+
+/* ── ALTERNATIVES ── */
 .alt-box{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r2);padding:22px;margin-bottom:4px}
 .alt-intro{font-size:.82rem;color:var(--muted);margin-bottom:16px;line-height:1.65}
 .alt-group{margin-bottom:20px}.alt-group:last-child{margin-bottom:0}
@@ -104,28 +126,46 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .alt-ico{width:28px;height:28px;background:#fff;border:1px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
 .alt-body{flex:1;min-width:0}
 .alt-name{font-size:.8rem;font-weight:600;color:var(--ink);margin-bottom:2px}
-.alt-d{font-size:.71rem;color:var(--muted);line-height:1.45}
-.alt-foot{display:flex;align-items:center;justify-content:space-between;margin-top:5px;flex-wrap:wrap;gap:3px}
+.alt-d{font-size:.71rem;color:var(--muted);line-height:1.45;margin-bottom:4px}
+.alt-specs{font-size:.67rem;color:var(--ink2);background:var(--white);border:1px solid var(--border);border-radius:5px;padding:4px 7px;line-height:1.5;margin-bottom:4px}
+.alt-foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:3px}
 .alt-p{font-family:'DM Mono',monospace;font-size:.67rem;font-weight:500}
 .p-free{color:var(--green)}.p-paid{color:var(--amber)}.p-big{color:var(--red)}
-.t-sim{font-size:.6rem;font-weight:700;text-transform:uppercase;background:var(--green-l);color:var(--green);padding:1px 5px;border-radius:3px}
-.t-sup{font-size:.6rem;font-weight:700;text-transform:uppercase;background:var(--blue-l);color:var(--blue);padding:1px 5px;border-radius:3px}
-.t-hb{font-size:.6rem;font-weight:700;text-transform:uppercase;background:var(--amber-l);color:var(--amber);padding:1px 5px;border-radius:3px}
-/* ACTIONS */
+/* Budget tags — all 4 variants */
+.t-inf{font-size:.6rem;font-weight:700;text-transform:uppercase;background:var(--green-l);color:var(--green);padding:1px 6px;border-radius:4px}
+.t-sim{font-size:.6rem;font-weight:700;text-transform:uppercase;background:var(--blue-l);color:var(--blue);padding:1px 6px;border-radius:4px}
+.t-sup{font-size:.6rem;font-weight:700;text-transform:uppercase;background:var(--amber-l);color:var(--amber);padding:1px 6px;border-radius:4px}
+.t-hb{font-size:.6rem;font-weight:700;text-transform:uppercase;background:var(--red-l);color:var(--red);padding:1px 6px;border-radius:4px}
+
+/* ── ACTIONS ── */
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:4px}
 .btn{padding:12px 20px;border-radius:var(--r);font-size:.87rem;font-weight:600;cursor:pointer;transition:all .15s;text-decoration:none;display:inline-flex;align-items:center;gap:6px;border:none;font-family:'DM Sans',sans-serif}
 .btn-primary{background:var(--green);color:#fff;box-shadow:0 2px 12px rgba(26,122,74,.2)}.btn-primary:hover{background:#15643d;text-decoration:none;color:#fff}
 .btn-outline{background:#fff;color:var(--ink);border:1.5px solid var(--border)}.btn-outline:hover{border-color:#a0b4cc;text-decoration:none;color:var(--ink)}
 .btn-amber{background:var(--amber-l);color:var(--amber);border:1.5px solid #f0c070}.btn-amber:hover{background:#fde8b8;text-decoration:none;color:var(--amber)}
-/* FOOTER */
+.btn-red{background:var(--red-l);color:var(--red);border:1.5px solid #f0c0bc}.btn-red:hover{background:#f8d0cd;text-decoration:none;color:var(--red)}
+
+/* ── FOOTER ── */
 .page-footer{border-top:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--white)}
 .footer-right img{height:30px;opacity:.5}
 .footer-note{font-size:.71rem;color:var(--muted)}
+
 @media(max-width:640px){.hero-inner{grid-template-columns:1fr}.score-pill{display:none}.hero h1{font-size:1.4rem}.budget-total{font-size:1.7rem}.brique-grid{grid-template-columns:1fr}.actions{flex-direction:column}}
-@media print{.page-header,.actions,.page-footer{display:none}.hero{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+@media print{.page-header,.actions,.page-footer,#alertOverlay{display:none!important}.hero{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
 </style>
 </head>
 <body>
+
+<!-- ── ALERT OVERLAY ── -->
+<div id="alertOverlay">
+  <div class="alert-popup">
+    <div class="alert-header">
+      <div class="alert-title">⚠️ Incompatibilités détectées</div>
+      <button class="alert-close" onclick="document.getElementById('alertOverlay').style.display='none'">✕ Fermer</button>
+    </div>
+    <div id="alertList"></div>
+  </div>
+</div>
 
 <header class="page-header">
   <div class="header-inner">
@@ -148,6 +188,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
         <div class="hm">💶 <strong id="heroBudget">—</strong></div>
         <div class="hm">⚙️ <strong id="heroMode">—</strong></div>
       </div>
+      <div id="defaultNote" style="display:none" class="default-note">ℹ️ Aucun paramètre fourni — configuration la plus simple et économique recommandée par défaut.</div>
     </div>
     <div class="score-pill">
       <div class="score-big" id="scoreNum">—</div>
@@ -172,16 +213,18 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
       <div style="text-align:right"><div style="font-size:.76rem;color:var(--muted);margin-bottom:3px">Par utilisateur / an</div><div class="budget-per" id="perUser">—</div></div>
     </div>
     <div class="budget-grid" id="budgetDetail"></div>
-    <div class="budget-note">* Estimation indicative hors prestations et formation. Render et Supabase : plan gratuit disponible. Experience Builder inclus dans ArcGIS Online Creator. IGN gratuit secteur public via convention.</div>
+    <div class="budget-note" id="budgetNote">* Estimation indicative hors prestations et formation. Render et Supabase : plan gratuit disponible. Experience Builder inclus dans ArcGIS Online Creator. IGN gratuit secteur public via convention.</div>
   </div>
 
   <div class="slabel">🧠 Pourquoi cette architecture ?</div>
   <div class="reasons-box"><div id="reasonsList"></div></div>
 
-  <div class="slabel">🔄 Alternatives — similaire, supérieur, hors budget</div>
+  <div class="slabel">🔄 Alternatives — budget inf. · similaire · supérieur · hors budget</div>
   <div class="alt-box">
-    <p class="alt-intro">Solutions alternatives classées par proximité budgétaire.
-      <span class="t-sim">Similaire</span> = même gamme de prix ·
+    <p class="alt-intro">
+      Solutions alternatives classées par proximité budgétaire par rapport au composant recommandé. ·
+      <span class="t-inf">Budget inf.</span> = moins cher ·
+      <span class="t-sim">Similaire</span> = même gamme ·
       <span class="t-sup">Budget sup.</span> = fonctionnalités supérieures ·
       <span class="t-hb">Hors budget</span> = à titre informatif.
     </p>
@@ -193,6 +236,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
     <button class="btn btn-primary" onclick="window.print()">🖨️ Télécharger (PDF)</button>
     <a href="index.html" class="btn btn-outline">← Modifier mon diagnostic</a>
     <a href="#" id="contactBtn" class="btn btn-amber">📧 Demander un devis</a>
+    <button class="btn btn-red" id="alertBtn" style="display:none" onclick="document.getElementById('alertOverlay').style.display='block'">⚠️ Voir les alertes</button>
   </div>
 </div>
 
@@ -203,814 +247,926 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 
 <script>
 /* ══════════════════════════════════════════════════════════════════
-   DATA — Catalogue restructuré
-   Catégories : logiciels · bases · hebergement · publication · imagerie · terrain
-   GeoServer et GeoNode → catégorie "publication" (diffusion web)
-   Supabase → hébergement managé (plan gratuit disponible)
-   Render → hébergement managé (plan gratuit disponible)
-   Experience Builder → inclus dans ArcGIS Online (p:0 dans les briques)
+   DATA CATALOGUE
 ══════════════════════════════════════════════════════════════════ */
 const DATA = {
 
-  /* ── LOGICIELS SIG ─────────────────────────────── */
+  /* ── LOGICIELS SIG ── */
   logiciels: {
     qgis: {
-      n:"QGIS Desktop", sub:"Open Source · Win / Mac / Linux",
-      d:"Logiciel SIG open source de référence mondial. Analyses spatiales avancées, 1 000+ plugins, Python/PyQGIS, symbologie professionnelle. Gratuit pour tous les utilisateurs, toutes plateformes. Communauté francophone très active.",
-      p:0, img:"Qgis.png", link:"https://qgis.org", mail:"office@qgis.org", note:"Gratuit · 0 €/utilisateur"
+      n:"QGIS Desktop", sub:"Open Source · Win / Mac / Linux · Gratuit",
+      d:"SIG open source de référence mondial. Analyses spatiales avancées, 1 000+ plugins, Python/PyQGIS, symbologie professionnelle. Toutes plateformes, communauté francophone très active.",
+      p:0, img:"Qgis.png", link:"https://qgis.org", mail:"office@qgis.org", note:"Gratuit · 0 €/utilisateur",
+      specs:{
+        geometre:"Plugins : Cadastre, QCadastre, Georeferencer. Lecture DWG via GDAL/OGR. GPS Leica/Trimble via NMEA.",
+        geomarketing:"Plugins : MMQGIS (géocodage), OSM geocoder, Isochrone. Jointures INSEE/SIRENE pour zones de chalandise.",
+        etudiant:"Plugins : GRASS, Orfeo Toolbox, Semi-Automatic Classification, PDAL, pgRouting. Compatible R et Python.",
+        collectivite:"Plugins : Cadastre, Lizmap, AtlasPrint, Géoportail, RichDEM. Export INSPIRE. QField pour terrain.",
+        btp:"Plugins : Georeferencer, Point Sampling, FME Workbench. Lecture DWG via OGR. Lien AutoCAD via SHP/DXF.",
+        bet_env:"Plugins : QGIS Natura 2000, BioHab, SCP télédétection, PDAL LiDAR. Connexion INPN/GBIF/OpenObs WFS.",
+        agriculture:"Plugins : SCP (NDVI/NDRE), Orfeo Toolbox, QFieldCloud. Import RPG/PAC direct. Sentinel-2 via Hub Copernicus.",
+        ong:"Plugins : HOT Export Tool, QuickMapServices, OSMDownloader. Compatible KoboToolbox, QFieldCloud.",
+        default:"Analyses vecteur/raster, mise en page, exports SHP, GeoPackage, DXF, KML, GeoJSON. Python/PyQGIS."
+      }
     },
     arcgis_pro: {
       n:"ArcGIS Pro (Standard)", sub:"Esri · 820 €/an · Windows uniquement",
-      d:"Logiciel Esri de référence industrielle. Analyse 2D/3D, Python ArcPy, connexion ArcGIS Online native. ⚠️ Windows uniquement. Tarif dégressif : 1 user 820 € · 5+ users ~650 € · 10+ users ~580 €/an.",
-      p:820, img:"ArcGisPRO.jpg", link:"https://www.esri.com", mail:"contact@esri.com", note:"820 €/an/user · Dégressif dès 5 users"
+      d:"Logiciel Esri de référence industrielle. Analyse 2D/3D, Python ArcPy, connexion ArcGIS Online native. ⚠️ Windows uniquement. Dégressif : 1 user 820 € · 5+ ~650 € · 10+ ~580 €/an.",
+      p:820, img:"ArcGisPRO.jpg", link:"https://www.esri.com", mail:"contact@esri.com", note:"820 €/an/user · Dégressif dès 5 users",
+      specs:{
+        geometre:"Extensions : Spatial Analyst, 3D Analyst. Import DWG/DXF natif. Projection Lambert 93/CC9Z. ⚠️ Windows only.",
+        btp:"Extensions : 3D Analyst (surfaces, volumes), Spatial Analyst. Scene Viewer 3D intégré. ⚠️ Windows only.",
+        collectivite:"Connexion ArcGIS Online native. Extensions Urban, Insights. GDB Esri pour stockage local haute performance.",
+        bet_env:"Extensions : Spatial Analyst, Image Analyst, Network Analyst. Script Python ArcPy pour automatisation.",
+        default:"ArcGIS Pro Standard : analyse vecteur/raster, Python ArcPy, 3D basique, connexion AGO. ⚠️ Windows uniquement."
+      }
     },
     arcgis_pro_adv: {
       n:"ArcGIS Pro Advanced", sub:"Esri · 3 850 €/an · Analyses réseau & 3D",
-      d:"ArcGIS Pro Standard + Network Analyst, Spatial Analyst complet, Image Analyst, topologie avancée. ⚠️ Windows uniquement. 3 850 €/user · 5+ users ~3 200 €.",
-      p:3850, img:"ArcGisPRO.jpg", link:"https://www.esri.com", mail:"contact@esri.com", note:"3 850 €/an/user · Dégressif dès 5 users"
+      d:"ArcGIS Pro Standard + Network Analyst, Spatial Analyst complet, Image Analyst, topologie avancée. ⚠️ Windows uniquement. 3 850 €/user · 5+ ~3 200 €.",
+      p:3850, img:"ArcGisPRO.jpg", link:"https://www.esri.com", mail:"contact@esri.com", note:"3 850 €/an/user · Dégressif dès 5 users",
+      specs:{default:"Network Analyst, Spatial Analyst complet, Image Analyst, topologie avancée. ⚠️ Windows uniquement."}
     },
     arcgis_ent: {
       n:"ArcGIS Enterprise", sub:"Esri · Suite serveur · Experience Builder inclus",
-      d:"Portail SIG privé + serveur cartographique + data store. Inclut Experience Builder, Field Maps, Survey123, ArcGIS Online. Paliers : 6 200 € (5 users) · 10 000 € (10 users) · 18 000 € (25 users). SSO LDAP/AD natif.",
-      p:6200, img:"ArcGisPRO.jpg", link:"https://www.esri.com", mail:"contact@esri.com", note:"6 200 €/an · 5 users inclus · Experience Builder inclus"
+      d:"Portail SIG privé + serveur cartographique + data store. Inclut Experience Builder, Field Maps, Survey123. Paliers : 6 200 € (5 users) · 10 000 € (10 users) · 18 000 € (25 users). SSO LDAP/AD natif.",
+      p:6200, img:"ArcGisPRO.jpg", link:"https://www.esri.com", mail:"contact@esri.com", note:"6 200 €/an · 5 users inclus · Suite complète",
+      specs:{
+        collectivite:"Inclut : Experience Builder, Field Maps, Survey123. SSO LDAP/AD natif. INSPIRE WMS/WFS natifs. Catalogue de métadonnées.",
+        energie:"Inclut : Utility Network (réseaux électriques/eau/gaz), Field Maps techniciens, Survey123, Experience Builder dashboards.",
+        default:"Suite complète : AGO, Experience Builder, Field Maps, Survey123, Insights, Notebooks. SSO LDAP/AD natif."
+      }
     },
     arcgis_online: {
       n:"ArcGIS Online Creator", sub:"Esri · SaaS · Experience Builder inclus",
-      d:"Plateforme SaaS Esri. Creator (500 €/an/user) inclut ArcGIS Online, Experience Builder, Field Maps, Survey123, 5 Go stockage. Viewer gratuit pour consultation seule. Experience Builder non vendu séparément.",
-      p:500, img:"AGOL.png", link:"https://arcgis.com", mail:"support@esri.com", note:"500 €/an/user Creator · Experience Builder inclus"
+      d:"Plateforme SaaS Esri. Creator (500 €/an/user) inclut ArcGIS Online, Experience Builder, Field Maps, Survey123, 5 Go stockage. Viewer gratuit pour consultation seule.",
+      p:500, img:"AGOL.png", link:"https://arcgis.com", mail:"support@esri.com", note:"500 €/an/user Creator · Experience Builder inclus",
+      specs:{
+        geomarketing:"Apps métier : dashboards commerciaux, zones de chalandise, Story Maps. Survey123 pour enquêtes terrain.",
+        petite_entreprise:"Creator (500€/user/an) inclut tout : Experience Builder, Field Maps, Survey123, 5 Go. Viewer 0€ pour consultation.",
+        default:"Creator : AGO, Experience Builder, Field Maps, Survey123, Insights, Notebooks, 5 Go. Viewer gratuit."
+      }
     },
     autocad: {
       n:"AutoCAD Map 3D", sub:"Autodesk · 2 500 €/an · Windows · DAO+SIG",
-      d:"Pont DAO↔SIG indispensable pour les géomètres et le BTP. Lecture/écriture native DWG/DXF. ⚠️ Windows uniquement pour Map 3D. Bundle AEC Collection 3 600 €/an (Civil 3D + Revit inclus). Dégressif dès 5 licences.",
-      p:2500, img:"Autocad.jpg", link:"https://www.autodesk.com", mail:"support@autodesk.com", note:"2 500 €/an · Bundle AEC 3 600 €/an"
+      d:"Pont DAO↔SIG indispensable pour géomètres et BTP. Lecture/écriture native DWG/DXF. ⚠️ Windows uniquement. Bundle AEC Collection 3 600 €/an (Civil 3D + Revit inclus). Dégressif dès 5 licences.",
+      p:2500, img:"Autocad.jpg", link:"https://www.autodesk.com", mail:"support@autodesk.com", note:"2 500 €/an · Bundle AEC 3 600 €/an",
+      specs:{
+        geometre:"Extensions Map 3D : Survey Functions, FDO Spatial, Object Data, Map 3D Mapbook. Export SHP, GeoJSON, KML natif.",
+        btp:"Bundle AEC : Civil 3D (profils/coupes/réseaux), Revit Link, ReCap (nuages points), Navisworks (maquette BIM).",
+        default:"AutoCAD Map 3D : FDO Provider, Object Data, import/export SHP, DWG natif. ⚠️ Windows uniquement."
+      }
     },
     geoconcept: {
       n:"Geoconcept", sub:"Français · Géomarketing · Sur devis",
-      d:"SIG expert français pour le géomarketing et l'optimisation de tournées. Support francophone dédié. Tarification sur devis uniquement — ~2 800 €/an indicatif monoposte. Modules Fleet Management et Routing disponibles.",
-      p:2800, img:"Geoconcept.png", link:"https://geoconcept.com", mail:"info@geoconcept.com", note:"~2 800 €/an indicatif · Prix sur devis"
+      d:"SIG expert français pour le géomarketing et l'optimisation de tournées. Support francophone dédié. ~2 800 €/an indicatif monoposte. Modules Fleet Management et Routing disponibles.",
+      p:2800, img:"Geoconcept.png", link:"https://geoconcept.com", mail:"info@geoconcept.com", note:"~2 800 €/an indicatif · Prix sur devis",
+      specs:{
+        geomarketing:"Modules : Fleet Management (tournées optimisées), Territory Manager (découpage secteurs), Geocoder Pro (adressage), Isochrones, segmentation IRIS/INSEE, données socio-démographiques optionnelles.",
+        default:"Geoconcept inclut : optimisation de tournées, zones de chalandise, géocodage FR, import Excel/CSV, export cartes PDF."
+      }
     },
     josm: {
-      n:"JOSM / OpenStreetMap Editor", sub:"Open Source · Communautaire · ONG",
-      d:"Éditeur OpenStreetMap de référence mondial. Standard des ONG et humanitaires (HOT, MSF, UNHCR). Cartographie participative, données libres mondiales. 100% gratuit, toutes plateformes.",
-      p:0, img:"OSM.jpg", link:"https://josm.openstreetmap.de", note:"Gratuit · Données OSM libres"
+      n:"JOSM / OpenStreetMap Editor", sub:"Open Source · Humanitaire · ONG · Gratuit",
+      d:"Éditeur OpenStreetMap de référence mondial. Standard HOT (Humanitarian OpenStreetMap Team), MSF, UNHCR. Cartographie participative, données libres mondiales. 100% gratuit, toutes plateformes.",
+      p:0, img:"OSM.jpg", link:"https://josm.openstreetmap.de", note:"Gratuit · Données OSM libres",
+      specs:{
+        ong:"Compatible HOT Tasking Manager. Plugins : JOSM Remote Control, MapCSS, Utilsplugin2. Mode hors connexion complet.",
+        default:"Éditeur OSM : contribution communautaire, vérification topologique, templates de tags, OSM API intégré."
+      }
     },
     grass: {
       n:"GRASS GIS", sub:"Open Source · Analyses avancées · Recherche",
-      d:"Logiciel SIG open source spécialisé en analyses hydrologiques, environnementales et scientifiques. Référence en milieu académique. Intégrable dans QGIS via plugin. Idéal pour la recherche et l'enseignement.",
-      p:0, img:"Qgis.png", link:"https://grass.osgeo.org", note:"Gratuit · Orienté recherche et analyse"
+      d:"SIG open source spécialisé en analyses hydrologiques, environnementales et scientifiques. Référence académique. Intégrable dans QGIS via plugin Processing.",
+      p:0, img:"Qgis.png", link:"https://grass.osgeo.org", note:"Gratuit · Orienté recherche et analyse",
+      specs:{
+        etudiant:"Modules : r.watershed (hydrologie), v.lidar (LiDAR), r.slope.aspect (topographie), i.landsat (télédétection), r.sun (ensoleillement). Compatible Python et R.",
+        bet_env:"Modules : r.watershed (bassins versants), v.overlay (croisements), r.mapcalc (algèbre spatial), i.segment (segmentation raster).",
+        default:"Modules GRASS : r.* (raster), v.* (vecteur), d.* (affichage), g.* (gestion). Intégré via plugin QGIS Processing."
+      }
     }
   },
 
-  /* ── BASES DE DONNÉES SPATIALES ─────────────── */
+  /* ── BASES DE DONNÉES SPATIALES ── */
   bases: {
     postgis: {
       n:"PostgreSQL / PostGIS", sub:"Open Source · Moteur spatial de référence",
-      d:"Moteur spatial open source de référence. SQL spatial avancé, topologie, index GIST, millions d'objets, TimescaleDB pour l'IoT. Multi-utilisateurs natif. Pilier de toute infrastructure SIG sérieuse, de la TPE à l'État.",
-      p:0, img:"PostGre_PostGIS.jpg", link:"https://postgis.net", mail:"pgsql-general@postgresql.org", note:"Gratuit · Hébergement serveur requis"
+      d:"Moteur spatial open source de référence. SQL spatial avancé, topologie, index GIST, millions d'objets, TimescaleDB pour l'IoT. Multi-utilisateurs natif. Pilier de toute infrastructure SIG sérieuse.",
+      p:0, img:"PostGre_PostGIS.jpg", link:"https://postgis.net", mail:"pgsql-general@postgresql.org", note:"Gratuit · Hébergement serveur requis",
+      specs:{
+        geometre:"Fonctions : ST_Transform (Lambert 93/CC9Z), ST_Distance (projections légales), Topology pour les levés. Schémas par dossier client.",
+        geomarketing:"Fonctions : ST_DWithin (zones de chalandise), ST_Voronoi, ST_ClusterKMeans, ST_TravelTime. Jointures INSEE/SIRENE.",
+        etudiant:"Extensions : PostGIS Raster, pgRouting, TimescaleDB. API : R (sf/dplyr), Python (geopandas/SQLAlchemy), Julia.",
+        agriculture:"Extensions : PostGIS Raster (Sentinel-2), TimescaleDB (séries météo). Tables RPG/PAC importables via ogr2ogr.",
+        collectivite:"Multi-schémas par service (voirie/réseaux/PLU). Extensions : pg_audit, pgcrypto. Compatibilité INSPIRE WFS.",
+        default:"Extensions : PostGIS Raster, Topology, pgRouting, TimescaleDB. Index GIST, SQL spatial ST_*."
+      }
     },
     gpkg: {
       n:"GeoPackage (.gpkg)", sub:"Format OGC · Fichier unique · Portable",
-      d:"Standard OGC portable : une base spatiale dans un seul fichier SQLite. Compatible QGIS, ArcGIS, GDAL. Synchronisable via OneDrive, Google Drive ou iCloud Drive. Idéal usage solo, terrain et archivage de données.",
-      p:0, img:"Geopackage.jpg", link:"https://geopackage.org", note:"Gratuit · Usage mono-utilisateur"
+      d:"Standard OGC portable : une base spatiale dans un seul fichier SQLite. Compatible QGIS, ArcGIS, GDAL. Synchronisable via OneDrive/Google Drive. Idéal usage solo, terrain et archivage.",
+      p:0, img:"Geopackage.jpg", link:"https://geopackage.org", note:"Gratuit · Usage mono-utilisateur",
+      specs:{
+        geometre:"Stocke : géométries, attributs, styles QGIS, formulaires. Archivage levés par mission. Compatible ArcGIS Pro en lecture.",
+        etudiant:"Support rasters, tuiles, attributs. Compatible GDAL, OGR, Spatialite. Idéal transfert de données entre chercheurs.",
+        default:"1 fichier = N couches + styles + métadonnées. Portable USB/cloud. Max conseillé ~5 Go pour les performances."
+      }
     },
     spatialite: {
       n:"SpatiaLite / SQLite", sub:"Open Source · Léger · Embarqué",
-      d:"Base spatiale légère dans un fichier SQLite. Parfaite pour applications mobiles, projets sans configuration serveur, stockage terrain hors-ligne. Taille maximale conseillée : 2 Go. Compatible QGIS et FME.",
-      p:0, img:"Spatialite.jpg", link:"https://gaia-gis.it", note:"Gratuit · Usage fichier · Max ~2 Go"
+      d:"Base spatiale légère dans un fichier SQLite. Parfaite pour applications mobiles, projets sans serveur, stockage terrain hors-ligne. Compatible QGIS et FME. Taille max conseillée : 2 Go.",
+      p:0, img:"Spatialite.jpg", link:"https://gaia-gis.it", note:"Gratuit · Usage fichier · Max ~2 Go",
+      specs:{
+        geometre:"Idéal pour levés de terrain courts. Portable sur clé USB. Compatible QField pour la synchronisation terrain.",
+        default:"SQLite spatial léger. Fonctions géométriques SpatiaLite. Compatible QGIS, FME, OGR. Max ~2 Go recommandé."
+      }
     },
     supabase: {
       n:"Supabase (PostGIS Managé)", sub:"Plan gratuit disponible · API REST auto",
-      d:"PostGIS clé en main dans le cloud. Plan gratuit : 500 Mo, 7 jours de logs — suffisant pour les petits projets. Pro 25 €/mois (8 Go). API REST auto-générée, authentification intégrée. Zéro administration serveur. Serveurs EU disponibles.",
-      p:0, img:"Supabase.png", link:"https://supabase.com", mail:"support@supabase.com", note:"Gratuit (500 Mo) · Pro 25€/mois"
+      d:"PostGIS clé en main dans le cloud. Gratuit : 500 Mo, 7 jours logs. Pro 25 €/mois (8 Go). API REST auto-générée, authentification intégrée, zéro administration. Serveurs EU disponibles.",
+      p:0, img:"Supabase.png", link:"https://supabase.com", mail:"support@supabase.com", note:"Gratuit (500 Mo) · Pro 25€/mois",
+      specs:{
+        geomarketing:"API REST géospatiale auto-générée. Temps réel WebSocket. Serveurs EU (RGPD). Interface Supabase Studio pour visualiser.",
+        etudiant:"API REST + GraphQL auto. SDK JavaScript, Python, Dart. Authentification JWT. Plan gratuit suffisant pour un projet de recherche.",
+        default:"PostGIS managé : API REST auto, Auth intégrée, Studio visuel, temps réel WebSocket. Plan gratuit 500 Mo. Serveurs EU."
+      }
     },
     arcgis_db: {
       n:"ArcGIS Online Data Store", sub:"Esri Cloud · Inclus dans Creator",
-      d:"Données hébergées dans le Cloud Esri. Inclus dans ArcGIS Online Creator (5 Go/user). Feature Services REST natifs, partage entre utilisateurs ArcGIS, Field Maps et Experience Builder. Stockage supp. ~14 €/Go/an.",
-      p:0, img:"AGOL.png", link:"https://arcgis.com", mail:"support@esri.com", note:"Inclus dans AGO Creator · 0 € supp."
+      d:"Données hébergées dans le Cloud Esri. Inclus dans ArcGIS Online Creator (5 Go/user). Feature Services REST natifs, partage entre utilisateurs ArcGIS. Stockage supp. ~14 €/Go/an.",
+      p:0, img:"AGOL.png", link:"https://arcgis.com", mail:"support@esri.com", note:"Inclus dans AGO Creator · 0 € supp.",
+      specs:{
+        default:"Feature Services REST, Hosted Tile Layers, Survey123 submissions. 5 Go/user Creator. Analytics SQL direct."
+      }
     },
     file_gdb: {
       n:"File Geodatabase (Esri)", sub:"Esri · Format propriétaire · Local",
-      d:"Format de base de données Esri haute performance pour usage local. Meilleure alternative au Shapefile dans l'écosystème Esri. Supporte les grands volumes et la topologie. Lecture possible dans QGIS via plugin.",
-      p:0, img:"ArcGisPRO.jpg", link:"https://www.esri.com", note:"Gratuit · Intégré à ArcGIS Pro"
+      d:"Format de base de données Esri haute performance pour usage local. Meilleure alternative au Shapefile dans l'écosystème Esri. Supporte les grands volumes et la topologie. Lecture possible dans QGIS.",
+      p:0, img:"ArcGisPRO.jpg", link:"https://www.esri.com", note:"Gratuit · Intégré à ArcGIS Pro",
+      specs:{default:"GDB Esri : topologie, domaines, sous-types, relations. Performances optimales avec ArcGIS Pro."}
     }
   },
 
-  /* ── HÉBERGEMENT / SERVEURS ──────────────────── */
+  /* ── HÉBERGEMENT / SERVEURS ── */
   hebergement: {
     local: {
       n:"Serveur Physique Local", sub:"On-Premise · Souveraineté totale · 0 €",
-      d:"Contrôle total sur les données, aucun coût cloud récurrent. Nécessite maintenance interne, onduleur, sauvegardes et compétences Linux/Windows Server. Investissement matériel initial : ~500 à 5 000 €. Idéal pour les données critiques.",
-      p:0, img:"Local.png", note:"0 € récurrent · Investissement matériel initial"
+      d:"Contrôle total sur les données, aucun coût cloud récurrent. Nécessite maintenance interne, onduleur, sauvegardes. Investissement matériel : ~500 à 5 000 €. Idéal pour données critiques et air-gapped.",
+      p:0, img:"Local.png", note:"0 € récurrent · Investissement matériel initial",
+      specs:{
+        geometre:"NAS Synology (DS923+ ~600€) ou mini-serveur. Données foncières sensibles en local. Backup externe obligatoire.",
+        collectivite:"Serveur rack ou tour en salle machine. OS Linux Debian/Ubuntu recommandé. Postgres + GeoServer + Lizmap.",
+        default:"OS Linux recommandé. Docker pour PostGIS + GeoServer. Backup NAS + RAID. UPS onduleur obligatoire."
+      }
     },
     ovh: {
       n:"VPS OVHcloud (France)", sub:"Cloud souverain FR · RGPD natif",
-      d:"Hébergement souverain français. Paliers : Starter 4 €/mois (2 Go RAM) · Essential 14 €/mois (4 Go — PostGIS+Lizmap) · Comfort 28 €/mois (8 Go — GeoServer+PostGIS+Lizmap) · Elite 56 €/mois (16 Go). Centres de données France. RGPD natif.",
-      p:168, img:"OVH.png", link:"https://ovhcloud.com", mail:"support@ovhcloud.com", note:"Dès 4 €/mois · Essential 14 €/mois recommandé"
+      d:"Hébergement souverain français. Paliers : Starter 4 €/mois (2 Go RAM) · Essential 14 €/mois (4 Go — PostGIS+Lizmap) · Comfort 28 €/mois (8 Go — GeoServer+PostGIS) · Elite 56 €/mois (16 Go). RGPD natif.",
+      p:168, img:"OVH.png", link:"https://ovhcloud.com", mail:"support@ovhcloud.com", note:"Dès 4 €/mois · Essential 14 €/mois recommandé",
+      specs:{
+        geometre:"Essential (14€/mois, 4 Go RAM) : PostGIS + Lizmap + QGIS Server. Données en France. Backup OVH intégré.",
+        collectivite:"Éligible marchés publics. Certifié ISO 27001. Centres de données Roubaix/Gravelines/Strasbourg (France).",
+        default:"VPS Linux : Docker disponible, snapshots automatiques, bande passante illimitée en France. Anti-DDoS inclus."
+      }
     },
     render: {
       n:"Render (Cloud Managé)", sub:"Plan gratuit disponible · Docker facile",
-      d:"Hébergement cloud moderne. Plan gratuit : usage limité, mise en veille après 15 min — suffisant pour les prototypes et projets légers. Starter 7 €/mois (usage continu). Standard 19 €/mois (1 Go RAM). Docker sans admin serveur. Serveurs US/EU.",
-      p:0, img:"Render.png", link:"https://render.com", mail:"support@render.com", note:"Gratuit (limité) · Starter 7€/mois · Hors France"
+      d:"Hébergement cloud moderne. Gratuit : usage limité, mise en veille après 15 min. Starter 7 €/mois. Standard 19 €/mois. Docker sans admin serveur. Serveurs US/EU. Idéal pour prototypes.",
+      p:0, img:"Render.png", link:"https://render.com", mail:"support@render.com", note:"Gratuit (limité) · Starter 7€/mois · Hors France",
+      specs:{
+        etudiant:"Plan gratuit : déploiement Docker de PostGIS + GeoServer. Mise en veille acceptable pour les projets de recherche.",
+        default:"Docker Compose, déploiement depuis GitHub, 0$ pour prototypes. Serveurs EU (Frankfurt) disponibles en payant."
+      }
     },
     aws: {
       n:"Amazon Web Services (AWS)", sub:"Cloud mondial N°1 · Scalable · Paris",
-      d:"Infrastructure cloud mondiale de référence. Région eu-west-3 Paris disponible. Paliers indicatifs : Léger ~420 €/an · Standard ~1 200 €/an · Pro ~3 600 €/an · ArcGIS Enterprise ~10 000–30 000 €/an. Autoscaling natif. SLA 99,99 %.",
-      p:1200, img:"Amazon_Web_Services.png", link:"https://aws.amazon.com", mail:"aws-support@amazon.com", note:"~420 € à 3 600 €/an · Région Paris dispo"
+      d:"Infrastructure cloud mondiale. Région eu-west-3 Paris. Paliers : Léger ~420 €/an · Standard ~1 200 €/an · Pro ~3 600 €/an. RDS PostGIS managé, EC2, S3, CloudFront CDN. SLA 99,99 %.",
+      p:1200, img:"Amazon_Web_Services.png", link:"https://aws.amazon.com", mail:"aws-support@amazon.com", note:"~420–3 600 €/an · Région Paris dispo",
+      specs:{
+        transport:"AWS IoT Core (capteurs), Lambda (temps réel), RDS PostGIS, CloudFront CDN pour les tuiles. Auto Scaling natif.",
+        ong:"AWS for Nonprofits : crédits gratuits jusqu'à 10 000$/an pour les ONG. Région eu-west-3 Paris ou eu-west-1 Ireland.",
+        default:"RDS (PostGIS managé, Multi-AZ), EC2 (GeoServer), S3 (rasters/backups), CloudFront (CDN tuiles). Auto Scaling."
+      }
     },
     azure: {
       n:"Microsoft Azure", sub:"Cloud Microsoft · France Central · SSO AD",
-      d:"Cloud Microsoft. France Central pour la souveraineté RGPD. Paliers : Léger ~600 €/an · Standard ~1 200 €/an · Pro ~3 000 €/an. Intégration native Azure AD (SSO), Teams, Power BI, Office 365. Azure Maps API dès 200 €/an.",
-      p:1200, img:"Azure.png", link:"https://azure.microsoft.com", mail:"azuresupport@microsoft.com", note:"Variable · France Central · SSO AD natif"
+      d:"Cloud Microsoft. France Central pour RGPD. Paliers : Léger ~600 €/an · Standard ~1 200 €/an · Pro ~3 000 €/an. SSO Azure AD natif, Teams, Power BI, Office 365. Azure Maps API.",
+      p:1200, img:"Azure.png", link:"https://azure.microsoft.com", mail:"azuresupport@microsoft.com", note:"Variable · France Central · SSO AD natif",
+      specs:{
+        collectivite:"France Central (RGPD). SSO Azure AD avec annuaire Windows. Intégration Teams, Power BI, Office 365.",
+        energie:"Azure IoT Hub + Stream Analytics pour capteurs. Intégration ArcGIS Enterprise native. France Central RGPD.",
+        default:"France Central, SSO Azure AD, Teams/Power BI intégration, Azure Maps API 200€/an. PostgreSQL Flexible managé."
+      }
     }
   },
 
-  /* ── PUBLICATION WEB & PORTAILS ──────────────── */
+  /* ── PUBLICATION WEB & PORTAILS ── */
   publication: {
     felt: {
       n:"Felt", sub:"SaaS · Partage instantané · Plan gratuit",
-      d:"Diffusion web cartographique la plus rapide. Plan gratuit : cartes illimitées, partage public. Pro ~10 $/user/mois (partage privé, branding). Collaboration temps réel, import SHP/GeoJSON/KML en un clic. Compatible Google Drive.",
-      p:0, img:"Felt.png", link:"https://felt.com", note:"Gratuit (public) · Pro ~120$/user/an"
+      d:"Diffusion web cartographique la plus rapide. Gratuit : cartes illimitées, partage public. Pro ~10 $/user/mois (partage privé). Collaboration temps réel, import SHP/GeoJSON/KML en 1 clic.",
+      p:0, img:"Felt.png", link:"https://felt.com", note:"Gratuit (public) · Pro ~120$/user/an",
+      specs:{
+        geometre:"Partage des plans de levés avec les maîtres d'ouvrage. Export PDF intégré. Aucune installation côté client.",
+        geomarketing:"Cartes commerciales interactives pour présentations client. Collaboration temps réel multi-utilisateurs.",
+        default:"Import SHP/GeoJSON/KML, annotation, collaboration. Lien partageable public. Pro pour accès privé."
+      }
     },
     lizmap: {
       n:"Lizmap Web Client", sub:"Open Source · Portail QGIS 100% fidèle",
-      d:"Publie vos projets QGIS sur le web avec une fidélité cartographique totale : symbologie, formulaires de saisie métier, outils de mesure, interrogation d'objets, WMS/WFS. Standard des collectivités françaises et des SIG territoriaux.",
-      p:0, img:"Lizmap.png", link:"https://www.lizmap.com", mail:"contact@3liz.com", note:"Gratuit · Serveur + QGIS requis"
+      d:"Publie vos projets QGIS sur le web avec fidélité totale : symbologie, formulaires de saisie métier, outils de mesure, WMS/WFS. Standard des collectivités françaises et SIG territoriaux.",
+      p:0, img:"Lizmap.png", link:"https://www.lizmap.com", mail:"contact@3liz.com", note:"Gratuit · QGIS Server requis",
+      specs:{
+        collectivite:"SSO LDAP natif. Formulaires de saisie métier. Édition en ligne des couches PostGIS. Compatible INSPIRE WMS/WFS.",
+        geometre:"Portail client en lecture seule ou édition limitée. Export PDF atlas QGIS. Historique des modifications.",
+        bet_env:"Portail de consultation des études environnementales. Formulaires de saisie des observations naturalistes.",
+        default:"Publie vos projets QGIS 100% fidèles : styles, formulaires, outils, impression. LDAP compatible."
+      }
     },
     geoserver_node: {
       n:"GeoServer + GeoNode", sub:"Open Source · OGC + Open Data · Docker",
-      d:"Suite complète open source : GeoServer publie vos données PostGIS en flux WMS, WFS, WCS, WMTS (standard OGC mondial). GeoNode ajoute un portail open data avec catalogue de métadonnées ISO 19115 / INSPIRE et gestion des droits. Déploiement Docker recommandé.",
-      p:0, img:"GeoServer.png", link:"https://geoserver.org", mail:"geoserver-users@lists.sf.net", note:"Gratuit · Serveur requis · Docker dispo"
+      d:"Suite complète : GeoServer publie PostGIS en WMS, WFS, WCS, WMTS (OGC). GeoNode ajoute un portail open data avec catalogue ISO 19115 / INSPIRE, gestion des droits. Déploiement Docker recommandé.",
+      p:0, img:"GeoServer.png", link:"https://geoserver.org", mail:"geoserver-users@lists.sf.net", note:"Gratuit · Serveur requis · Docker dispo",
+      specs:{
+        collectivite:"Conformité INSPIRE : WMS, WFS, WCS. GeoNode pour catalogue ISO 19115. Portail open data conforme Loi Lemaire.",
+        etudiant:"Flux WMS/WFS pour partage inter-laboratoires. GeoNode open data scientifique. REST API pour scripts Python/R.",
+        portail:"GeoServer : WMS, WFS, WCS, WMTS, WPS, REST API. GeoNode : authentification, groupes, catalogue ISO, droits par couche.",
+        default:"GeoServer : WMS, WFS, WCS, WMTS, WPS. GeoNode : catalogue INSPIRE, open data, gestion des droits."
+      }
     },
     openlayers: {
       n:"OpenLayers / Leaflet.js", sub:"Open Source · Dev JavaScript · Sur mesure",
-      d:"Bibliothèques JavaScript de cartographie web. Cartes interactives sur mesure, flux OGC (WMS, WFS, WMTS), tuiles vectorielles MapLibre. Leaflet pour les projets simples, OpenLayers pour les architectures complexes. Compétences JS requises.",
-      p:0, img:"Openlayers.png", link:"https://openlayers.org", note:"Gratuit · Compétences JavaScript requises"
+      d:"Bibliothèques JavaScript de cartographie web. Cartes interactives sur mesure, flux OGC (WMS, WFS, WMTS), tuiles vectorielles MapLibre. Leaflet pour projets simples, OpenLayers pour architectures complexes.",
+      p:0, img:"Openlayers.png", link:"https://openlayers.org", note:"Gratuit · Compétences JavaScript requises",
+      specs:{
+        etudiant:"Compatible React/Vue/Angular. Intégration dans Jupyter Notebook (ipyleaflet). Support OGC WMS, WFS, WMTS, MVT.",
+        transport:"WebSocket pour positions temps réel. Rendu tuiles vectorielles MapLibre. GTFS parser intégré. Routing OSRM/Valhalla.",
+        default:"OGC WMS/WFS/WMTS, tuiles vectorielles MapLibre, projections avancées (proj4js). React/Vue/Angular compatible."
+      }
     },
     qgis_cloud: {
       n:"QGIS Cloud", sub:"SaaS · Publication directe · Suisse · RGPD",
-      d:"Publication directe depuis QGIS Desktop en un clic. Plan gratuit : 100 Mo, 2 projets — idéal pour tester. Basic 19 €/mois (500 Mo) · Standard 59 €/mois (2 Go) · Pro 99 €/mois (10 Go). Serveurs en Suisse, RGPD compatible.",
-      p:0, img:"QgisCloud.png", link:"https://qgiscloud.com", mail:"support@sourcepole.ch", note:"Gratuit (2 projets) · Basic 19€/mois"
+      d:"Publication directe depuis QGIS Desktop en 1 clic. Gratuit : 100 Mo, 2 projets. Basic 19 €/mois (500 Mo) · Standard 59 €/mois (2 Go) · Pro 99 €/mois (10 Go). Serveurs Suisse, RGPD compatible.",
+      p:0, img:"QgisCloud.png", link:"https://qgiscloud.com", mail:"support@sourcepole.ch", note:"Gratuit (2 projets) · Basic 19€/mois",
+      specs:{default:"Publication QGIS → WMS/WFS en 1 clic. Accès web sans serveur. Serveurs Suisse RGPD. Partage direct du lien."}
     },
     experience_builder: {
       n:"ArcGIS Experience Builder", sub:"Esri · Inclus dans ArcGIS Online Creator",
-      d:"Applications web haut de gamme Esri : dashboards temps réel, StoryMaps, formulaires géolocalisés, galeries de cartes. Inclus gratuitement dans tout abonnement ArcGIS Online Creator (500 €/an) et ArcGIS Enterprise. Non vendu séparément.",
-      p:0, img:"Experience Builder.jpg", link:"https://experience.arcgis.com", mail:"support@esri.com", note:"Inclus dans AGO Creator · 0 € supp."
+      d:"Applications web Esri haut de gamme : dashboards temps réel, StoryMaps, formulaires géolocalisés. Inclus dans ArcGIS Online Creator (500 €/an) et ArcGIS Enterprise. Non vendu séparément.",
+      p:0, img:"Experience Builder.jpg", link:"https://experience.arcgis.com", mail:"support@esri.com", note:"Inclus dans AGO Creator · 0 € supp.",
+      specs:{
+        collectivite:"Applications métier sans code : atlas équipements, suivi chantiers, tableau de bord urbanisme. Survey123 inclus.",
+        geomarketing:"Dashboards d'analyse commerciale, zones de chalandise interactives, Story Maps présentation client.",
+        energie:"Dashboards réseau temps réel, cartes actifs, suivi incidents. Connecteurs Power BI et Azure IoT Hub.",
+        default:"Apps web sans code : dashboards, StoryMaps, formulaires géolocalisés, galeries. Inclus Creator."
+      }
     },
     umap: {
       n:"uMap", sub:"Open Source · Collaborative · France · Gratuit",
-      d:"Outil de cartographie collaborative basé sur OpenStreetMap. Hébergé par OpenStreetMap France — aucune installation requise. Idéal pour les cartes simples, les projets éducatifs et les associations. 100% gratuit et open source.",
-      p:0, img:"OSM.jpg", link:"https://umap.openstreetmap.fr", note:"Gratuit · Hébergé par OSM France"
+      d:"Cartographie collaborative basée sur OpenStreetMap. Hébergé par OpenStreetMap France. Idéal pour cartes simples, projets éducatifs et associations. 100% gratuit et open source.",
+      p:0, img:"OSM.jpg", link:"https://umap.openstreetmap.fr", note:"Gratuit · Hébergé par OSM France",
+      specs:{default:"Couches GeoJSON, WMS, WFS. Partage lien ou iframe. Collaboration multi-utilisateurs. Export GeoJSON."}
     }
   },
 
-  /* ── IMAGERIE & FONDS DE PLAN ────────────────── */
+  /* ── IMAGERIE & FONDS DE PLAN ── */
   imagerie: {
     osm_libre: {
       n:"OpenStreetMap / Fonds libres", sub:"Gratuit · Licence ODbL · Sans frais",
-      d:"Fonds de plan communautaires libres. OpenStreetMap (ODbL), BRGM, Géoportail IGN (flux WMS publics). Aucun coût, aucune restriction de diffusion commerciale pour OSM. Compatible QGIS, Lizmap et tous les portails web.",
-      p:0, img:"OSM.jpg", note:"Gratuit · Diffusion libre"
+      d:"Fonds de plan communautaires libres : OSM (ODbL), BRGM, Géoportail IGN (flux WMS publics). Aucun coût, aucune restriction de diffusion commerciale pour OSM. Compatible QGIS, GeoServer, Leaflet.",
+      p:0, img:"OSM.jpg", note:"Gratuit · Diffusion libre",
+      specs:{default:"OSM ODbL, BRGM géologique, Géoportail WMS public, Stamen, CartoDB. Tuiles XYZ pour QGIS et web."}
     },
     ign_precise: {
-      n:"Imagerie HD & Orthophotos sur mesure", sub:"Précision 5–20 cm · IGN / Drone / Satellite",
-      d:"Imagerie haute définition pour usage professionnel. BD ORTHO IGN (5–20 cm) gratuite via convention pour le secteur public, ~800 €/an pour le secteur privé. Imagerie drone sur mesure (~1 500 €/an). Satellite Pléiades/SPOT disponible. Sentinel-2 (ESA) : gratuit, 10 m, toutes les 5 jours.",
-      p:800, img:"DalleHD.jpg", link:"https://geoplateforme.fr", note:"Public : gratuit IGN · Privé : ~800 €/an · Drone ~1 500 €/an"
+      n:"Imagerie HD & Orthophotos IGN", sub:"5–20 cm · IGN / Drone / Satellite",
+      d:"Imagerie haute définition professionnelle. BD ORTHO IGN (5–20 cm) gratuite secteur public via convention IGN, ~800 €/an secteur privé. Drone sur mesure ~1 500 €/an. Pléiades/SPOT disponibles. Sentinel-2 ESA gratuit 10 m.",
+      p:800, img:"DalleHD.jpg", link:"https://geoplateforme.fr", note:"Public : gratuit IGN · Privé : ~800 €/an · Drone ~1 500 €/an",
+      specs:{
+        geometre:"BD ORTHO 20cm, RGE ALTI 1m/5m, MNS, Géoportail Urbanisme (PLU vectoriel). WMTS Géoplateforme. LiDAR HD gratuit.",
+        collectivite:"Convention IGN (gratuit) : BD ORTHO, BD TOPO, BD CARTO, Cadastre, BDNB. Géoportail Urbanisme obligatoire.",
+        agriculture:"RPG gratuit data.gouv.fr. BD FORÊT v2. Sentinel-2 ESA gratuit (10m, toutes 5j). NDVI/NDRE via plugin SCP.",
+        btp:"RGE ALTI 1m, MNS photogrammétrique, LiDAR HD (5pts/m², gratuit). Accès Géoplateforme API REST.",
+        default:"BD ORTHO 5-20cm, BD TOPO, Cadastre, LiDAR HD (gratuit secteur public). WMTS Géoplateforme ou API REST."
+      }
     }
   },
 
-  /* ── COLLECTE TERRAIN ───────────────────────── */
+  /* ── COLLECTE TERRAIN ── */
   terrain: {
     qfield: {
       n:"QField", sub:"QGIS terrain · GPS décimétrique · Open Source",
-      d:"Application mobile qui synchronise directement vos projets QGIS pour la saisie terrain hors-ligne. GPS décimétrique, formulaires métier fidèles, édition de géométries. Android et iOS. Plan gratuit en local. QFieldCloud : synchronisation cloud dès 15 €/mois.",
-      p:0, img:"Qfield.png", link:"https://qfield.cloud", note:"Gratuit en local · QFieldCloud dès 15€/mois"
+      d:"Application mobile qui synchronise vos projets QGIS pour la saisie terrain hors-ligne. GPS décimétrique, formulaires métier fidèles, édition de géométries. Android et iOS. QFieldCloud : sync cloud dès 15 €/mois.",
+      p:0, img:"Qfield.png", link:"https://qfield.cloud", note:"Gratuit en local · QFieldCloud dès 15€/mois",
+      specs:{
+        geometre:"GPS décimétrique Leica/Trimble compatible (NMEA). Formulaires levés, photos géolocalisées, sync PostGIS/GeoPackage.",
+        btp:"Saisie points de contrôle, photos de chantier géolocalisées, formulaires d'inspection. Sync OVH/PostGIS.",
+        agriculture:"Saisie GPS des parcelles, relevés agronomiques (essence/état), photos d'état cultural. Compatible RPG direct.",
+        collectivite:"Formulaires terrain pour voirie, patrimoine, réseaux. Synchronisation base PostGIS centrale. Multi-utilisateurs.",
+        bet_env:"Inventaires naturalistes : espèce, statut, abondance, photos. GPS décimétrique. Sync PostGIS automatique.",
+        default:"QField synchronise vos projets QGIS pour la saisie terrain hors-ligne. GPS décimétrique, formulaires, photos."
+      }
     },
     kobo: {
       n:"KoboCollect / ODK", sub:"Enquêtes socio-éco · Standard ONG · Gratuit",
-      d:"Standard mondial des enquêtes socio-économiques hors-ligne. Formulaires complexes avec logique conditionnelle, géolocalisation, photos. Utilisé par UNHCR, MSF, Croix-Rouge, OMS. KoboToolbox hébergé gratuitement pour les ONG. Analyses statistiques intégrées.",
-      p:0, img:"Qfield.png", link:"https://www.kobotoolbox.org", note:"Gratuit pour ONG · Hébergement propre possible"
+      d:"Standard mondial des enquêtes socio-économiques hors-ligne. Formulaires complexes avec logique conditionnelle, géolocalisation, photos. UNHCR, MSF, Croix-Rouge, OMS. Gratuit pour les ONG.",
+      p:0, img:"Qfield.png", link:"https://www.kobotoolbox.org", note:"Gratuit pour ONG · Hébergement propre possible",
+      specs:{
+        agriculture:"Formulaires agronomiques : essence, état sanitaire, phytosanitaire. Compatible Android basique. Export XLSX/CSV.",
+        ong:"Standard UNHCR/MSF. Logique conditionnelle, calculs auto, offline complet. Hébergement gratuit kobotoolbox.org.",
+        default:"Formulaires d'enquête XLSForm complexes, hors-ligne, avec photos et géolocalisation. Export CSV/XLSX/JSON."
+      }
     },
     fieldmaps: {
       n:"ArcGIS Field Maps", sub:"Esri · Terrain · Inclus dans ArcGIS Online",
-      d:"Application mobile Esri pour la collecte terrain. Édition en temps réel, hors-ligne, formulaires géolocalisés intelligents. Survey123 inclus pour les enquêtes avancées. Inclus gratuitement dans ArcGIS Online Creator. Non disponible sans abonnement ArcGIS Online.",
-      p:0, img:"ArcGISFieldMaps.jpg", link:"https://www.esri.com", mail:"support@esri.com", note:"Inclus dans AGO Creator · 0 € supp."
+      d:"Application mobile Esri pour la collecte terrain. Édition en temps réel, hors-ligne, formulaires géolocalisés. Survey123 inclus. Inclus dans ArcGIS Online Creator. ⚠️ Nécessite abonnement Esri.",
+      p:0, img:"ArcGISFieldMaps.jpg", link:"https://www.esri.com", mail:"support@esri.com", note:"Inclus dans AGO Creator · 0 € supp.",
+      specs:{
+        collectivite:"Saisie terrain équipements, voirie, patrimoine. Survey123 pour les enquêtes. Sync temps réel ArcGIS Online.",
+        energie:"Mise à jour actifs réseau, signalement incidents, relevés compteurs. Sync immédiate ArcGIS Enterprise.",
+        default:"Application mobile Esri : saisie terrain, formulaires géolocalisés, synchronisation ArcGIS Online/Enterprise."
+      }
     }
   }
 };
 
 /* ══════════════════════════════════════════════════════════════════
-   30 SCÉNARIOS FINAUX
-   Chaque scénario : { id, name, badge, emoji, desc, briques[], reasons[], alts{} }
-   Briques : { cat, key, priceNote, primary? }
-   Raisons : textes spécifiques aux briques choisies (pas au profil)
-   Alt : { cat → [key, key] } — alternatives par catégorie
+   30 SCÉNARIOS — mapping secteur → scénario
 ══════════════════════════════════════════════════════════════════ */
 const SCENARIOS = [
 
-/* ━━━ 1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:1, name:"La Boîte à Outils du Bénévole", badge:"🌍 ONG · Budget zéro", emoji:"🤝",
-  desc:"Architecture 100% gratuite et open source pour les associations humanitaires, ONG et projets communautaires. Zéro coût de licence, déploiement immédiat, données libres.",
+  desc:"Architecture 100% gratuite et open source pour ONG, associations humanitaires et projets communautaires. Zéro coût de licence, déploiement immédiat, données libres.",
   briques:[
-    {cat:'logiciels',   key:'josm',           primary:true, note:"Gratuit"},
-    {cat:'logiciels',   key:'qgis',           note:"Gratuit"},
-    {cat:'bases',       key:'gpkg',           note:"Gratuit"},
-    {cat:'hebergement', key:'local',          note:"0 €"},
-    {cat:'publication', key:'felt',           note:"Gratuit"},
-    {cat:'imagerie',    key:'osm_libre',      note:"Gratuit"},
-    {cat:'terrain',     key:'kobo',           note:"Gratuit"}
+    {cat:'logiciels',   key:'josm',      primary:true, note:"Gratuit"},
+    {cat:'logiciels',   key:'qgis',      note:"Gratuit"},
+    {cat:'bases',       key:'gpkg',      note:"Gratuit"},
+    {cat:'hebergement', key:'local',     note:"0 €"},
+    {cat:'publication', key:'felt',      note:"Gratuit"},
+    {cat:'imagerie',    key:'osm_libre', note:"Gratuit"},
+    {cat:'terrain',     key:'kobo',      note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>JOSM + QGIS</strong> : JOSM pour contribuer à OpenStreetMap (le fonds de carte de l'humanitaire), QGIS pour analyser et produire les cartes terrain. Ces deux outils sont le standard HOT/MSF/UNHCR."},
+    {dot:'g', txt:"<strong>JOSM + QGIS</strong> : JOSM pour contribuer à OpenStreetMap (standard HOT/MSF/UNHCR), QGIS pour analyser et produire les cartes terrain. Deux outils gratuits, complémentaires, toutes plateformes."},
     {dot:'g', txt:"<strong>GeoPackage</strong> : format portable idéal pour les contextes à faible connectivité. Un seul fichier, synchronisable sur clé USB ou email. Compatible QGIS et la majorité des outils terrain."},
     {dot:'g', txt:"<strong>Felt</strong> : partager une carte en ligne en 1 clic sans serveur ni compétence technique. Lien partageable direct, collaboration en temps réel, plan gratuit illimité pour les cartes publiques."},
-    {dot:'b', txt:"<strong>KoboCollect / ODK</strong> : standard mondial des enquêtes socio-économiques hors-ligne. Logique conditionnelle, géolocalisation, photos. Gratuit pour les ONG via kobotoolbox.org."},
-    {dot:'g', txt:"<strong>OpenStreetMap</strong> : fonds de carte libre, diffusion sans restriction, mis à jour par la communauté mondiale. Aucun coût, aucune restriction d'usage commercial ou humanitaire."}
+    {dot:'b', txt:"<strong>KoboCollect / ODK</strong> : standard mondial des enquêtes socio-économiques hors-ligne. Logique conditionnelle, géolocalisation, photos. Gratuit pour les ONG via kobotoolbox.org."}
   ],
   alts:{ logiciels:['qgis','grass'], publication:['umap','qgis_cloud'], terrain:['qfield'] }
 },
 
-/* ━━━ 2 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:2, name:"Le Cartographe Nomade", badge:"🎒 Solo · Mobilité · Gratuit", emoji:"🗺️",
   desc:"Solution portable et autonome pour le professionnel itinérant, le consultant indépendant ou le chercheur de terrain. Tout sur un fichier, partout dans le monde.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'gpkg',    note:"Gratuit"},
-    {cat:'hebergement', key:'local',   note:"0 €"},
+    {cat:'logiciels',   key:'qgis',       primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'gpkg',       note:"Gratuit"},
+    {cat:'hebergement', key:'local',      note:"0 €"},
     {cat:'publication', key:'qgis_cloud', note:"Gratuit (2 projets)"},
-    {cat:'imagerie',    key:'osm_libre', note:"Gratuit"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'imagerie',    key:'osm_libre',  note:"Gratuit"},
+    {cat:'terrain',     key:'qfield',     note:"Gratuit"}
   ],
   reasons:[
     {dot:'g', txt:"<strong>QGIS Desktop</strong> : le SIG de référence open source pour l'analyse, la cartographie et la production. Natif Windows, macOS et Linux — idéal pour le consultant qui change de poste."},
     {dot:'g', txt:"<strong>GeoPackage</strong> : un seul fichier contient toutes vos données, vos styles et vos projets. Synchronisable via OneDrive, Google Drive ou iCloud Drive entre tous vos appareils."},
-    {dot:'g', txt:"<strong>QGIS Cloud (plan gratuit)</strong> : publication web directe depuis QGIS en un clic. 2 projets gratuits, serveurs en Suisse (RGPD compatible). Idéal pour partager un résultat client sans serveur."},
+    {dot:'g', txt:"<strong>QGIS Cloud (plan gratuit)</strong> : publication web directe depuis QGIS en un clic. 2 projets gratuits, serveurs en Suisse (RGPD compatible). Idéal pour partager un résultat client."},
     {dot:'b', txt:"<strong>QField</strong> : application terrain iOS/Android qui synchronise vos projets QGIS. GPS décimétrique, saisie de géométries et formulaires métier hors connexion. Gratuit en mode local."}
   ],
   alts:{ publication:['felt','lizmap'], bases:['spatialite','postgis'], terrain:['kobo'] }
 },
 
-/* ━━━ 3 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-{ id:3, name:"Le Labo Académique", badge:"🎓 Recherche · Étudiant · Open Source", emoji:"🔬",
-  desc:"Architecture orientée recherche, enseignement et analyse avancée. Accès à tous les outils d'analyse spatiale sans budget, adapté aux universités, laboratoires et étudiants.",
+{ id:3, name:"Le Labo Académique", badge:"🎓 Recherche · Étudiant · Open Source · QGIS + GRASS", emoji:"🔬",
+  desc:"Architecture orientée recherche, enseignement et analyse avancée. QGIS + GRASS GIS pour les analyses spatiales poussées, PostGIS pour les gros jeux de données, GeoServer pour le partage scientifique.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'logiciels',   key:'grass',   note:"Gratuit"},
-    {cat:'bases',       key:'postgis', note:"Gratuit"},
-    {cat:'hebergement', key:'render',  note:"Gratuit (limité)"},
-    {cat:'publication', key:'geoserver_node', note:"Gratuit"},
-    {cat:'imagerie',    key:'osm_libre', note:"Gratuit · Sentinel-2 ESA gratuit"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'logiciels',   key:'qgis',           primary:true, note:"Gratuit"},
+    {cat:'logiciels',   key:'grass',           note:"Gratuit · Intégré QGIS"},
+    {cat:'bases',       key:'postgis',         note:"Gratuit"},
+    {cat:'hebergement', key:'render',          note:"Gratuit (limité)"},
+    {cat:'publication', key:'geoserver_node',  note:"Gratuit"},
+    {cat:'imagerie',    key:'osm_libre',       note:"Gratuit · Sentinel-2 ESA gratuit"},
+    {cat:'terrain',     key:'qfield',          note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>QGIS + GRASS GIS</strong> : combinaison de référence en milieu académique. QGIS pour la production et la visualisation, GRASS pour les analyses hydrologiques, environnementales et de modélisation avancée (directement intégré dans QGIS via plugin)."},
-    {dot:'g', txt:"<strong>PostgreSQL/PostGIS</strong> : moteur de base de données spatiales open source de référence mondiale. SQL spatial, topologie, gros volumes, multi-utilisateurs. Compatible avec tous les langages de programmation (Python, R, Julia)."},
-    {dot:'b', txt:"<strong>GeoServer + GeoNode</strong> : publication des données de recherche en flux WMS/WFS OGC standards et catalogue de métadonnées INSPIRE. Idéal pour l'open data scientifique et le partage avec d'autres laboratoires."},
-    {dot:'g', txt:"<strong>Render (plan gratuit)</strong> : déploiement Docker de PostGIS et GeoServer sans administration serveur. Suffisant pour les prototypes et projets de recherche à trafic modéré. Passage au plan payant si besoin de performance."},
-    {dot:'b', txt:"<strong>Sentinel-2 (ESA/Copernicus)</strong> : imagerie satellite multispectrale gratuite, 10 m de résolution, toutes les 5 jours. Idéal pour la télédétection, l'étude du couvert végétal et les analyses temporelles."}
+    {dot:'g', txt:"<strong>QGIS + GRASS GIS</strong> : combinaison de référence en milieu académique. QGIS pour la production et la visualisation, GRASS pour les analyses hydrologiques, environnementales et de modélisation avancée (intégré via plugin Processing)."},
+    {dot:'g', txt:"<strong>PostgreSQL/PostGIS</strong> : moteur de base de données spatiales open source. SQL spatial, topologie, gros volumes, multi-utilisateurs. Compatible Python (geopandas), R (sf/dplyr), Julia. Extensions : pgRouting, PostGIS Raster, TimescaleDB."},
+    {dot:'b', txt:"<strong>GeoServer + GeoNode</strong> : publication des données de recherche en flux WMS/WFS OGC standards et catalogue de métadonnées INSPIRE. Idéal pour l'open data scientifique et le partage inter-laboratoires."},
+    {dot:'b', txt:"<strong>Sentinel-2 (ESA/Copernicus)</strong> : imagerie satellite multispectrale gratuite, 10 m, toutes les 5 jours. Idéal pour la télédétection, le couvert végétal et les analyses temporelles."}
   ],
   alts:{ logiciels:['qgis'], hebergement:['local','ovh'], publication:['felt','openlayers'] }
 },
 
-/* ━━━ 4 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:4, name:"Le Démarrage Sans Risque", badge:"🌱 Starter · < 500 € / an", emoji:"🚀",
-  desc:"Première infrastructure SIG professionnelle pour les petites structures et les indépendants. Maximum de fonctionnalités avec un budget minimal. Évolutive vers plus de puissance.",
+  desc:"Première infrastructure SIG professionnelle pour petites structures et indépendants. Maximum de fonctionnalités avec un budget minimal. Évolutive vers plus de puissance.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'supabase', note:"Gratuit (500 Mo)"},
-    {cat:'hebergement', key:'render',  note:"Gratuit / 7 €/mois"},
-    {cat:'publication', key:'felt',    note:"Gratuit"},
-    {cat:'imagerie',    key:'osm_libre', note:"Gratuit"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'logiciels',   key:'qgis',       primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'supabase',   note:"Gratuit (500 Mo)"},
+    {cat:'hebergement', key:'render',     note:"Gratuit / 7 €/mois"},
+    {cat:'publication', key:'felt',       note:"Gratuit"},
+    {cat:'imagerie',    key:'osm_libre',  note:"Gratuit"},
+    {cat:'terrain',     key:'qfield',     note:"Gratuit"}
   ],
   reasons:[
     {dot:'g', txt:"<strong>QGIS Desktop</strong> : SIG complet et gratuit. La solution la plus complète disponible à 0 € de licence. Production, analyse, mise en page cartographique professionnelle."},
-    {dot:'g', txt:"<strong>Supabase (plan gratuit)</strong> : PostGIS managé dans le cloud, 500 Mo gratuits — suffisant pour débuter avec des données vectorielles. API REST auto-générée pour les intégrations futures. Upgrade vers Pro (25 €/mois) quand le projet grandit."},
-    {dot:'g', txt:"<strong>Render (plan gratuit)</strong> : hébergement de Supabase ou d'une instance légère de GeoServer sans coût ni administration. Mise en veille après inactivité — acceptable pour un usage non critique."},
-    {dot:'g', txt:"<strong>Felt</strong> : diffusion web de cartes sans serveur, sans code, sans coût. Plan gratuit illimité pour les cartes publiques. Lien partageable en 1 clic depuis QGIS ou le navigateur."}
+    {dot:'g', txt:"<strong>Supabase (plan gratuit)</strong> : PostGIS managé dans le cloud, 500 Mo gratuits — suffisant pour débuter. API REST auto-générée. Upgrade vers Pro (25 €/mois) quand le projet grandit."},
+    {dot:'g', txt:"<strong>Render (plan gratuit)</strong> : hébergement de GeoServer léger sans coût ni administration. Mise en veille après inactivité — acceptable pour un usage non critique."},
+    {dot:'g', txt:"<strong>Felt</strong> : diffusion web de cartes sans serveur, sans code, sans coût. Plan gratuit illimité pour cartes publiques. Lien partageable en 1 clic depuis QGIS."}
   ],
   alts:{ bases:['gpkg','postgis'], hebergement:['ovh'], publication:['qgis_cloud','lizmap'] }
 },
 
-/* ━━━ 5 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-{ id:5, name:"Le Collectif Collaboratif", badge:"👥 Équipe 2–5 · Intermédiaire", emoji:"🤲",
+{ id:5, name:"Le Collectif Collaboratif", badge:"👥 Équipe 2–5 · Intermédiaire · Multi-utilisateurs", emoji:"🤲",
   desc:"Architecture multi-utilisateurs pour une petite équipe qui édite les données en simultané. Serveur partagé, base centralisée, diffusion web incluse.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'postgis', note:"Gratuit"},
-    {cat:'hebergement', key:'ovh',     note:"~168 €/an (Essential)"},
-    {cat:'publication', key:'lizmap',  note:"Gratuit"},
-    {cat:'imagerie',    key:'osm_libre', note:"Gratuit"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'logiciels',   key:'qgis',       primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'postgis',    note:"Gratuit"},
+    {cat:'hebergement', key:'ovh',        note:"~168 €/an (Essential)"},
+    {cat:'publication', key:'lizmap',     note:"Gratuit"},
+    {cat:'imagerie',    key:'osm_libre',  note:"Gratuit"},
+    {cat:'terrain',     key:'qfield',     note:"Gratuit"}
   ],
   reasons:[
     {dot:'g', txt:"<strong>PostgreSQL/PostGIS</strong> : base de données spatiales centralisée indispensable dès que plusieurs personnes éditent les mêmes données. Gestion des droits par utilisateur, transactions ACID, pas de conflits d'édition."},
-    {dot:'g', txt:"<strong>VPS OVHcloud Essential (14 €/mois)</strong> : serveur Linux dédié en France, 4 Go de RAM — suffisant pour héberger PostGIS + Lizmap + QGIS Server. Souveraineté RGPD native, bande passante incluse."},
-    {dot:'g', txt:"<strong>Lizmap Web Client</strong> : portail cartographique QGIS publié sur le web avec une fidélité 100% : vos styles QGIS, vos formulaires de saisie métier et vos outils de mesure sont reproduits à l'identique pour les utilisateurs web."},
-    {dot:'b', txt:"<strong>QField</strong> : chaque membre de l'équipe peut travailler sur le terrain hors connexion avec QFieldCloud, puis synchroniser ses modifications vers la base PostGIS centrale automatiquement."}
+    {dot:'g', txt:"<strong>VPS OVHcloud Essential (14 €/mois)</strong> : serveur Linux dédié en France, 4 Go RAM — suffisant pour PostGIS + Lizmap + QGIS Server. Souveraineté RGPD native, bande passante incluse."},
+    {dot:'g', txt:"<strong>Lizmap Web Client</strong> : portail cartographique QGIS sur le web avec fidélité 100% : vos styles QGIS, formulaires de saisie métier et outils de mesure reproduits à l'identique pour les utilisateurs web."},
+    {dot:'b', txt:"<strong>QField</strong> : chaque membre de l'équipe peut travailler hors connexion avec QFieldCloud, puis synchroniser ses modifications vers PostGIS automatiquement."}
   ],
   alts:{ bases:['supabase','gpkg'], hebergement:['render'], publication:['geoserver_node','felt'] }
 },
 
-/* ━━━ 6 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-{ id:6, name:"La Forteresse Territoriale", badge:"🏛️ Collectivité · Souveraineté FR", emoji:"🇫🇷",
-  desc:"Architecture souveraine pour les collectivités, mairies et établissements publics. Données hébergées en France, RGPD natif, portail cartographique métier, open data.",
+{ id:6, name:"La Forteresse Territoriale", badge:"🏛️ Collectivité · Souveraineté FR · GeoServer", emoji:"🇫🇷",
+  desc:"Architecture souveraine pour les collectivités, mairies et établissements publics. Données hébergées en France, RGPD natif, portail cartographique métier, open data INSPIRE.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'postgis', note:"Gratuit"},
-    {cat:'hebergement', key:'ovh',     note:"~168 €/an"},
-    {cat:'publication', key:'geoserver_node', note:"Gratuit"},
-    {cat:'imagerie',    key:'ign_precise', note:"Gratuit via convention IGN"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'logiciels',   key:'qgis',           primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'postgis',         note:"Gratuit"},
+    {cat:'hebergement', key:'ovh',             note:"~168 €/an"},
+    {cat:'publication', key:'geoserver_node',  note:"Gratuit"},
+    {cat:'imagerie',    key:'ign_precise',     note:"Gratuit via convention IGN"},
+    {cat:'terrain',     key:'qfield',          note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>VPS OVHcloud France</strong> : hébergement physiquement en France (Roubaix, Gravelines, Strasbourg), conformité RGPD native, éligible aux marchés publics. Rapport qualité/prix optimal pour les collectivités avec budget contraint."},
-    {dot:'g', txt:"<strong>GeoServer + GeoNode</strong> : GeoServer publie vos données PostGIS en flux WMS/WFS OGC conformes INSPIRE. GeoNode ajoute un portail open data avec catalogue ISO 19115 — obligatoire pour les collectivités soumises à la directive INSPIRE."},
-    {dot:'g', txt:"<strong>BD ORTHO IGN gratuite via convention</strong> : en tant que collectivité publique, vous bénéficiez gratuitement de la BD ORTHO (20 cm), BD TOPO et du Cadastre vectoriel via convention IGN ou flux WMS Géoplateforme. Ce qui représente un coût 0 €/an pour l'imagerie."},
-    {dot:'b', txt:"<strong>QField</strong> : les agents de terrain saisissent directement dans les couches PostGIS de la collectivité (réseaux, voirie, patrimoine) hors connexion, avec synchronisation automatique dès le retour au bureau ou en 4G."}
+    {dot:'g', txt:"<strong>VPS OVHcloud France</strong> : hébergement physiquement en France, conformité RGPD native, éligible aux marchés publics. Rapport qualité/prix optimal pour les collectivités avec budget contraint."},
+    {dot:'g', txt:"<strong>GeoServer + GeoNode</strong> : publie vos données PostGIS en flux WMS/WFS OGC conformes INSPIRE. GeoNode ajoute un portail open data avec catalogue ISO 19115 — obligatoire pour les collectivités soumises à la directive INSPIRE."},
+    {dot:'g', txt:"<strong>BD ORTHO IGN gratuite via convention</strong> : en tant que collectivité publique, vous bénéficiez gratuitement de la BD ORTHO (20 cm), BD TOPO et du Cadastre vectoriel via convention IGN. 0 €/an pour l'imagerie."},
+    {dot:'b', txt:"<strong>QField</strong> : les agents de terrain saisissent directement dans les couches PostGIS (réseaux, voirie, patrimoine) hors connexion, avec synchronisation automatique en retour au bureau."}
   ],
   alts:{ hebergement:['local','azure'], publication:['lizmap','openlayers'], imagerie:['osm_libre'] }
 },
 
-/* ━━━ 7 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:7, name:"Le Bureau d'Études Résilient", badge:"📊 BET · Multi-projets · 1 000–5 000 €", emoji:"📐",
-  desc:"Architecture professionnelle pour les bureaux d'études qui gèrent plusieurs projets simultanément, avec diffusion client et interopérabilité formats.",
+  desc:"Architecture professionnelle pour les bureaux d'études qui gèrent plusieurs projets simultanément, avec diffusion client et interopérabilité des formats.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'postgis', note:"Gratuit"},
-    {cat:'hebergement', key:'ovh',     note:"~168 €/an"},
-    {cat:'publication', key:'lizmap',  note:"Gratuit"},
+    {cat:'logiciels',   key:'qgis',        primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'postgis',     note:"Gratuit"},
+    {cat:'hebergement', key:'ovh',         note:"~168 €/an"},
+    {cat:'publication', key:'lizmap',      note:"Gratuit"},
     {cat:'imagerie',    key:'ign_precise', note:"~800 €/an (secteur privé)"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'terrain',     key:'qfield',      note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>QGIS + PostGIS</strong> : combinaison de référence dans les BET. QGIS gère la production cartographique multi-projets, PostGIS centralise les données de tous les projets avec des schémas séparés par client ou par mission."},
-    {dot:'g', txt:"<strong>Lizmap</strong> : portail web pour livrer les cartes aux clients sans leur installer de logiciel. Chaque client accède à son espace dédié avec ses couches, ses formulaires de validation et ses outils de mesure. Idéal pour les rendus intermédiaires et finaux."},
-    {dot:'g', txt:"<strong>VPS OVHcloud</strong> : hébergement professionnel en France pour les données clients sensibles. Un seul serveur peut héberger PostGIS, QGIS Server et Lizmap pour l'ensemble du bureau d'études."},
-    {dot:'b', txt:"<strong>Imagerie HD IGN</strong> : les dalles ortho à 5–20 cm/pixel et la BD TOPO vectorielle sont indispensables pour les études urbaines, foncières et environnementales. ~800 €/an en abonnement Géoplateforme pour le secteur privé."}
+    {dot:'g', txt:"<strong>QGIS + PostGIS</strong> : combinaison de référence dans les BET. QGIS gère la production cartographique multi-projets, PostGIS centralise les données avec des schémas séparés par client ou par mission."},
+    {dot:'g', txt:"<strong>Lizmap</strong> : portail web pour livrer les cartes aux clients sans leur installer de logiciel. Chaque client accède à son espace dédié avec ses couches, formulaires de validation et outils de mesure."},
+    {dot:'g', txt:"<strong>VPS OVHcloud</strong> : hébergement professionnel en France pour les données clients sensibles. Un seul serveur héberge PostGIS, QGIS Server et Lizmap pour l'ensemble du bureau."},
+    {dot:'b', txt:"<strong>Imagerie HD IGN</strong> : dalles ortho à 5–20 cm/pixel et BD TOPO vectorielle indispensables pour les études urbaines, foncières et environnementales. ~800 €/an abonnement Géoplateforme (secteur privé)."}
   ],
   alts:{ logiciels:['arcgis_pro'], publication:['geoserver_node','openlayers'], hebergement:['render'] }
 },
 
-/* ━━━ 8 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-{ id:8, name:"Le Géomètre Connecté", badge:"📐 Géomètre-Expert · DAO+SIG", emoji:"🔭",
-  desc:"Architecture pour les géomètres-experts et les bureaux d'études BTP. Pont DAO-SIG natif, imagerie centimétrique, levés GPS terrain, interopérabilité DWG.",
+{ id:8, name:"Le Géomètre Connecté", badge:"📐 Géomètre-Expert · DAO+SIG · AutoCAD", emoji:"🔭",
+  desc:"Architecture pour les géomètres-experts et bureaux d'études BTP. Pont DAO-SIG natif avec AutoCAD Map 3D, imagerie centimétrique, levés GPS terrain, interopérabilité DWG totale.",
   briques:[
-    {cat:'logiciels',   key:'autocad', primary:true, note:"2 500 €/an"},
-    {cat:'logiciels',   key:'qgis',    note:"Gratuit"},
-    {cat:'bases',       key:'spatialite', note:"Gratuit"},
-    {cat:'hebergement', key:'local',   note:"0 € récurrent"},
-    {cat:'publication', key:'felt',    note:"Gratuit"},
+    {cat:'logiciels',   key:'autocad',     primary:true, note:"2 500 €/an"},
+    {cat:'logiciels',   key:'qgis',        note:"Gratuit · Complémentaire"},
+    {cat:'bases',       key:'spatialite',  note:"Gratuit"},
+    {cat:'hebergement', key:'local',       note:"0 € récurrent"},
+    {cat:'publication', key:'felt',        note:"Gratuit"},
     {cat:'imagerie',    key:'ign_precise', note:"~1 500 €/an (drone)"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'terrain',     key:'qfield',      note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>AutoCAD Map 3D + QGIS</strong> : AutoCAD Map 3D assure la lecture/écriture native des fichiers DWG — indispensable pour collaborer avec les architectes, promoteurs et autres géomètres. QGIS complète l'analyse spatiale et la production cartographique SIG sans coût de licence supplémentaire."},
+    {dot:'g', txt:"<strong>AutoCAD Map 3D</strong> : la lecture/écriture native DWG est indispensable pour collaborer avec les architectes, promoteurs et autres géomètres. Bundle AEC Collection (3 600 €/an) inclut Civil 3D + Revit pour les projets BTP complexes. ⚠️ Windows uniquement."},
+    {dot:'g', txt:"<strong>QGIS en complément</strong> : analyses spatiales avancées que AutoCAD ne couvre pas nativement (topologie, calculs de densité, joins spatiaux). Gratuit, natif macOS/Linux, 1 000+ plugins. Les deux lisent les formats standards (SHP, GPKG, DXF)."},
     {dot:'g', txt:"<strong>SpatiaLite</strong> : base spatiale légère dans un fichier SQLite, idéale pour les levés de terrain et les missions courtes. Portable sur clé USB, compatible QField pour la synchronisation terrain."},
-    {dot:'g', txt:"<strong>Serveur local</strong> : pour un usage solo ou en petite équipe, un NAS ou un PC serveur suffit. Les données foncières sensibles restent dans vos locaux, aucune dépendance cloud."},
     {dot:'b', txt:"<strong>Imagerie drone / photogrammétrie</strong> : précision centimétrique sur vos zones d'étude. OpenDroneMap (gratuit) pour le traitement des photos drone. Pix4D ou Agisoft Metashape pour les projets complexes."}
   ],
   alts:{ logiciels:['arcgis_pro'], bases:['gpkg','postgis'], imagerie:['osm_libre'], publication:['lizmap'] }
 },
 
-/* ━━━ 9 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:9, name:"L'Agriculteur Connecté", badge:"🌾 Agriculture · Télédétection · Terrain", emoji:"🛰️",
-  desc:"Architecture pour les agriculteurs, agronomes et coopératives. Suivi parcellaire par satellite, saisie terrain GPS, analyse végétation et gestion des données PAC/RPG.",
+  desc:"Architecture pour agriculteurs, agronomes et coopératives. Suivi parcellaire par satellite, saisie terrain GPS, analyse végétation et gestion des données PAC/RPG.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'postgis', note:"Gratuit"},
-    {cat:'hebergement', key:'ovh',     note:"~168 €/an"},
-    {cat:'publication', key:'felt',    note:"Gratuit"},
+    {cat:'logiciels',   key:'qgis',        primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'postgis',     note:"Gratuit"},
+    {cat:'hebergement', key:'ovh',         note:"~168 €/an"},
+    {cat:'publication', key:'felt',        note:"Gratuit"},
     {cat:'imagerie',    key:'ign_precise', note:"Sentinel-2 gratuit (ESA)"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'terrain',     key:'qfield',      note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>QGIS + plugin Orfeo Toolbox</strong> : traitement des images satellitaires Sentinel-2 directement dans QGIS. Calcul d'indices de végétation (NDVI, EVI), détection de cultures, suivi de stress hydrique. Tout cela gratuitement avec les données ESA."},
-    {dot:'g', txt:"<strong>Sentinel-2 (ESA/Copernicus)</strong> : imagerie satellite gratuite, 10 m de résolution, toutes les 5 jours. La référence pour le suivi agricole en France et dans le monde. Accès via QGIS Sentinel Hub ou le Hub Copernicus."},
-    {dot:'b', txt:"<strong>QField</strong> : saisie GPS des parcelles directement sur tablette ou smartphone en plein champ. Synchronisation avec la base PostGIS centrale en fin de journée ou via 4G. Formulaires de saisie adaptés aux relevés agronomiques."},
-    {dot:'b', txt:"<strong>PostGIS + VPS OVH</strong> : centralise les données parcellaires (RPG, PAC), les relevés terrain et les résultats d'analyse. Permet le partage entre plusieurs exploitations d'une même coopérative."}
+    {dot:'g', txt:"<strong>QGIS + plugin Orfeo Toolbox</strong> : traitement des images satellitaires Sentinel-2 directement dans QGIS. Calcul d'indices de végétation (NDVI, EVI), détection de cultures, suivi de stress hydrique. Gratuit avec données ESA."},
+    {dot:'g', txt:"<strong>Sentinel-2 (ESA/Copernicus)</strong> : imagerie satellite gratuite, 10 m de résolution, toutes les 5 jours. Référence pour le suivi agricole en France. Accès via QGIS Sentinel Hub ou Hub Copernicus."},
+    {dot:'b', txt:"<strong>QField</strong> : saisie GPS des parcelles directement sur tablette en plein champ. Synchronisation avec la base PostGIS centrale en fin de journée ou via 4G."},
+    {dot:'b', txt:"<strong>PostGIS + VPS OVH</strong> : centralise les données parcellaires (RPG, PAC), relevés terrain et résultats d'analyse. Partage entre plusieurs exploitations d'une même coopérative."}
   ],
   alts:{ imagerie:['osm_libre'], hebergement:['local','render'], publication:['lizmap','geoserver_node'] }
 },
 
-/* ━━━ 10 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-{ id:10, name:"Le Réseau Critique", badge:"⚡ Énergie · Réseaux · Grande Entreprise", emoji:"🔌",
-  desc:"Architecture pour les gestionnaires de réseaux (énergie, eau, télécom). Données critiques, cartographie des actifs, mise à jour terrain temps réel, haute disponibilité.",
+{ id:10, name:"Le Réseau Critique", badge:"⚡ Énergie · Réseaux · Grande Entreprise · Esri", emoji:"🔌",
+  desc:"Architecture pour gestionnaires de réseaux (énergie, eau, télécom). Données critiques, cartographie des actifs, mise à jour terrain temps réel, haute disponibilité.",
   briques:[
-    {cat:'logiciels',   key:'arcgis_ent', primary:true, note:"6 200 €/an (5 users)"},
-    {cat:'bases',       key:'arcgis_db',  note:"Inclus dans ArcGIS Enterprise"},
-    {cat:'hebergement', key:'azure',      note:"~1 200 €/an"},
+    {cat:'logiciels',   key:'arcgis_ent',      primary:true, note:"6 200 €/an (5 users)"},
+    {cat:'bases',       key:'arcgis_db',        note:"Inclus dans ArcGIS Enterprise"},
+    {cat:'hebergement', key:'azure',            note:"~1 200 €/an"},
     {cat:'publication', key:'experience_builder', note:"Inclus dans ArcGIS Enterprise"},
-    {cat:'imagerie',    key:'ign_precise', note:"~800 €/an"},
-    {cat:'terrain',     key:'fieldmaps',  note:"Inclus dans ArcGIS Online"}
+    {cat:'imagerie',    key:'ign_precise',      note:"~800 €/an"},
+    {cat:'terrain',     key:'fieldmaps',        note:"Inclus dans ArcGIS Online"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>ArcGIS Enterprise</strong> : la suite Esri complète pour les organisations complexes. Inclut Experience Builder pour les applications web, Field Maps pour le terrain, Survey123 pour les enquêtes et ArcGIS Online. SSO LDAP/Active Directory natif pour l'authentification unique."},
-    {dot:'g', txt:"<strong>Experience Builder (inclus)</strong> : applications web métier sans code pour visualiser les actifs réseau, suivre les incidents et diffuser les informations aux équipes et aux décideurs. Inclus gratuitement dans ArcGIS Enterprise — aucun coût supplémentaire."},
-    {dot:'g', txt:"<strong>Field Maps (inclus)</strong> : les techniciens terrain mettent à jour les données des actifs réseau en temps réel depuis leur smartphone. Formulaires intelligents, géolocalisation GPS centimétrique, synchronisation immédiate avec la base centrale."},
-    {dot:'a', txt:"<strong>Microsoft Azure</strong> : infrastructure cloud Microsoft qui s'intègre nativement avec ArcGIS Enterprise et Azure Active Directory. SSO unique pour toute l'organisation. Option France Central pour la souveraineté des données critiques."}
+    {dot:'g', txt:"<strong>ArcGIS Enterprise</strong> : suite Esri complète pour les organisations complexes. Utility Network pour les réseaux électriques/eau/gaz. Inclut Experience Builder, Field Maps, Survey123, ArcGIS Online. SSO LDAP/Active Directory natif."},
+    {dot:'g', txt:"<strong>Experience Builder (inclus)</strong> : applications web métier pour visualiser les actifs réseau, suivre les incidents et diffuser les informations aux équipes. Inclus dans ArcGIS Enterprise — aucun coût supplémentaire."},
+    {dot:'g', txt:"<strong>Field Maps (inclus)</strong> : les techniciens terrain mettent à jour les données des actifs réseau en temps réel depuis leur smartphone. Formulaires intelligents, GPS centimétrique, synchronisation immédiate."},
+    {dot:'a', txt:"<strong>Microsoft Azure</strong> : intégration native avec Azure Active Directory pour le SSO. Option France Central pour la souveraineté des données critiques. Azure IoT Hub pour les capteurs réseau."}
   ],
-  alts:{ logiciels:['arcgis_pro'], hebergement:['aws','ovh'], publication:['lizmap','geoserver_node'] }
+  alts:{ logiciels:['arcgis_online','qgis'], hebergement:['aws','ovh'], publication:['lizmap'] }
 },
 
-/* ━━━ 11 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-{ id:11, name:"La Tour de Contrôle Esri", badge:"🏢 Grande Entreprise · Suite Esri · +10k €", emoji:"🗼",
-  desc:"Architecture Enterprise complète dans l'écosystème Esri. ArcGIS Online Creator avec Experience Builder inclus, Field Maps intégré. Suite cohérente sans double coût.",
+{ id:11, name:"La Petite Entreprise Esri", badge:"🏢 Petite Entreprise · ArcGIS Online · +500 € / user", emoji:"💼",
+  desc:"Architecture ArcGIS Online Creator pour la petite entreprise. Suite SaaS Esri complète sans infrastructure serveur : Experience Builder, Field Maps, Survey123 inclus. Simple à déployer.",
   briques:[
-    {cat:'logiciels',   key:'arcgis_online', primary:true, note:"500 €/an/user"},
-    {cat:'bases',       key:'arcgis_db',     note:"Inclus dans ArcGIS Online"},
-    {cat:'hebergement', key:'azure',         note:"~1 200 €/an"},
+    {cat:'logiciels',   key:'arcgis_online',    primary:true, note:"500 €/an/user"},
+    {cat:'bases',       key:'arcgis_db',         note:"Inclus dans ArcGIS Online"},
+    {cat:'hebergement', key:'azure',             note:"~600 €/an (léger)"},
     {cat:'publication', key:'experience_builder', note:"Inclus dans ArcGIS Online Creator"},
-    {cat:'imagerie',    key:'ign_precise',   note:"~800 €/an"},
-    {cat:'terrain',     key:'fieldmaps',     note:"Inclus dans ArcGIS Online"}
+    {cat:'imagerie',    key:'ign_precise',       note:"~800 €/an"},
+    {cat:'terrain',     key:'fieldmaps',         note:"Inclus dans ArcGIS Online"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>ArcGIS Online Creator (500 €/an/user)</strong> : l'abonnement Creator inclut ArcGIS Online, Experience Builder, Field Maps, Survey123 et 5 Go de stockage par utilisateur. Aucun coût supplémentaire pour ces outils — ils sont tous compris dans le prix Creator."},
-    {dot:'g', txt:"<strong>Experience Builder (0 € supp.)</strong> : inclus gratuitement dans tout abonnement Creator. Permet de créer des applications web haut de gamme, des dashboards temps réel et des StoryMaps sans développement — directement depuis le navigateur."},
-    {dot:'g', txt:"<strong>Field Maps (0 € supp.)</strong> : inclus dans ArcGIS Online Creator. Application mobile pour la collecte terrain, mise à jour des données en temps réel, hors-ligne. Survey123 également inclus pour les formulaires d'enquête avancés."},
-    {dot:'a', txt:"<strong>Microsoft Azure</strong> : intégration native avec Azure Active Directory pour le SSO (authentification unique). Les utilisateurs se connectent avec leurs identifiants Microsoft — aucun compte Esri séparé à gérer."}
+    {dot:'g', txt:"<strong>ArcGIS Online Creator (500 €/an/user)</strong> : l'abonnement Creator inclut ArcGIS Online, Experience Builder, Field Maps, Survey123 et 5 Go de stockage par utilisateur. Aucun serveur à gérer, déploiement en quelques heures."},
+    {dot:'g', txt:"<strong>Experience Builder (0 € supp.)</strong> : inclus dans Creator. Applications web haut de gamme, dashboards temps réel et StoryMaps sans développement — directement depuis le navigateur."},
+    {dot:'g', txt:"<strong>Field Maps (0 € supp.)</strong> : inclus dans Creator. Application mobile pour la collecte terrain, mise à jour des données en temps réel, hors-ligne. Survey123 également inclus pour les formulaires d'enquête."},
+    {dot:'a', txt:"<strong>ArcGIS Online + Azure</strong> : intégration optionnelle avec Azure Active Directory pour le SSO. Les utilisateurs se connectent avec leurs identifiants Microsoft — aucun compte Esri séparé."}
   ],
   alts:{ logiciels:['arcgis_ent','arcgis_pro'], hebergement:['aws','ovh'], publication:['lizmap'] }
 },
 
-/* ━━━ 12 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-{ id:12, name:"Le Géomarketeur", badge:"📊 Commerce · Géomarketing · Données HDR", emoji:"🛍️",
-  desc:"Architecture pour le géomarketing, l'analyse de territoire commercial et l'optimisation des implantations. Données sociodémographiques, zones de chalandise, tournées.",
+{ id:12, name:"Le Géomarketeur", badge:"📊 Commerce · Géomarketing · Geoconcept · Données HDR", emoji:"🛍️",
+  desc:"Architecture pour le géomarketing, l'analyse de territoire commercial et l'optimisation des implantations. Geoconcept + QGIS + données socio-démographiques INSEE/SIRENE.",
   briques:[
-    {cat:'logiciels',   key:'geoconcept', primary:true, note:"~2 800 €/an"},
-    {cat:'logiciels',   key:'qgis',       note:"Gratuit"},
-    {cat:'bases',       key:'postgis',    note:"Gratuit"},
-    {cat:'hebergement', key:'ovh',        note:"~168 €/an"},
+    {cat:'logiciels',   key:'geoconcept',   primary:true, note:"~2 800 €/an"},
+    {cat:'logiciels',   key:'qgis',         note:"Gratuit · Complémentaire"},
+    {cat:'bases',       key:'postgis',      note:"Gratuit"},
+    {cat:'hebergement', key:'ovh',          note:"~168 €/an"},
     {cat:'publication', key:'experience_builder', note:"Inclus si AGO Creator"},
-    {cat:'imagerie',    key:'ign_precise', note:"~800 €/an"}
+    {cat:'imagerie',    key:'ign_precise',  note:"~800 €/an"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>Geoconcept</strong> : SIG français de référence pour le géomarketing et l'optimisation de tournées. Modules dédiés à l'analyse de zone de chalandise, la segmentation de territoire et l'optimisation logistique. Support francophone dédié. Prix sur devis — ~2 800 €/an indicatif."},
-    {dot:'g', txt:"<strong>QGIS en complément</strong> : analyses spatiales avancées que Geoconcept ne couvre pas nativement (topologie, calculs de densité, joins spatiaux complexes). Les deux outils sont complémentaires et partagent les formats standards (SHP, GPKG)."},
-    {dot:'b', txt:"<strong>PostGIS</strong> : base de données spatiales pour stocker les données clients, les zones commerciales et les données socio-démographiques (INSEE, DVF). Permet des requêtes complexes directement depuis Geoconcept ou QGIS."},
-    {dot:'b', txt:"<strong>Ortho HD IGN</strong> : fonds de plan haute définition pour contextualiser les analyses commerciales et préparer les présentations clients. La BD TOPO vectorielle complète avec les commerces, les routes et le bâti."}
+    {dot:'g', txt:"<strong>Geoconcept</strong> : SIG français de référence pour le géomarketing. Modules : Territory Manager (découpage secteurs), Fleet Management (tournées optimisées), Geocoder Pro (adressage France), Isochrones. Support francophone dédié. Prix sur devis — ~2 800 €/an indicatif."},
+    {dot:'g', txt:"<strong>QGIS en complément</strong> : analyses spatiales avancées que Geoconcept ne couvre pas nativement (topologie, calculs de densité, joins spatiaux complexes). Plugins MMQGIS, OSM geocoder, isochrones. Gratuit et complémentaire."},
+    {dot:'b', txt:"<strong>PostGIS</strong> : stockage des données clients, zones commerciales et données socio-démographiques (INSEE, DVF). Requêtes : ST_DWithin (zones de chalandise), ST_Voronoi, ST_ClusterKMeans. Compatible Python/pandas."},
+    {dot:'b', txt:"<strong>Ortho HD IGN</strong> : fonds de plan haute définition pour contextualiser les analyses commerciales. BD TOPO vectorielle avec commerces, routes et bâti. Accès Géoplateforme ~800 €/an secteur privé."}
   ],
   alts:{ logiciels:['arcgis_online','qgis'], publication:['felt','lizmap'], hebergement:['azure'] }
 },
 
-/* ━━━ 13 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:13, name:"L'Urgentiste Humanitaire", badge:"🚨 Crise · Terrain · Déploiement Rapide", emoji:"🆘",
   desc:"Architecture de réponse rapide pour les crises humanitaires. Déploiement en moins d'une heure, zéro infrastructure locale, données OpenStreetMap, terrain hors connexion.",
   briques:[
-    {cat:'logiciels',   key:'josm',    primary:true, note:"Gratuit"},
-    {cat:'logiciels',   key:'qgis',    note:"Gratuit"},
-    {cat:'bases',       key:'gpkg',    note:"Gratuit"},
-    {cat:'hebergement', key:'render',  note:"Gratuit"},
-    {cat:'publication', key:'umap',    note:"Gratuit (OSM France)"},
-    {cat:'imagerie',    key:'osm_libre', note:"Gratuit · HOT Tasking Manager"},
-    {cat:'terrain',     key:'kobo',    note:"Gratuit"}
+    {cat:'logiciels',   key:'josm',        primary:true, note:"Gratuit"},
+    {cat:'logiciels',   key:'qgis',        note:"Gratuit"},
+    {cat:'bases',       key:'gpkg',        note:"Gratuit"},
+    {cat:'hebergement', key:'render',      note:"Gratuit"},
+    {cat:'publication', key:'umap',        note:"Gratuit (OSM France)"},
+    {cat:'imagerie',    key:'osm_libre',   note:"Gratuit · HOT Tasking Manager"},
+    {cat:'terrain',     key:'kobo',        note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>JOSM + OpenStreetMap</strong> : le HOT (Humanitarian OpenStreetMap Team) organise des sessions de cartographie d'urgence mondiales. En quelques heures, des milliers de bénévoles numérisent les routes, bâtiments et points d'eau dans la zone de crise depuis JOSM."},
-    {dot:'g', txt:"<strong>uMap (OSM France)</strong> : création et partage instantané de cartes opérationnelles sans installation ni compte. Lien partageable avec les équipes sur le terrain, les coordinateurs et les médias. Hébergé par OSM France, 100% gratuit."},
-    {dot:'b', txt:"<strong>KoboCollect</strong> : le standard des enquêtes humanitaires d'urgence (UNHCR, MSF, OMS). Formulaires déployables sur téléphone Android basique, collecte hors connexion, logique conditionnelle. Analyse statistique des données de blessés, déplacés, besoins."},
-    {dot:'g', txt:"<strong>GeoPackage</strong> : format portable idéal pour les contextes avec peu de connectivité. Les cartes OpenStreetMap de la zone peuvent être téléchargées hors-ligne dans QField ou OsmAnd pour la navigation terrain."}
+    {dot:'g', txt:"<strong>JOSM + OpenStreetMap</strong> : le HOT organise des sessions de cartographie d'urgence mondiales. En quelques heures, des milliers de bénévoles numérisent les routes, bâtiments et points d'eau dans la zone de crise depuis JOSM."},
+    {dot:'g', txt:"<strong>uMap (OSM France)</strong> : création et partage instantané de cartes opérationnelles sans installation ni compte. Lien partageable avec les équipes terrain, les coordinateurs et les médias. 100% gratuit."},
+    {dot:'b', txt:"<strong>KoboCollect</strong> : standard des enquêtes humanitaires d'urgence (UNHCR, MSF, OMS). Formulaires sur téléphone Android basique, collecte hors connexion, logique conditionnelle. Analyse des données de blessés et besoins."},
+    {dot:'g', txt:"<strong>GeoPackage</strong> : format portable pour les contextes avec peu de connectivité. Cartes OSM de la zone téléchargeables hors-ligne dans QField ou OsmAnd pour la navigation terrain."}
   ],
   alts:{ publication:['felt','lizmap'], terrain:['qfield'], hebergement:['local'] }
 },
 
-/* ━━━ 14 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:14, name:"Le Développeur Cartographe", badge:"💻 Dev · API · Sur mesure · Open Source", emoji:"⚙️",
   desc:"Architecture pour les développeurs qui intègrent la cartographie dans leurs applications. API REST spatiales, tuiles vectorielles, carte web personnalisée.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'postgis', note:"Gratuit"},
-    {cat:'hebergement', key:'ovh',     note:"~168 €/an"},
-    {cat:'publication', key:'openlayers', note:"Gratuit"},
-    {cat:'imagerie',    key:'osm_libre', note:"Gratuit"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'logiciels',   key:'qgis',           primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'postgis',        note:"Gratuit"},
+    {cat:'hebergement', key:'ovh',            note:"~168 €/an"},
+    {cat:'publication', key:'openlayers',     note:"Gratuit"},
+    {cat:'imagerie',    key:'osm_libre',      note:"Gratuit"},
+    {cat:'terrain',     key:'qfield',         note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>PostgreSQL/PostGIS</strong> : base de données spatiale avec API REST via PostgREST (Supabase). Requêtes SQL spatiales depuis n'importe quel langage (Python, JavaScript, Java, Rust). PostGIS ST_* functions couvrent 100% des besoins géospatiaux courants."},
-    {dot:'g', txt:"<strong>OpenLayers / Leaflet.js</strong> : bibliothèques JavaScript de cartographie web. Intégration dans n'importe quel framework (React, Vue, Angular). Flux OGC (WMS/WFS), tuiles vectorielles MapLibre, contrôle total du rendu et de l'interaction."},
+    {dot:'g', txt:"<strong>PostgreSQL/PostGIS</strong> : base de données spatiale avec API REST via PostgREST (Supabase). Requêtes SQL spatiales depuis n'importe quel langage (Python, JavaScript, Java, Rust). ST_* functions couvrent 100% des besoins courants."},
+    {dot:'g', txt:"<strong>OpenLayers / Leaflet.js</strong> : bibliothèques JavaScript de cartographie web. Intégration dans n'importe quel framework (React, Vue, Angular). Flux OGC (WMS/WFS), tuiles vectorielles MapLibre, contrôle total du rendu."},
     {dot:'g', txt:"<strong>GeoServer</strong> : serveur de flux OGC pour exposer vos données PostGIS en WMS, WFS, WCS, WMTS. API REST GeoServer pour l'administration programmatique. Compatible avec tous les frameworks cartographiques."},
     {dot:'b', txt:"<strong>VPS OVH</strong> : hébergement Linux sur lequel vous installez exactement ce dont vous avez besoin. Docker Compose pour orchestrer PostGIS + GeoServer + API custom. Déploiement reproductible et versionné."}
   ],
   alts:{ bases:['supabase'], hebergement:['render','aws'], publication:['geoserver_node','felt'] }
 },
 
-/* ━━━ 15 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:15, name:"Les Données Massives", badge:"📦 Big Data · LiDAR · +1M objets · Open Source", emoji:"🏔️",
   desc:"Architecture pour les projets à très large volume : LiDAR, rasters HD, millions d'objets vectoriels, modèles 3D de territoire. Performance et scalabilité.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'logiciels',   key:'grass',   note:"Gratuit"},
-    {cat:'bases',       key:'postgis', note:"Gratuit"},
-    {cat:'hebergement', key:'ovh',     note:"~336 €/an (Comfort 28€/mois)"},
+    {cat:'logiciels',   key:'qgis',           primary:true, note:"Gratuit"},
+    {cat:'logiciels',   key:'grass',          note:"Gratuit"},
+    {cat:'bases',       key:'postgis',        note:"Gratuit"},
+    {cat:'hebergement', key:'ovh',            note:"~336 €/an (Comfort)"},
     {cat:'publication', key:'geoserver_node', note:"Gratuit"},
-    {cat:'imagerie',    key:'ign_precise', note:"Sentinel-2 gratuit · LiDAR IGN gratuit"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'imagerie',    key:'ign_precise',    note:"LiDAR HD IGN gratuit"},
+    {cat:'terrain',     key:'qfield',         note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>PostgreSQL/PostGIS</strong> : le seul moteur open source capable de gérer des centaines de millions d'objets géographiques avec des performances acceptables. Index spatial GIST, partitionnement de tables, connexions parallèles. Compatible avec TimescaleDB pour les données temporelles."},
-    {dot:'g', txt:"<strong>GRASS GIS</strong> : référence pour le traitement des nuages de points LiDAR (module v.lidar.*), la modélisation hydrologique (r.watershed) et les analyses de terrain (r.slope.aspect). Intégré dans QGIS via plugin Processing."},
-    {dot:'g', txt:"<strong>GeoServer</strong> : diffusion des grandes couches en tuiles vectorielles (format MVT/pbf) — seule solution performante pour afficher des millions d'objets dans un navigateur web. Rendu côté serveur pour les couches raster volumineux."},
-    {dot:'b', txt:"<strong>LiDAR RGE ALTI IGN (gratuit)</strong> : le LiDAR HD national (5 points/m²) est accessible gratuitement via la Géoplateforme IGN pour toute la France. Traitement avec PDAL ou le module GRASS r.in.lidar."}
+    {dot:'g', txt:"<strong>PostgreSQL/PostGIS</strong> : le seul moteur open source capable de gérer des centaines de millions d'objets géographiques avec performances acceptables. Index spatial GIST, partitionnement de tables, connexions parallèles. Compatible TimescaleDB."},
+    {dot:'g', txt:"<strong>GRASS GIS</strong> : référence pour le traitement des nuages de points LiDAR (module v.lidar.*), modélisation hydrologique (r.watershed) et analyses de terrain. Intégré dans QGIS via plugin Processing."},
+    {dot:'g', txt:"<strong>GeoServer</strong> : diffusion des grandes couches en tuiles vectorielles (MVT/pbf) — seule solution performante pour afficher des millions d'objets dans un navigateur. Rendu côté serveur pour rasters volumineux."},
+    {dot:'b', txt:"<strong>LiDAR RGE ALTI IGN (gratuit)</strong> : le LiDAR HD national (5 points/m²) est accessible gratuitement via la Géoplateforme IGN. Traitement avec PDAL ou GRASS r.in.lidar."}
   ],
   alts:{ hebergement:['aws','azure'], logiciels:['arcgis_pro_adv'], publication:['openlayers'] }
 },
 
-/* ━━━ 16 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:16, name:"La Sentinelle Environnementale", badge:"🌿 Environnement · Biodiversité · BET", emoji:"🦋",
-  desc:"Architecture pour les bureaux d'études environnement, les associations naturalistes et les opérateurs Natura 2000. Suivi des habitats, inventaires espèces, cartes réglementaires.",
+  desc:"Architecture pour les bureaux d'études environnement, associations naturalistes et opérateurs Natura 2000. Suivi des habitats, inventaires espèces, cartes réglementaires.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'postgis', note:"Gratuit"},
-    {cat:'hebergement', key:'ovh',     note:"~168 €/an"},
+    {cat:'logiciels',   key:'qgis',           primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'postgis',        note:"Gratuit"},
+    {cat:'hebergement', key:'ovh',            note:"~168 €/an"},
     {cat:'publication', key:'geoserver_node', note:"Gratuit"},
-    {cat:'imagerie',    key:'ign_precise', note:"Sentinel-2 gratuit · IGN"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'imagerie',    key:'ign_precise',    note:"Sentinel-2 gratuit · IGN"},
+    {cat:'terrain',     key:'qfield',         note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>QGIS + plugins naturalistes</strong> : plugins spécialisés biodiversité (TAXREF, INPN, Faune France) disponibles dans QGIS. Connexion directe aux bases de données d'observation (GBIF, OpenObs) via WFS. Plugin Biodiversity Observer pour les inventaires."},
-    {dot:'g', txt:"<strong>GeoNode</strong> : catalogue de métadonnées INSPIRE obligatoire pour les opérateurs Natura 2000 et les études d'impact réglementaires. Partage des couches (zones protégées, habitats, espèces) avec les partenaires institutionnels (DREAL, OFB)."},
-    {dot:'b', txt:"<strong>Sentinel-2 (ESA)</strong> : suivi des habitats et de la végétation par télédétection — indice NDVI, cartographie des zones humides, détection de changements forestiers. Gratuit, résolution 10 m, toutes les 5 jours. Idéal pour les suivis long terme."},
-    {dot:'b', txt:"<strong>QField pour les inventaires terrain</strong> : formulaires QGIS adaptés aux inventaires floristiques et faunistiques (espèce, statut, abondance, photo). GPS décimétrique pour la localisation précise. Synchronisation directe avec la base PostGIS de l'étude."}
+    {dot:'g', txt:"<strong>QGIS + plugins naturalistes</strong> : plugins spécialisés biodiversité (TAXREF, INPN, Faune France). Connexion directe aux bases d'observation (GBIF, OpenObs) via WFS. Plugin Biodiversity Observer pour les inventaires."},
+    {dot:'g', txt:"<strong>GeoNode</strong> : catalogue de métadonnées INSPIRE obligatoire pour les opérateurs Natura 2000 et études d'impact. Partage des couches (zones protégées, habitats, espèces) avec les partenaires (DREAL, OFB)."},
+    {dot:'b', txt:"<strong>Sentinel-2 (ESA)</strong> : suivi des habitats par télédétection — indice NDVI, cartographie zones humides, détection de changements forestiers. Gratuit, 10 m, toutes les 5 jours."},
+    {dot:'b', txt:"<strong>QField pour les inventaires terrain</strong> : formulaires QGIS pour les inventaires floristiques et faunistiques (espèce, statut, abondance, photo). GPS décimétrique. Synchronisation directe avec PostGIS."}
   ],
   alts:{ imagerie:['osm_libre'], publication:['lizmap','openlayers'], hebergement:['render'] }
 },
 
-/* ━━━ 17 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:17, name:"Le Transporteur Intelligent", badge:"🚌 Transport · Mobilité · Temps Réel", emoji:"🛤️",
   desc:"Architecture pour les opérateurs de transport et de mobilité. Suivi de flottes en temps réel, calcul d'itinéraires, diffusion des horaires GTFS, carte grand public.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'postgis', note:"Gratuit + TimescaleDB"},
-    {cat:'hebergement', key:'aws',     note:"~1 200 €/an"},
-    {cat:'publication', key:'openlayers', note:"Gratuit"},
-    {cat:'imagerie',    key:'osm_libre', note:"Gratuit"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'logiciels',   key:'qgis',        primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'postgis',     note:"Gratuit + TimescaleDB"},
+    {cat:'hebergement', key:'aws',         note:"~1 200 €/an"},
+    {cat:'publication', key:'openlayers',  note:"Gratuit"},
+    {cat:'imagerie',    key:'osm_libre',   note:"Gratuit"},
+    {cat:'terrain',     key:'qfield',      note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>PostgreSQL/PostGIS + TimescaleDB</strong> : extension temporelle de PostGIS pour stocker et interroger efficacement les données de position GPS en temps réel. Compatible MQTT pour l'ingestion des données de flotte. Requêtes de type ST_Distance sur des millions de positions en millisecondes."},
-    {dot:'g', txt:"<strong>OpenLayers.js</strong> : bibliothèque JavaScript pour la carte temps réel sur le site ou l'application mobile des voyageurs. Affichage des véhicules en mouvement, calcul d'itinéraires via OSRM (open source), intégration des données GTFS (horaires) en open data."},
-    {dot:'a', txt:"<strong>Amazon Web Services (Paris)</strong> : la scalabilité AWS est indispensable pour les pics d'audience (événements, grèves). Lambda pour les calculs temps réel, RDS pour la base de données, CloudFront CDN pour les tuiles cartographiques."},
-    {dot:'b', txt:"<strong>OpenStreetMap</strong> : données de voirie libres et à jour pour le calcul d'itinéraires et le fond de plan. OSRM ou Valhalla (moteurs de routage open source) peuvent être hébergés sur AWS pour les calculs d'itinéraires personnalisés."}
+    {dot:'g', txt:"<strong>PostgreSQL/PostGIS + TimescaleDB</strong> : extension temporelle de PostGIS pour stocker et interroger efficacement les données de position GPS en temps réel. Compatible MQTT. Requêtes ST_Distance sur millions de positions en millisecondes."},
+    {dot:'g', txt:"<strong>OpenLayers.js</strong> : carte temps réel sur le site ou l'application mobile des voyageurs. Affichage des véhicules en mouvement, calcul d'itinéraires via OSRM (open source), intégration des données GTFS en open data."},
+    {dot:'a', txt:"<strong>Amazon Web Services (Paris)</strong> : la scalabilité AWS est indispensable pour les pics d'audience. Lambda pour les calculs temps réel, RDS pour la base de données, CloudFront CDN pour les tuiles."},
+    {dot:'b', txt:"<strong>OpenStreetMap</strong> : données de voirie libres pour le calcul d'itinéraires et le fond de plan. OSRM ou Valhalla (moteurs de routage open source) hébergés sur AWS."}
   ],
   alts:{ hebergement:['azure','ovh'], publication:['felt','experience_builder'], bases:['supabase'] }
 },
 
-/* ━━━ 18 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━════════ */
 { id:18, name:"L'Atlas du Peuple", badge:"🌍 Open Data · Grand Public · Atlas Territorial", emoji:"📜",
   desc:"Architecture pour la diffusion de données géographiques ouvertes au grand public. Atlas territorial, portail open data INSPIRE, catalogue de métadonnées, visualisation.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'postgis', note:"Gratuit"},
-    {cat:'hebergement', key:'ovh',     note:"~168 €/an"},
+    {cat:'logiciels',   key:'qgis',           primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'postgis',        note:"Gratuit"},
+    {cat:'hebergement', key:'ovh',            note:"~168 €/an"},
     {cat:'publication', key:'geoserver_node', note:"Gratuit"},
-    {cat:'imagerie',    key:'osm_libre', note:"Gratuit"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'imagerie',    key:'osm_libre',      note:"Gratuit"},
+    {cat:'terrain',     key:'qfield',         note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>GeoNode</strong> : la plateforme de référence pour l'open data géospatial. Catalogue de métadonnées ISO 19115 / INSPIRE, gestion des droits d'accès (public/authentifié), prévisualisation des couches, téléchargement en plusieurs formats (SHP, GeoJSON, CSV). Utilisé par l'ONU, les gouvernements et les collectivités."},
-    {dot:'g', txt:"<strong>GeoServer</strong> : publication des données en flux WMS, WFS, WCS conformes OGC. Chaque couche est accessible via une URL standard consommable par n'importe quel SIG ou portail tiers. Intégration native avec GeoNode."},
-    {dot:'b', txt:"<strong>PostGIS</strong> : stockage et traitement de toutes les couches thématiques de l'atlas (communes, réseaux, zonages réglementaires, données INSEE). SQL spatial pour les agrégations statistiques et les jointures entre couches thématiques."},
-    {dot:'g', txt:"<strong>OpenStreetMap</strong> : fond de carte libre pour l'atlas, sans restriction de diffusion commerciale ni de volume de requêtes. Mise à jour communautaire garantissant une fraîcheur supérieure à la plupart des sources propriétaires."}
+    {dot:'g', txt:"<strong>GeoNode</strong> : plateforme de référence pour l'open data géospatial. Catalogue ISO 19115 / INSPIRE, gestion des droits, prévisualisation, téléchargement SHP/GeoJSON/CSV. Utilisé par l'ONU, les gouvernements et les collectivités."},
+    {dot:'g', txt:"<strong>GeoServer</strong> : publication des données en flux WMS, WFS, WCS conformes OGC. Chaque couche accessible via URL standard consommable par n'importe quel SIG ou portail tiers."},
+    {dot:'b', txt:"<strong>PostGIS</strong> : stockage de toutes les couches thématiques (communes, réseaux, zonages, données INSEE). SQL spatial pour les agrégations statistiques et les jointures entre couches."},
+    {dot:'g', txt:"<strong>OpenStreetMap</strong> : fond de carte libre pour l'atlas, sans restriction de diffusion. Mise à jour communautaire garantissant une fraîcheur supérieure aux sources propriétaires."}
   ],
   alts:{ publication:['lizmap','openlayers'], hebergement:['render','azure'], imagerie:['ign_precise'] }
 },
 
-/* ━━━ 19 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:19, name:"Le Maître des Flux IoT", badge:"📡 IoT · SCADA · Temps Réel · Capteurs", emoji:"⚡",
   desc:"Architecture pour les systèmes IoT géolocalisés : capteurs environnementaux, compteurs intelligents, stations météo, surveillance de réseaux. Données temporelles et spatiales.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'postgis', note:"Gratuit + TimescaleDB"},
-    {cat:'hebergement', key:'aws',     note:"~1 200 €/an"},
-    {cat:'publication', key:'openlayers', note:"Gratuit"},
-    {cat:'imagerie',    key:'osm_libre', note:"Gratuit"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'logiciels',   key:'qgis',        primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'postgis',     note:"Gratuit + TimescaleDB"},
+    {cat:'hebergement', key:'aws',         note:"~1 200 €/an"},
+    {cat:'publication', key:'openlayers',  note:"Gratuit"},
+    {cat:'imagerie',    key:'osm_libre',   note:"Gratuit"},
+    {cat:'terrain',     key:'qfield',      note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>TimescaleDB sur PostGIS</strong> : extension PostgreSQL dédiée aux séries temporelles. Compression automatique des données anciennes, requêtes temporelles ultra-rapides (rollup, downsampling). Idéale pour stocker des millions de mesures géolocalisées de capteurs IoT."},
-    {dot:'b', txt:"<strong>MQTT + PostGIS</strong> : protocole MQTT pour l'ingestion des données capteurs en temps réel. Un broker MQTT (Mosquitto, sur EC2 ou ECS) centralise les messages, un consumer Python les insère dans PostGIS. Latence < 100 ms de bout en bout."},
-    {dot:'a', txt:"<strong>AWS</strong> : AWS IoT Core pour l'ingestion managée des données capteurs (MQTT, HTTP). Lambda pour le traitement temps réel. RDS pour PostGIS managé. CloudWatch pour le monitoring. Architecture hautement disponible et autoscalable."},
-    {dot:'g', txt:"<strong>OpenLayers</strong> : tableau de bord cartographique temps réel. WebSocket pour la mise à jour automatique des positions/valeurs des capteurs sans rechargement de page. Grafana Maps (connecté à PostGIS) en alternative pour les dashboards analytiques."}
+    {dot:'g', txt:"<strong>TimescaleDB sur PostGIS</strong> : extension PostgreSQL dédiée aux séries temporelles. Compression automatique, requêtes temporelles rapides (rollup, downsampling). Idéale pour des millions de mesures géolocalisées de capteurs IoT."},
+    {dot:'b', txt:"<strong>MQTT + PostGIS</strong> : broker Mosquitto pour l'ingestion des données capteurs. Consumer Python insère dans PostGIS. Latence < 100 ms de bout en bout."},
+    {dot:'a', txt:"<strong>AWS</strong> : AWS IoT Core pour l'ingestion managée (MQTT, HTTP), Lambda pour le traitement temps réel, RDS pour PostGIS managé, CloudWatch pour le monitoring."},
+    {dot:'g', txt:"<strong>OpenLayers</strong> : tableau de bord cartographique temps réel. WebSocket pour la mise à jour automatique des positions/valeurs des capteurs. Grafana Maps (connecté à PostGIS) en alternative pour les dashboards analytiques."}
   ],
   alts:{ hebergement:['azure','ovh'], bases:['supabase'], publication:['experience_builder'] }
 },
 
-/* ━━━ 20 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:20, name:"La Clinique des Données", badge:"🏥 Santé · Épidémiologie · Données Sensibles", emoji:"🩺",
   desc:"Architecture pour les épidémiologistes, agences de santé publique et chercheurs médicaux. Données sensibles, hébergement HDS, analyses spatiales de santé.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'postgis', note:"Gratuit + chiffrement"},
-    {cat:'hebergement', key:'local',   note:"0 € récurrent · HDS requis"},
-    {cat:'publication', key:'lizmap',  note:"Gratuit · Accès restreint"},
+    {cat:'logiciels',   key:'qgis',        primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'postgis',     note:"Gratuit + chiffrement"},
+    {cat:'hebergement', key:'local',       note:"0 € récurrent · HDS requis"},
+    {cat:'publication', key:'lizmap',      note:"Gratuit · Accès restreint"},
     {cat:'imagerie',    key:'ign_precise', note:"Gratuit (secteur public)"},
-    {cat:'terrain',     key:'kobo',    note:"Gratuit"}
+    {cat:'terrain',     key:'kobo',        note:"Gratuit"}
   ],
   reasons:[
-    {dot:'r', txt:"<strong>Hébergement local / HDS</strong> : les données de santé personnalisées nécessitent un hébergement certifié HDS (Hébergeur de Données de Santé) ou un serveur physique dans vos locaux. Aucun cloud non certifié n'est autorisé pour les données de santé à caractère personnel en France."},
-    {dot:'g', txt:"<strong>PostgreSQL/PostGIS avec pgcrypto</strong> : chiffrement des données sensibles au repos (extension pgcrypto). SSL/TLS obligatoire pour toutes les connexions. Audit complet des accès via pg_audit. Pseudonymisation des données patients avant analyse spatiale."},
-    {dot:'g', txt:"<strong>Lizmap avec authentification</strong> : portail web sécurisé avec gestion fine des droits d'accès par utilisateur et par couche. Seules les personnes autorisées peuvent visualiser les données épidémiologiques. Logs d'accès intégrés."},
-    {dot:'b', txt:"<strong>KoboCollect</strong> : collecte des données d'enquête épidémiologique terrain (cas contacts, symptômes, localisations). Version auto-hébergée recommandée pour les données de santé. Formulaires chiffrés de bout en bout."}
+    {dot:'r', txt:"<strong>Hébergement local / HDS</strong> : les données de santé personnalisées nécessitent un hébergement certifié HDS ou un serveur physique dans vos locaux. Aucun cloud non certifié n'est autorisé pour les données de santé en France."},
+    {dot:'g', txt:"<strong>PostgreSQL/PostGIS avec pgcrypto</strong> : chiffrement des données sensibles au repos. SSL/TLS obligatoire. Audit complet via pg_audit. Pseudonymisation des données patients avant analyse spatiale."},
+    {dot:'g', txt:"<strong>Lizmap avec authentification</strong> : portail web sécurisé avec gestion fine des droits d'accès par utilisateur et par couche. Logs d'accès intégrés."},
+    {dot:'b', txt:"<strong>KoboCollect</strong> : collecte des données d'enquête épidémiologique terrain. Version auto-hébergée recommandée pour les données de santé. Formulaires chiffrés de bout en bout."}
   ],
   alts:{ hebergement:['ovh','azure'], publication:['geoserver_node'], logiciels:['arcgis_ent'] }
 },
 
-/* ━━━ 21 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:21, name:"Le Cabinet Immobilier", badge:"🏠 Immobilier · Foncier · DVF · Analyse", emoji:"🏗️",
   desc:"Architecture pour les promoteurs, agences immobilières et experts fonciers. Analyse DVF, cadastre, zones PLU, diagnostics territoriaux, présentation client.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'postgis', note:"Gratuit"},
-    {cat:'hebergement', key:'ovh',     note:"~168 €/an"},
-    {cat:'publication', key:'felt',    note:"Gratuit"},
+    {cat:'logiciels',   key:'qgis',        primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'postgis',     note:"Gratuit"},
+    {cat:'hebergement', key:'ovh',         note:"~168 €/an"},
+    {cat:'publication', key:'felt',        note:"Gratuit"},
     {cat:'imagerie',    key:'ign_precise', note:"~800 €/an (privé)"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'terrain',     key:'qfield',      note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>QGIS + données DVF</strong> : les données de mutation foncière (DVF) sont en open data et importables directement dans QGIS ou PostGIS. Croisement avec le cadastre (data.gouv.fr), les zonages PLU (Géoportail Urbanisme) et les données INSEE pour des analyses de marché précises."},
-    {dot:'g', txt:"<strong>Felt pour la présentation client</strong> : créez une carte interactive de présentation du projet immobilier (parcelles, accès, contexte, rayons de chalandise) et partagez un lien au client en 5 minutes. Plan gratuit, aucune installation requise côté client."},
-    {dot:'b', txt:"<strong>Ortho HD IGN</strong> : images aériennes à 20 cm de résolution pour les présentations clients, les études de contextualisation et les diagnostics urbains. Le Cadastre vectoriel IGN (données DV3F) est disponible en open data."},
-    {dot:'b', txt:"<strong>QField pour les visites terrain</strong> : géolocalisation GPS des parcelles visitées, annotation photographique, rattachement aux données cadastrales. Synchronisation avec PostGIS pour le suivi du portefeuille foncier."}
+    {dot:'g', txt:"<strong>QGIS + données DVF</strong> : les données de mutation foncière (DVF) sont en open data et importables directement dans QGIS ou PostGIS. Croisement avec le cadastre (data.gouv.fr), les zonages PLU et les données INSEE."},
+    {dot:'g', txt:"<strong>Felt pour la présentation client</strong> : carte interactive de présentation du projet immobilier (parcelles, accès, contexte, rayons de chalandise) partagée en lien en 5 minutes. Plan gratuit."},
+    {dot:'b', txt:"<strong>Ortho HD IGN</strong> : images aériennes 20 cm pour les présentations clients et les diagnostics urbains. Cadastre vectoriel IGN (DV3F) disponible en open data."},
+    {dot:'b', txt:"<strong>QField pour les visites terrain</strong> : géolocalisation GPS des parcelles visitées, annotation photographique, rattachement aux données cadastrales."}
   ],
   alts:{ logiciels:['arcgis_online','geoconcept'], publication:['lizmap','openlayers'], hebergement:['render'] }
 },
 
-/* ━━━ 22 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-{ id:22, name:"Le Sentier Pédagogique", badge:"📚 Éducation · Initiation · Débutant Absolu", emoji:"🎒",
+{ id:22, name:"Le Sentier Pédagogique", badge:"📚 Éducation · Initiation · Débutant", emoji:"🎒",
   desc:"Première découverte du SIG sans rien installer. Pour les enseignants, formateurs et débutants qui veulent expérimenter la cartographie sans infrastructure.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'gpkg',    note:"Gratuit"},
-    {cat:'hebergement', key:'local',   note:"0 €"},
-    {cat:'publication', key:'umap',    note:"Gratuit"},
-    {cat:'imagerie',    key:'osm_libre', note:"Gratuit"},
-    {cat:'terrain',     key:'kobo',    note:"Gratuit"}
+    {cat:'logiciels',   key:'qgis',       primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'gpkg',       note:"Gratuit"},
+    {cat:'hebergement', key:'local',      note:"0 €"},
+    {cat:'publication', key:'umap',       note:"Gratuit"},
+    {cat:'imagerie',    key:'osm_libre',  note:"Gratuit"},
+    {cat:'terrain',     key:'kobo',       note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>QGIS</strong> : disponible en français, documentation française complète sur docs.qgis.org, tutoriels YouTube en français. Installation en 5 minutes sur Windows, Mac ou Linux. Mise à jour régulière, 100% gratuit. Le point d'entrée idéal pour l'enseignement du SIG."},
-    {dot:'g', txt:"<strong>GeoPackage</strong> : format le plus simple pour les débutants. Un seul fichier contient toutes les couches, les styles et les formulaires. Idéal pour la transmission des données entre enseignant et étudiants (clé USB, email, cloud)."},
-    {dot:'g', txt:"<strong>uMap (OSM France)</strong> : créer et partager une carte collaborative en quelques minutes sans installation. Idéal pour les projets étudiants, les activités de classe et les premiers exercices de cartographie participative."},
-    {dot:'b', txt:"<strong>KoboCollect</strong> : initiation à la collecte de données géolocalisées avec un simple smartphone Android. Création de formulaires en ligne (kobotoolbox.org), collecte sur le terrain, analyse des résultats. Activité pédagogique complète en 1 heure."}
+    {dot:'g', txt:"<strong>QGIS</strong> : disponible en français, documentation complète sur docs.qgis.org, tutoriels YouTube en français. Installation en 5 minutes sur Windows, Mac ou Linux. Mise à jour régulière, 100% gratuit."},
+    {dot:'g', txt:"<strong>GeoPackage</strong> : format le plus simple pour les débutants. Un seul fichier, idéal pour la transmission entre enseignant et étudiants (clé USB, email, cloud)."},
+    {dot:'g', txt:"<strong>uMap (OSM France)</strong> : créer et partager une carte collaborative en quelques minutes sans installation. Idéal pour les projets étudiants et les premières activités de cartographie participative."},
+    {dot:'b', txt:"<strong>KoboCollect</strong> : initiation à la collecte géolocalisée avec un simple smartphone Android. Formulaires en ligne, collecte terrain, analyse des résultats. Activité pédagogique complète en 1 heure."}
   ],
   alts:{ publication:['felt','qgis_cloud'], bases:['spatialite'], terrain:['qfield'] }
 },
 
-/* ━━━ 23 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-{ id:23, name:"La Forêt Numérique", badge:"🌲 Forestier · ONF · Sylviculture · Inventaire", emoji:"🌳",
-  desc:"Architecture pour la gestion forestière, l'ONF, les coopératives sylvicoles et les experts forêt. Inventaires, suivi sanitaire, planification des coupes, LIDAR forêt.",
+{ id:23, name:"Le Forestier Vigilant", badge:"🌲 Forêt · LiDAR · Inventaire · PDAL", emoji:"🌳",
+  desc:"Architecture pour la gestion forestière, les inventaires dendrométriques et la surveillance phytosanitaire. LiDAR IGN gratuit, télédétection Sentinel-2, terrain GPS.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'logiciels',   key:'grass',   note:"Gratuit"},
-    {cat:'bases',       key:'postgis', note:"Gratuit"},
-    {cat:'hebergement', key:'ovh',     note:"~168 €/an"},
-    {cat:'publication', key:'lizmap',  note:"Gratuit"},
+    {cat:'logiciels',   key:'qgis',        primary:true, note:"Gratuit"},
+    {cat:'logiciels',   key:'grass',       note:"Gratuit"},
+    {cat:'bases',       key:'postgis',     note:"Gratuit"},
+    {cat:'hebergement', key:'ovh',         note:"~168 €/an"},
+    {cat:'publication', key:'lizmap',      note:"Gratuit"},
     {cat:'imagerie',    key:'ign_precise', note:"LiDAR HD IGN gratuit · Sentinel-2 gratuit"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'terrain',     key:'qfield',      note:"Gratuit"}
   ],
   reasons:[
     {dot:'g', txt:"<strong>LiDAR HD IGN (gratuit)</strong> : le LiDAR haute densité national (5 points/m²) est accessible gratuitement via la Géoplateforme IGN. Calcul de la hauteur de canopée, segmentation des couronnes d'arbres, estimation du volume bois. Traitement avec PDAL ou GRASS GIS."},
-    {dot:'g', txt:"<strong>GRASS GIS</strong> : analyses hydrologiques du bassin versant forestier (r.watershed), modélisation de l'écoulement pour la prévention des risques de crue, analyse de la connectivité des habitats forestiers. Intégré dans QGIS via plugin Processing."},
-    {dot:'b', txt:"<strong>QField pour les inventaires</strong> : saisie GPS des placettes d'inventaire forestier, paramètres dendrométriques (essence, hauteur, diamètre, santé), photos des dommages sanitaires. Synchronisation avec PostGIS central pour le suivi pluriannuel."},
-    {dot:'b', txt:"<strong>Sentinel-2</strong> : suivi phénologique (verdissement, feuillaison), détection des stress hydriques et sanitaires (dépérissement du chêne, scolytes) par calcul d'indices de végétation (NDVI, NDRE). Gratuit, 10 m, toutes les 5 jours."}
+    {dot:'g', txt:"<strong>GRASS GIS</strong> : analyses hydrologiques du bassin versant forestier (r.watershed), modélisation de l'écoulement pour la prévention des risques de crue. Intégré dans QGIS via plugin Processing."},
+    {dot:'b', txt:"<strong>QField pour les inventaires</strong> : saisie GPS des placettes d'inventaire forestier, paramètres dendrométriques (essence, hauteur, diamètre, santé), photos des dommages. Synchronisation PostGIS."},
+    {dot:'b', txt:"<strong>Sentinel-2</strong> : suivi phénologique, détection des stress hydriques et sanitaires (scolytes) par indices de végétation (NDVI, NDRE). Gratuit, 10 m, toutes les 5 jours."}
   ],
   alts:{ publication:['geoserver_node','felt'], hebergement:['local'], imagerie:['osm_libre'] }
 },
 
-/* ━━━ 24 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-{ id:24, name:"L'Esri Maison", badge:"🏛️ Collectivité · Esri · SSO · Enterprise", emoji:"🗺️",
-  desc:"Architecture Esri Enterprise pour les grandes collectivités ou administrations déjà dans l'écosystème Esri. SSO Active Directory, Experience Builder inclus, Field Maps intégré.",
+{ id:24, name:"L'Esri Maison", badge:"🏛️ Collectivité · Esri Enterprise · SSO LDAP", emoji:"🗺️",
+  desc:"Architecture Esri Enterprise pour les grandes collectivités ou administrations déjà dans l'écosystème Esri. SSO Active Directory natif, Experience Builder inclus, Field Maps intégré.",
   briques:[
-    {cat:'logiciels',   key:'arcgis_ent', primary:true, note:"6 200 €/an (5 users)"},
-    {cat:'bases',       key:'arcgis_db',  note:"Inclus dans ArcGIS Enterprise"},
-    {cat:'hebergement', key:'azure',      note:"~1 200 €/an · France Central"},
+    {cat:'logiciels',   key:'arcgis_ent',       primary:true, note:"6 200 €/an (5 users)"},
+    {cat:'bases',       key:'arcgis_db',         note:"Inclus dans ArcGIS Enterprise"},
+    {cat:'hebergement', key:'azure',             note:"~1 200 €/an · France Central"},
     {cat:'publication', key:'experience_builder', note:"Inclus dans ArcGIS Enterprise"},
-    {cat:'imagerie',    key:'ign_precise', note:"Gratuit IGN (secteur public)"},
-    {cat:'terrain',     key:'fieldmaps',  note:"Inclus dans ArcGIS Enterprise"}
+    {cat:'imagerie',    key:'ign_precise',       note:"Gratuit IGN (secteur public)"},
+    {cat:'terrain',     key:'fieldmaps',         note:"Inclus dans ArcGIS Enterprise"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>ArcGIS Enterprise avec Experience Builder inclus</strong> : l'abonnement Enterprise inclut Experience Builder, Field Maps, Survey123 et ArcGIS Online sans surcoût supplémentaire. Aucun doublon de facturation — c'est une suite intégrée."},
-    {dot:'g', txt:"<strong>SSO Active Directory natif</strong> : ArcGIS Enterprise se connecte nativement à votre annuaire Active Directory ou Azure AD. Les agents se connectent avec leurs identifiants Windows habituels — aucun compte Esri séparé à gérer pour les utilisateurs finaux."},
-    {dot:'g', txt:"<strong>Azure France Central</strong> : hébergement en France pour la conformité RGPD et la directive NIS2. Intégration native avec Azure AD pour le SSO. Les données restent physiquement sur sol français."},
-    {dot:'b', txt:"<strong>Field Maps (inclus)</strong> : chaque agent terrain dispose de l'application mobile Esri qui synchronise avec ArcGIS Enterprise. Collecte, modification des actifs et remontée d'informations en temps réel ou hors connexion."}
+    {dot:'g', txt:"<strong>ArcGIS Enterprise avec Experience Builder inclus</strong> : Enterprise inclut Experience Builder, Field Maps, Survey123 et ArcGIS Online sans surcoût. Suite intégrée, aucun doublon de facturation."},
+    {dot:'g', txt:"<strong>SSO Active Directory natif</strong> : ArcGIS Enterprise se connecte nativement à votre annuaire AD ou Azure AD. Les agents se connectent avec leurs identifiants Windows — aucun compte Esri séparé."},
+    {dot:'g', txt:"<strong>Azure France Central</strong> : hébergement en France pour la conformité RGPD et NIS2. Intégration native Azure AD pour le SSO. Données physiquement sur sol français."},
+    {dot:'b', txt:"<strong>Field Maps (inclus)</strong> : chaque agent terrain dispose de l'application mobile Esri qui synchronise avec ArcGIS Enterprise. Collecte, modification des actifs, remontée d'informations en temps réel."}
   ],
   alts:{ logiciels:['arcgis_online'], hebergement:['aws','ovh'], publication:['lizmap'] }
 },
 
-/* ━━━ 25 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:25, name:"La Startup GeoTech", badge:"🚀 Startup · API · SaaS · Scalable", emoji:"💡",
   desc:"Architecture pour les startups qui développent un produit SaaS géospatial. API REST spatiale, scalabilité cloud, time-to-market rapide, coûts maîtrisés au démarrage.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'supabase', note:"Gratuit → 25 €/mois"},
-    {cat:'hebergement', key:'render',  note:"Gratuit → 19 €/mois"},
+    {cat:'logiciels',   key:'qgis',        primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'supabase',   note:"Gratuit → 25 €/mois"},
+    {cat:'hebergement', key:'render',     note:"Gratuit → 19 €/mois"},
     {cat:'publication', key:'openlayers', note:"Gratuit"},
-    {cat:'imagerie',    key:'osm_libre', note:"Gratuit"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'imagerie',    key:'osm_libre',  note:"Gratuit"},
+    {cat:'terrain',     key:'qfield',     note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>Supabase (plan gratuit → scale)</strong> : PostGIS managé avec API REST auto-générée — vos données géospatiales sont accessibles via API en quelques minutes sans développement backend. Plan gratuit pour le MVP, upgrade progressif à 25 €/mois (8 Go) puis 599 €/mois (illimité)."},
-    {dot:'g', txt:"<strong>Render (plan gratuit → scale)</strong> : déployez votre API géospatiale ou votre backend en quelques clics depuis GitHub. Docker natif, zero-downtime deployments. Plan gratuit pour le prototype, 7–19 €/mois pour la production. Serveurs EU disponibles."},
-    {dot:'g', txt:"<strong>OpenLayers / MapLibre GL</strong> : bibliothèques JavaScript libres pour le rendu cartographique dans votre application web ou mobile. Tuiles vectorielles pour les performances à grande échelle. Contrôle total du style et de l'interaction."},
-    {dot:'b', txt:"<strong>Architecture pay-as-you-grow</strong> : démarrez à 0 €/mois (plans gratuits Supabase + Render) pour valider le marché, puis scalez progressivement. Migration vers AWS/Azure uniquement si le produit atteint des volumes qui le justifient."}
+    {dot:'g', txt:"<strong>Supabase (plan gratuit → scale)</strong> : PostGIS managé avec API REST auto-générée. Plan gratuit pour le MVP, upgrade progressif à 25 €/mois (8 Go) puis 599 €/mois (illimité). SDK JS, Python, Dart."},
+    {dot:'g', txt:"<strong>Render (plan gratuit → scale)</strong> : déployez votre API géospatiale depuis GitHub. Docker natif, zero-downtime deployments. Plan gratuit pour le prototype, 7–19 €/mois pour la production."},
+    {dot:'g', txt:"<strong>OpenLayers / MapLibre GL</strong> : bibliothèques JavaScript libres pour le rendu cartographique. Tuiles vectorielles pour les performances à grande échelle. Contrôle total du style et de l'interaction."},
+    {dot:'b', txt:"<strong>Architecture pay-as-you-grow</strong> : démarrez à 0 €/mois pour valider le marché, puis scalez progressivement. Migration vers AWS/Azure si les volumes le justifient."}
   ],
   alts:{ bases:['postgis'], hebergement:['ovh','aws'], publication:['experience_builder','felt'] }
 },
 
-/* ━━━ 26 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:26, name:"La Ville Intelligente", badge:"🏙️ Smart City · IoT Urbain · Grand Public · Azure", emoji:"🌆",
-  desc:"Architecture pour les villes qui déploient des capteurs urbains (stationnement, qualité de l'air, éclairage public). Données temps réel, tableau de bord citoyen, open data.",
+  desc:"Architecture pour les villes qui déploient des capteurs urbains (stationnement, qualité de l'air, éclairage). Données temps réel, tableau de bord citoyen, open data.",
   briques:[
-    {cat:'logiciels',   key:'arcgis_ent', primary:true, note:"6 200 €/an"},
-    {cat:'bases',       key:'postgis',   note:"Gratuit + TimescaleDB"},
-    {cat:'hebergement', key:'azure',     note:"~1 200 €/an · France Central"},
+    {cat:'logiciels',   key:'arcgis_ent',       primary:true, note:"6 200 €/an"},
+    {cat:'bases',       key:'postgis',           note:"Gratuit + TimescaleDB"},
+    {cat:'hebergement', key:'azure',             note:"~1 200 €/an · France Central"},
     {cat:'publication', key:'experience_builder', note:"Inclus dans ArcGIS Enterprise"},
-    {cat:'imagerie',    key:'ign_precise', note:"Gratuit IGN (secteur public)"},
-    {cat:'terrain',     key:'fieldmaps',  note:"Inclus dans ArcGIS Enterprise"}
+    {cat:'imagerie',    key:'ign_precise',       note:"Gratuit IGN (secteur public)"},
+    {cat:'terrain',     key:'fieldmaps',         note:"Inclus dans ArcGIS Enterprise"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>Azure IoT Hub + PostGIS</strong> : Azure IoT Hub centralise les données de tous les capteurs urbains (MQTT, AMQP, HTTP). Stream Analytics achemine les données vers PostGIS + TimescaleDB en temps réel. Architecture natif Microsoft qui s'intègre avec l'annuaire de la ville."},
-    {dot:'g', txt:"<strong>ArcGIS Experience Builder (inclus)</strong> : tableau de bord citoyen interactif — occupation des parkings, indice de qualité de l'air, état de l'éclairage public — mis à jour en temps réel. Inclus dans ArcGIS Enterprise, aucun développement custom nécessaire."},
-    {dot:'g', txt:"<strong>GeoNode</strong> : portail open data pour la diffusion des données capteurs en open data (conformité Loi Lemaire). Catalogue INSPIRE, téléchargement GeoJSON/CSV, API WMS/WFS publique pour les développeurs citoyens."},
-    {dot:'b', txt:"<strong>Field Maps (inclus)</strong> : les agents techniques de la ville signalent les pannes et incidents depuis l'application mobile Esri. Géolocalisation automatique, formulaires métier adaptés à chaque service (voirie, éclairage, espaces verts)."}
+    {dot:'g', txt:"<strong>Azure IoT Hub + PostGIS</strong> : IoT Hub centralise les données de tous les capteurs urbains (MQTT, AMQP). Stream Analytics achemine vers PostGIS + TimescaleDB en temps réel."},
+    {dot:'g', txt:"<strong>ArcGIS Experience Builder (inclus)</strong> : tableau de bord citoyen interactif — parkings, qualité de l'air, éclairage — mis à jour en temps réel. Inclus dans ArcGIS Enterprise."},
+    {dot:'g', txt:"<strong>GeoNode</strong> : portail open data pour la diffusion des données capteurs (conformité Loi Lemaire). Catalogue INSPIRE, API WMS/WFS publique pour les développeurs citoyens."},
+    {dot:'b', txt:"<strong>Field Maps (inclus)</strong> : les agents techniques signalent pannes et incidents depuis l'application mobile Esri avec géolocalisation automatique."}
   ],
   alts:{ logiciels:['qgis'], hebergement:['aws','ovh'], publication:['geoserver_node','openlayers'] }
 },
 
-/* ━━━ 27 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:27, name:"La Salle des Cartes Militaire", badge:"🔒 Défense · Critique · Air-gapped · Intranet", emoji:"🛡️",
-  desc:"Architecture ultra-sécurisée pour les données Confidentiel Défense et les réseaux critiques. Hébergement interne obligatoire, aucun cloud, zéro dépendance externe.",
+  desc:"Architecture ultra-sécurisée pour les données Confidentiel Défense. Hébergement interne obligatoire, aucun cloud, zéro dépendance externe. Compatible IGI 1300 et OTAN.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'postgis', note:"Gratuit + pgcrypto"},
-    {cat:'hebergement', key:'local',   note:"0 € récurrent · Intranet"},
-    {cat:'publication', key:'lizmap',  note:"Gratuit · Intranet uniquement"},
-    {cat:'imagerie',    key:'ign_precise', note:"Convention IGN / capteurs internes"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit · Usage intranet"}
+    {cat:'logiciels',   key:'qgis',           primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'postgis',        note:"Gratuit + pgcrypto"},
+    {cat:'hebergement', key:'local',          note:"0 € récurrent · Intranet"},
+    {cat:'publication', key:'lizmap',         note:"Gratuit · Intranet uniquement"},
+    {cat:'imagerie',    key:'ign_precise',    note:"Convention IGN / capteurs internes"},
+    {cat:'terrain',     key:'qfield',         note:"Gratuit · Usage intranet"}
   ],
   reasons:[
-    {dot:'r', txt:"<strong>Intranet total — aucun cloud</strong> : aucune donnée ne quitte le réseau interne. Lizmap, GeoServer, PostGIS et QGIS Server fonctionnent en réseau local fermé. Les mises à jour logicielles sont faites via miroir interne. Compatible avec les exigences IGI 1300 et OTAN."},
-    {dot:'g', txt:"<strong>PostgreSQL/PostGIS avec pgcrypto</strong> : chiffrement au repos des données géographiques sensibles (positions d'actifs, infrastructures critiques). SSL/TLS pour toutes les connexions internes. Audit intégral via pg_audit. Séparation des rôles administrateur/opérateur/lecteur."},
-    {dot:'g', txt:"<strong>Lizmap en intranet</strong> : portail web cartographique accessible uniquement sur le réseau interne sécurisé. Authentification LDAP/AD, contrôle d'accès par couche et par groupe utilisateur. Aucune donnée diffusée vers l'extérieur."},
-    {dot:'a', txt:"<strong>QGIS + plugins sécurisés</strong> : QGIS peut être déployé sans accès Internet (mode hors-ligne). Les plugins sont installés manuellement depuis un miroir interne validé. Compatible avec les processus d'homologation ANSSI RGS."}
+    {dot:'r', txt:"<strong>Intranet total — aucun cloud</strong> : aucune donnée ne quitte le réseau interne. Lizmap, GeoServer, PostGIS et QGIS Server fonctionnent en réseau local fermé. Mises à jour via miroir interne. Compatible IGI 1300 et OTAN."},
+    {dot:'g', txt:"<strong>PostgreSQL/PostGIS avec pgcrypto</strong> : chiffrement au repos des données géographiques sensibles. SSL/TLS pour toutes les connexions internes. Audit intégral via pg_audit. Séparation des rôles administrateur/opérateur/lecteur."},
+    {dot:'g', txt:"<strong>Lizmap en intranet</strong> : portail web cartographique accessible uniquement sur le réseau interne sécurisé. Authentification LDAP/AD, contrôle d'accès par couche et par groupe."},
+    {dot:'a', txt:"<strong>QGIS + plugins sécurisés</strong> : QGIS déployé sans accès Internet (mode hors-ligne). Plugins installés manuellement depuis un miroir interne validé. Compatible processus d'homologation ANSSI RGS."}
   ],
   alts:{ hebergement:['ovh'], publication:['geoserver_node','openlayers'], logiciels:['arcgis_ent'] }
 },
 
-/* ━━━ 28 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:28, name:"La Carte Participative", badge:"🤝 Participation · Grand Public · Collectif", emoji:"✋",
   desc:"Architecture pour la cartographie participative et la consultation citoyenne. Les habitants contribuent à la carte, signalent des problèmes, participent aux projets urbains.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'postgis', note:"Gratuit"},
-    {cat:'hebergement', key:'ovh',     note:"~168 €/an"},
+    {cat:'logiciels',   key:'qgis',           primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'postgis',        note:"Gratuit"},
+    {cat:'hebergement', key:'ovh',            note:"~168 €/an"},
     {cat:'publication', key:'geoserver_node', note:"Gratuit"},
-    {cat:'imagerie',    key:'osm_libre', note:"Gratuit"},
-    {cat:'terrain',     key:'kobo',    note:"Gratuit"}
+    {cat:'imagerie',    key:'osm_libre',      note:"Gratuit"},
+    {cat:'terrain',     key:'kobo',           note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>GeoNode</strong> : plateforme de contribution citoyenne permettant aux habitants d'uploader leurs propres données géographiques (signalements, photos géolocalisées, zones de risque). Modération des contributions avant validation. Catalogue consultable par tous."},
-    {dot:'g', txt:"<strong>KoboCollect / ODK</strong> : formulaires de signalement citoyen accessibles depuis n'importe quel smartphone (QR code ou lien direct). Géolocalisation automatique, photos, description. Les signalements arrivent directement dans PostGIS pour traitement."},
-    {dot:'b', txt:"<strong>PostGIS</strong> : base de données spatiale centrale qui agrège tous les signalements citoyens, les couches thématiques officielles et les données OSM. Jointures spatiales pour croiser les signalements avec les zones de risque ou les périmètres réglementaires."},
-    {dot:'b', txt:"<strong>OpenStreetMap</strong> : fonds de carte contributif et collaboratif — parfaitement cohérent avec une démarche de participation citoyenne. Les citoyens peuvent également contribuer à OSM pour améliorer la carte de leur quartier."}
+    {dot:'g', txt:"<strong>GeoNode</strong> : plateforme de contribution citoyenne permettant aux habitants d'uploader leurs données géographiques (signalements, photos géolocalisées). Modération avant validation. Catalogue consultable par tous."},
+    {dot:'g', txt:"<strong>KoboCollect / ODK</strong> : formulaires de signalement citoyen accessibles depuis n'importe quel smartphone (QR code ou lien direct). Géolocalisation automatique, photos, description."},
+    {dot:'b', txt:"<strong>PostGIS</strong> : base centrale qui agrège tous les signalements citoyens, les couches thématiques officielles et les données OSM. Jointures spatiales avec zones de risque ou périmètres réglementaires."},
+    {dot:'b', txt:"<strong>OpenStreetMap</strong> : fond contributif et collaboratif — cohérent avec une démarche de participation citoyenne. Les citoyens peuvent aussi contribuer à OSM pour améliorer la carte de leur quartier."}
   ],
   alts:{ publication:['umap','felt','lizmap'], terrain:['qfield'], hebergement:['render'] }
 },
 
-/* ━━━ 29 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:29, name:"Le Risque Sous Contrôle", badge:"⚠️ Risques · DICRIM · Prévention · Collectivité", emoji:"🌊",
   desc:"Architecture pour la gestion des risques naturels et technologiques. Cartographie PPRN/PPRT, DICRIM, plans d'évacuation, suivi des enjeux exposés.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'bases',       key:'postgis', note:"Gratuit"},
-    {cat:'hebergement', key:'ovh',     note:"~168 €/an"},
-    {cat:'publication', key:'lizmap',  note:"Gratuit"},
+    {cat:'logiciels',   key:'qgis',        primary:true, note:"Gratuit"},
+    {cat:'bases',       key:'postgis',     note:"Gratuit"},
+    {cat:'hebergement', key:'ovh',         note:"~168 €/an"},
+    {cat:'publication', key:'lizmap',      note:"Gratuit"},
     {cat:'imagerie',    key:'ign_precise', note:"Gratuit IGN (secteur public)"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'terrain',     key:'qfield',      note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>QGIS pour la cartographie réglementaire</strong> : production des cartes PPRN (Plan de Prévention des Risques Naturels), PPRT, zonages d'aléa et de vulnérabilité. Import des données GASPAR (BDRISK) et des modèles numériques de terrain IGN pour les calculs d'inondabilité et de glissement de terrain."},
-    {dot:'g', txt:"<strong>Lizmap pour le DICRIM en ligne</strong> : portail web cartographique pour le Document d'Information Communal sur les RIsques Majeurs (DICRIM) — obligation légale pour les communes exposées. Les citoyens consultent les zones de risque et les consignes de sécurité depuis le site de la mairie."},
-    {dot:'b', txt:"<strong>PostGIS pour les enjeux exposés</strong> : requêtes spatiales pour dénombrer les bâtiments, habitants et équipements sensibles dans chaque zone d'aléa. Mise à jour automatique lors de l'évolution des zones réglementaires ou du bâti communal."},
-    {dot:'b', txt:"<strong>QField pour les inspections terrain</strong> : les agents communaux inspectent les ouvrages de protection (digues, bassins de rétention), signalent les dommages et mettent à jour les données de vulnérabilité directement depuis le terrain."}
+    {dot:'g', txt:"<strong>QGIS pour la cartographie réglementaire</strong> : production des cartes PPRN, PPRT, zonages d'aléa et de vulnérabilité. Import des données GASPAR (BDRISK) et des MNT IGN pour les calculs d'inondabilité."},
+    {dot:'g', txt:"<strong>Lizmap pour le DICRIM en ligne</strong> : portail web pour le Document d'Information Communal sur les RIsques Majeurs (DICRIM) — obligation légale. Les citoyens consultent les zones de risque depuis le site de la mairie."},
+    {dot:'b', txt:"<strong>PostGIS pour les enjeux exposés</strong> : requêtes spatiales pour dénombrer bâtiments, habitants et équipements sensibles dans chaque zone d'aléa. Mise à jour automatique lors de l'évolution des zones réglementaires."},
+    {dot:'b', txt:"<strong>QField pour les inspections terrain</strong> : les agents inspectent les ouvrages de protection (digues, bassins), signalent les dommages et mettent à jour les données de vulnérabilité."}
   ],
   alts:{ hebergement:['azure','local'], publication:['geoserver_node'], logiciels:['arcgis_online'] }
 },
 
-/* ━━━ 30 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 { id:30, name:"La Plateforme Universelle", badge:"🌐 Généraliste · AWS · Scalable · Expert", emoji:"🔮",
-  desc:"Architecture généraliste hautement scalable sur AWS. Pour les organisations qui ont besoin de flexibilité maximale, de haute disponibilité et d'une intégration avec des systèmes tiers complexes.",
+  desc:"Architecture généraliste hautement scalable sur AWS. Pour les organisations qui ont besoin de flexibilité maximale, haute disponibilité et intégration avec des systèmes tiers complexes.",
   briques:[
-    {cat:'logiciels',   key:'qgis',    primary:true, note:"Gratuit"},
-    {cat:'logiciels',   key:'arcgis_pro', note:"820 €/an"},
-    {cat:'bases',       key:'postgis', note:"Gratuit"},
-    {cat:'hebergement', key:'aws',     note:"~1 200 €/an"},
+    {cat:'logiciels',   key:'qgis',           primary:true, note:"Gratuit"},
+    {cat:'logiciels',   key:'arcgis_pro',     note:"820 €/an"},
+    {cat:'bases',       key:'postgis',        note:"Gratuit"},
+    {cat:'hebergement', key:'aws',            note:"~1 200 €/an"},
     {cat:'publication', key:'geoserver_node', note:"Gratuit"},
-    {cat:'imagerie',    key:'ign_precise', note:"~800 €/an"},
-    {cat:'terrain',     key:'qfield',  note:"Gratuit"}
+    {cat:'imagerie',    key:'ign_precise',    note:"~800 €/an"},
+    {cat:'terrain',     key:'qfield',         note:"Gratuit"}
   ],
   reasons:[
-    {dot:'g', txt:"<strong>AWS (région Paris)</strong> : la plateforme cloud la plus complète du marché. RDS pour PostGIS managé sans administration, EC2 pour GeoServer, S3 pour le stockage raster, CloudFront CDN pour les tuiles cartographiques. Auto Scaling Groups pour absorber les pics de charge sans intervention humaine."},
-    {dot:'g', txt:"<strong>QGIS + ArcGIS Pro en parallèle</strong> : QGIS pour la production open source et les traitements Python, ArcGIS Pro pour les analyses nécessitant les algorithmes Esri spécifiques (Network Analyst, geostatistiques avancées). Les deux lisent les mêmes sources PostGIS."},
-    {dot:'g', txt:"<strong>GeoServer + GeoNode</strong> : publication en flux OGC standards ouverts pour une interopérabilité maximale avec les systèmes tiers. Tout système capable de consommer du WMS/WFS peut s'y connecter — indépendamment du logiciel SIG utilisé."},
-    {dot:'b', txt:"<strong>Architecture haute disponibilité</strong> : RDS Multi-AZ pour PostGIS (failover automatique < 60 sec), Load Balancer pour GeoServer, S3 + CloudFront pour le stockage raster (99,999999999% de durabilité). SLA global > 99,9 % de disponibilité annuelle."}
+    {dot:'g', txt:"<strong>AWS (région Paris)</strong> : RDS pour PostGIS managé sans administration, EC2 pour GeoServer, S3 pour le stockage raster, CloudFront CDN pour les tuiles. Auto Scaling Groups pour absorber les pics de charge."},
+    {dot:'g', txt:"<strong>QGIS + ArcGIS Pro en parallèle</strong> : QGIS pour la production open source et les traitements Python, ArcGIS Pro pour les analyses nécessitant les algorithmes Esri spécifiques. Les deux lisent les mêmes sources PostGIS."},
+    {dot:'g', txt:"<strong>GeoServer + GeoNode</strong> : publication en flux OGC standards ouverts pour une interopérabilité maximale avec les systèmes tiers. Tout système capable de consommer du WMS/WFS peut s'y connecter."},
+    {dot:'b', txt:"<strong>Architecture haute disponibilité</strong> : RDS Multi-AZ pour PostGIS (failover automatique < 60 sec), Load Balancer pour GeoServer, S3 + CloudFront (99,999999999% de durabilité)."}
   ],
   alts:{ hebergement:['azure','ovh'], logiciels:['arcgis_ent'], publication:['experience_builder','lizmap'] }
 }
@@ -1018,88 +1174,224 @@ const SCENARIOS = [
 ]; // fin SCENARIOS
 
 /* ══════════════════════════════════════════════════════════════════
-   MOTEUR DE SÉLECTION DE SCÉNARIO
-   Lit les paramètres URL et choisit le scénario le plus proche.
-   Scoring : budget (40%) + secteur (35%) + mode (15%) + options (10%)
+   PARAMÈTRES URL + DEFAULTS
+   Mode Expert null = je ne sais pas → config simple
 ══════════════════════════════════════════════════════════════════ */
-const P = new URLSearchParams(window.location.search);
-const secteur  = P.get('secteur')  || '';
-const budget   = P.get('budget')   || 'zero';
-const mode     = P.get('mode')     || 'simple';
-const volume   = P.get('volume')   || 'nsp';
-const collab   = P.get('collaboration') || 'nsp';
-const souverain= P.get('souverainete') || 'nsp';
-const imagerie = P.get('imagerie') || 'nsp';
-const terrain  = P.get('terrain')  || 'nsp';
-const diffusion= P.get('diffusion')|| 'nsp';
-const si_exist = P.get('si_existant') || 'nsp_si';
+const P       = new URLSearchParams(window.location.search);
+const secteur = P.get('secteur')       || '';
+const budget  = P.get('budget')        || 'nsp';
+const mode    = P.get('mode')          || 'simple';
+const volume  = P.get('volume')        || 'nsp';
+const collab  = P.get('collaboration') || 'nsp';
+const souverain = P.get('souverainete')|| 'nsp';
+const terrain  = P.get('terrain')      || 'nsp';
+const diffusion= P.get('diffusion')    || 'nsp';
+const si_exist = P.get('si_existant')  || 'nsp';
+const besoinTerrain = terrain !== 'non' && terrain !== 'nsp';
 
 const NB_USERS_MAP = {solo:1, multi_2_5:3, multi_10:12, nsp:1};
 const nbUsers = NB_USERS_MAP[collab] || 1;
 
-// Correspondances scénarios recommandés selon profil
-// Matching rule : (budget_groupe, secteur_groupe, options) → score → pick scénario
+// Détection "rien de choisi"
+const isDefaultMode = !P.get('secteur') && !P.get('budget') && !P.get('mode');
+if (isDefaultMode) document.getElementById('defaultNote').style.display = 'block';
+
+/* ══════════════════════════════════════════════════════════════════
+   SÉLECTION DU SCÉNARIO
+   Mode Standard → mapping direct secteur/contexte → scénario fixe
+   Mode Expert   → scoring multicritères
+   Null/nsp      → config la plus simple et économique
+══════════════════════════════════════════════════════════════════ */
+
+// ── Mapping STANDARD : secteur → scénario imposé ──
+const STANDARD_MAP = {
+  geomarketing: 12,  // Geoconcept
+  geometre:     8,   // AutoCAD Map 3D
+  btp:          8,   // AutoCAD Map 3D (BTP)
+  etudiant:     3,   // QGIS + GRASS (Labo Académique)
+  ong:          1,   // Boîte à Outils Bénévole
+  collectivite: 6,   // Forteresse Territoriale
+  etat:         6,   // Forteresse Territoriale
+  bet_env:      16,  // Sentinelle Environnementale
+  agriculture:  9,   // Agriculteur Connecté
+  energie:      10,  // Réseau Critique
+  transport:    17,  // Transporteur Intelligent
+  immobilier:   21,  // Cabinet Immobilier
+  bet:          7,   // Bureau d'Études
+  ne_sait_pas:  2,   // Cartographe Nomade (simple/solo)
+};
+
+// Surcharges contextuelles par priorité
+function getStandardScenarioId() {
+  // Portail multi-utilisateurs → GeoServer
+  if (diffusion === 'portail_metier' || collab === 'multi_10') {
+    if (secteur === 'collectivite' || secteur === 'etat') return 6;
+    if (budget === 'entreprise') return 30;
+    return 5; // GeoServer via scénario 5 ou 6
+  }
+
+  // Budget 0 + secteur ONG → scénario 1
+  if (budget === 'zero' && (secteur === 'ong' || !secteur)) return 1;
+
+  // Petite entreprise Esri → 11
+  if (si_exist === 'arcgis_si' && budget !== 'zero') return 11;
+
+  // Sector direct mapping
+  if (STANDARD_MAP[secteur]) return STANDARD_MAP[secteur];
+
+  // Budget enterprise sans secteur → 30
+  if (budget === 'entreprise') return 30;
+
+  // Budget starter → 4
+  if (budget === 'starter_free') return 4;
+
+  // Défaut : scénario 2 (simple/solo/gratuit)
+  return 2;
+}
+
+// ── SCORING pour mode expert ──
 function matchScore(sc) {
   let score = 0;
   const badge = sc.badge.toLowerCase();
+  const brickeKeys = sc.briques.map(b => b.key);
 
-  // Budget matching (40 pts max)
-  if (budget === 'zero'       && (badge.includes('gratuit') || badge.includes('0 €') || badge.includes('open source'))) score += 40;
+  // Budget (40 pts)
+  if (budget === 'zero' && (badge.includes('gratuit') || badge.includes('0 €') || badge.includes('open source'))) score += 40;
   else if (budget === 'starter_free' && (badge.includes('500') || badge.includes('starter') || badge.includes('< 500'))) score += 40;
-  else if (budget === 'inter_pro'    && (badge.includes('1 000') || badge.includes('5 000') || badge.includes('intermédiaire'))) score += 40;
-  else if (budget === 'entreprise'   && (badge.includes('+10k') || badge.includes('enterprise') || badge.includes('grande'))) score += 40;
-  else if (budget === 'nsp'          && (badge.includes('gratuit') || badge.includes('0 €'))) score += 30;
+  else if (budget === 'inter_pro' && (badge.includes('1 000') || badge.includes('5 000') || badge.includes('intermédiaire'))) score += 40;
+  else if (budget === 'entreprise' && (badge.includes('+10k') || badge.includes('enterprise') || badge.includes('grande') || badge.includes('esri'))) score += 40;
+  else if (budget === 'nsp' && (badge.includes('gratuit') || badge.includes('0 €') || badge.includes('starter'))) score += 30;
 
-  // Secteur matching (35 pts max)
-  if (secteur === 'ong'         && (badge.includes('ong') || badge.includes('humanit'))) score += 35;
-  if (secteur === 'collectivite'&& (badge.includes('collectivité') || badge.includes('territorial'))) score += 35;
-  if (secteur === 'etat'        && badge.includes('collectivité')) score += 25;
-  if (secteur === 'geometre'    && badge.includes('géomètre')) score += 35;
-  if (secteur === 'btp'         && (badge.includes('btp') || badge.includes('géomètre'))) score += 30;
-  if (secteur === 'bet_env'     && (badge.includes('environnement') || badge.includes('bet'))) score += 35;
-  if (secteur === 'agriculture' && badge.includes('agricult')) score += 35;
-  if (secteur === 'energie'     && (badge.includes('énergie') || badge.includes('réseau'))) score += 35;
-  if (secteur === 'transport'   && badge.includes('transport')) score += 35;
-  if (secteur === 'immobilier'  && badge.includes('immobilier')) score += 35;
-  if (secteur === 'geomarketing'&& badge.includes('géomark')) score += 35;
-  if (secteur === 'etudiant'    && (badge.includes('recherche') || badge.includes('étudiant') || badge.includes('éducation'))) score += 35;
+  // Secteur (35 pts)
+  if (secteur === 'ong'          && (badge.includes('ong') || badge.includes('humanit') || badge.includes('bénévole'))) score += 35;
+  if (secteur === 'collectivite' && (badge.includes('collectivité') || badge.includes('territorial'))) score += 35;
+  if (secteur === 'etat'         && badge.includes('collectivité')) score += 25;
+  if (secteur === 'geometre'     && badge.includes('géomètre')) score += 35;
+  if (secteur === 'btp'          && (badge.includes('btp') || badge.includes('géomètre'))) score += 30;
+  if (secteur === 'bet_env'      && (badge.includes('environnement') || badge.includes('biodiversité'))) score += 35;
+  if (secteur === 'agriculture'  && badge.includes('agricult')) score += 35;
+  if (secteur === 'energie'      && (badge.includes('énergie') || badge.includes('réseau'))) score += 35;
+  if (secteur === 'transport'    && badge.includes('transport')) score += 35;
+  if (secteur === 'immobilier'   && badge.includes('immobilier')) score += 35;
+  if (secteur === 'geomarketing' && badge.includes('géomark')) score += 35;
+  if (secteur === 'etudiant'     && (badge.includes('recherche') || badge.includes('étudiant') || badge.includes('académique') || badge.includes('éducation'))) score += 35;
+  if (secteur === 'bet'          && badge.includes('bet')) score += 30;
 
-  // Options expert (15 pts max)
-  if (souverain === 'critique'  && badge.includes('air-gapped')) score += 15;
-  if (souverain === 'sensible'  && (badge.includes('souveraineté') || badge.includes('france'))) score += 10;
-  if (si_exist === 'azure'      && badge.includes('azure')) score += 12;
-  if (si_exist === 'aws'        && badge.includes('aws')) score += 12;
-  if (si_exist === 'arcgis_si'  && badge.includes('esri')) score += 12;
-  if (volume === 'lourd'        && badge.includes('big data')) score += 12;
-  if (terrain === 'kobo'        && (badge.includes('terrain') || badge.includes('enquête'))) score += 8;
-  if (imagerie === 'drone'      && badge.includes('précision')) score += 8;
-  if (mode === 'expert'         && badge.includes('expert')) score += 5;
+  // Options expert (15 pts max) — null/nsp = score neutre (0)
+  if (souverain !== 'nsp') {
+    if (souverain === 'critique' && badge.includes('air-gapped')) score += 15;
+    if (souverain === 'sensible' && (badge.includes('souveraineté') || badge.includes('france') || badge.includes('fr'))) score += 10;
+  }
+  if (si_exist !== 'nsp') {
+    if (si_exist === 'azure'     && badge.includes('azure')) score += 12;
+    if (si_exist === 'aws'       && badge.includes('aws')) score += 12;
+    if (si_exist === 'arcgis_si' && badge.includes('esri')) score += 12;
+  }
+  if (volume !== 'nsp') {
+    if (volume === 'lourd' && badge.includes('big data')) score += 12;
+    if (volume === 'leger' && (badge.includes('solo') || badge.includes('nomade') || badge.includes('bénévole'))) score += 8;
+  }
+  if (terrain !== 'nsp') {
+    if (besoinTerrain && (badge.includes('terrain') || badge.includes('enquête'))) score += 8;
+  }
 
-  // Bonus spéciaux
+  // Bonus combinés
   if (collab === 'multi_10' && badge.includes('grande')) score += 10;
   if (collab === 'multi_2_5' && badge.includes('équipe')) score += 8;
-  if (budget === 'zero' && secteur === 'ong') score += 20; // Fort bonus combiné
+  if (budget === 'zero' && secteur === 'ong') score += 20;
   if (budget === 'entreprise' && si_exist === 'arcgis_si') score += 15;
   if (budget === 'entreprise' && si_exist === 'azure') score += 12;
+  if (diffusion === 'portail_metier' && brickeKeys.includes('geoserver_node')) score += 10;
+  if (diffusion === 'portail_metier' && brickeKeys.includes('lizmap')) score += 8;
 
   return score;
 }
 
-// Sélectionner le scénario avec le score le plus élevé
-const scoredScenarios = SCENARIOS.map(sc => ({ sc, score: matchScore(sc) }));
-scoredScenarios.sort((a, b) => b.score - a.score);
-const SELECTED = scoredScenarios[0].sc;
+// ── Sélection finale ──
+let SELECTED, PCT;
+if (isDefaultMode || mode === 'simple') {
+  const id = getStandardScenarioId();
+  SELECTED = SCENARIOS.find(s => s.id === id) || SCENARIOS[1];
+  PCT = 88;
+} else {
+  // Mode expert
+  const scored = SCENARIOS.map(sc => ({ sc, score: matchScore(sc) }));
+  scored.sort((a, b) => b.score - a.score);
+  SELECTED = scored[0].sc;
+  const rawScore = scored[0].score;
+  PCT = Math.min(97, Math.max(55, Math.round(55 + (rawScore / 100) * 42)));
+}
 
 /* ══════════════════════════════════════════════════════════════════
-   CALCUL DU SCORE DE PERTINENCE
-   Normalisé 55–97 selon la qualité du match
+   DÉTECTION DES INCOMPATIBILITÉS — ALERTES POPUP
 ══════════════════════════════════════════════════════════════════ */
-const maxPossible = 100; // 40 + 35 + 15 + 10
-const rawScore = scoredScenarios[0].score;
-const PCT = Math.min(97, Math.max(55, Math.round(55 + (rawScore / maxPossible) * 42)));
+const alerts = [];
+
+// Budget 0€ + secteur géomètre
+if ((budget === 'zero' || budget === 'nsp') && secteur === 'geometre') {
+  alerts.push("💶 <strong>Budget 0€ incompatible avec le secteur géomètre</strong> : AutoCAD Map 3D (~2 500 €/an) ou ArcGIS Pro (~820 €/an) sont indispensables pour la lecture/écriture DWG native. Un budget 0€ ne permet que QGIS — limité pour les échanges DWG avec les architectes.");
+}
+
+// Budget 0€ + BTP
+if ((budget === 'zero') && secteur === 'btp') {
+  alerts.push("💶 <strong>Budget 0€ avec le secteur BTP</strong> : sans AutoCAD Map 3D, les échanges DWG/DXF avec les architectes et bureaux d'études seront limités. QGIS seul peut ouvrir les DWG en lecture via GDAL/OGR, mais sans édition native complète.");
+}
+
+// Budget 0€ + LiDAR/drone
+if (budget === 'zero' && terrain === 'drone') {
+  alerts.push("🛰️ <strong>Budget 0€ incompatible avec l'imagerie drone</strong> : l'acquisition de données drone implique un coût (appareil, prestation, logiciel de traitement). Sentinel-2 (ESA, gratuit) et LiDAR HD IGN (gratuit pour les données nationales) sont des alternatives open source sans coût.");
+}
+
+// macOS + ArcGIS Pro ou AutoCAD
+const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0 || navigator.userAgent.toUpperCase().indexOf('MAC') >= 0;
+if (isMac && (SELECTED.briques.some(b => b.key === 'arcgis_pro' || b.key === 'arcgis_pro_adv' || b.key === 'autocad'))) {
+  alerts.push("🍎 <strong>macOS détecté · ArcGIS Pro / AutoCAD sont Windows uniquement</strong> : votre profil inclut un logiciel Windows-only. Options : Parallels Desktop (~100 €/an), Boot Camp (gratuit), ou migration vers QGIS (gratuit, natif macOS). QGIS est la seule alternative SIG 100% native macOS.");
+}
+
+// Budget très faible + multi_10 utilisateurs
+if ((budget === 'zero' || budget === 'starter_free') && collab === 'multi_10') {
+  alerts.push("👥 <strong>Budget faible + 10+ utilisateurs</strong> : gérer 10 utilisateurs ou plus avec un budget de 0–500€/an est complexe. Il faut au minimum un VPS (~168 €/an) + PostGIS pour centraliser les données. Sans infrastructure partagée, les conflits d'édition sont inévitables.");
+}
+
+// Souveraineté critique + services cloud Esri
+if (souverain === 'critique' && SELECTED.briques.some(b => b.key === 'arcgis_online' || b.key === 'ago')) {
+  alerts.push("🔒 <strong>Données critiques (air-gapped) incompatibles avec ArcGIS Online</strong> : ArcGIS Online est un service SaaS cloud (serveurs Esri US/EU). Pour des données air-gapped, seul ArcGIS Enterprise sur serveur interne est compatible. Coût : 6 200 €/an minimum pour 5 utilisateurs.");
+}
+
+// Secteur défense/critique + cloud
+if (souverain === 'critique' && SELECTED.briques.some(b => ['aws','azure','render'].includes(b.key))) {
+  alerts.push("🛡️ <strong>Souveraineté critique incompatible avec le cloud public</strong> : votre exigence d'hébergement air-gapped exclut AWS, Azure et Render. Seul un serveur physique local ou un réseau intranet fermé est conforme. La recommandation ci-dessous a été adaptée, mais vérifiez chaque composant cloud.");
+}
+
+// Géomètre + budget 0 + pas d'autocad dans scénario
+if (secteur === 'geometre' && !SELECTED.briques.some(b => b.key === 'autocad')) {
+  alerts.push("📐 <strong>Scénario sans AutoCAD pour un profil géomètre</strong> : votre contrainte budgétaire a orienté vers QGIS seul. QGIS peut ouvrir les fichiers DWG en lecture via GDAL, mais l'édition et l'export DWG natifs nécessitent AutoCAD Map 3D. Prévoir un budget pour le logiciel si des échanges DWG sont requis.");
+}
+
+// Budget 0 + scénario avec coûts
+const scCost = SELECTED.briques.reduce((t, b) => t + (DATA[b.cat]?.[b.key]?.p || 0), 0);
+if ((budget === 'zero') && scCost > 500) {
+  alerts.push(`💰 <strong>Attention : votre budget est 0€ mais le scénario recommandé coûte ${scCost.toLocaleString('fr-FR')} €/an</strong> : ce scénario est affiché pour information en raison de votre secteur métier. Des alternatives entièrement gratuites existent — consultez la section Alternatives ci-dessous.`);
+}
+
+// Affichage des alertes
+if (alerts.length > 0) {
+  const alertList = document.getElementById('alertList');
+  alerts.forEach(a => {
+    alertList.innerHTML += `<div class="alert-item"><div class="alert-ico">⚠️</div><div>${a}</div></div>`;
+  });
+  document.getElementById('alertOverlay').style.display = 'block';
+  document.getElementById('alertBtn').style.display = 'inline-flex';
+
+  // Auto-masquer après 12 secondes
+  setTimeout(() => {
+    const overlay = document.getElementById('alertOverlay');
+    if (overlay) overlay.style.display = 'none';
+  }, 12000);
+}
 
 /* ══════════════════════════════════════════════════════════════════
-   LABELS POUR L'AFFICHAGE
+   LABELS AFFICHAGE
 ══════════════════════════════════════════════════════════════════ */
 const SECTEUR_LABELS = {
   collectivite:"Collectivité Territoriale", etat:"État / Établissement public",
@@ -1113,16 +1405,16 @@ const SECTEUR_LABELS = {
 const BUDGET_LABELS = {
   zero:"0 € — Open Source", starter_free:"Starter < 500 €/an",
   inter_pro:"Intermédiaire 1 000–5 000 €/an", entreprise:"Enterprise +10 000 €/an",
-  nsp:"Budget non précisé"
+  nsp:"Budget non précisé → gratuit par défaut"
 };
 
 /* ══════════════════════════════════════════════════════════════════
-   INJECTION META HERO
+   INJECTION HERO
 ══════════════════════════════════════════════════════════════════ */
 document.getElementById('heroTitle').textContent    = SELECTED.emoji + ' ' + SELECTED.name;
 document.getElementById('heroSub').textContent      = SELECTED.desc;
 document.getElementById('heroSecteur').textContent  = SECTEUR_LABELS[secteur] || 'Généraliste';
-document.getElementById('heroBudget').textContent   = BUDGET_LABELS[budget] || 'Non précisé';
+document.getElementById('heroBudget').textContent   = BUDGET_LABELS[budget]   || 'Non précisé';
 document.getElementById('heroMode').textContent     = mode === 'expert' ? 'Mode Expert' : 'Mode Standard';
 document.getElementById('hdrBadge').textContent     = SELECTED.badge;
 document.getElementById('scenarioBadge').textContent= SELECTED.badge;
@@ -1134,15 +1426,14 @@ document.getElementById('contactBtn').href          = `contact.html${window.loca
 
 /* ══════════════════════════════════════════════════════════════════
    AFFICHAGE DES BRIQUES
-   Cat map pour les classes CSS et labels
 ══════════════════════════════════════════════════════════════════ */
 const CAT_CONFIG = {
-  logiciels:   { cls:'cat-log', lbl:'Logiciel SIG', ico:'💻' },
-  bases:       { cls:'cat-base', lbl:'Base de données spatiale', ico:'🗄️' },
-  hebergement: { cls:'cat-srv', lbl:'Hébergement / Infrastructure', ico:'🖧' },
-  publication: { cls:'cat-pub', lbl:'Publication Web & Portail', ico:'🌐' },
-  imagerie:    { cls:'cat-ima', lbl:'Imagerie & Fond de plan', ico:'🛰️' },
-  terrain:     { cls:'cat-ter', lbl:'Collecte Terrain', ico:'📱' }
+  logiciels:   { cls:'cat-log',  lbl:'Logiciel SIG',                ico:'💻' },
+  bases:       { cls:'cat-base', lbl:'Base de données spatiale',    ico:'🗄️' },
+  hebergement: { cls:'cat-srv',  lbl:'Hébergement / Infrastructure', ico:'🖧' },
+  publication: { cls:'cat-pub',  lbl:'Publication Web & Portail',   ico:'🌐' },
+  imagerie:    { cls:'cat-ima',  lbl:'Imagerie & Fond de plan',     ico:'🛰️' },
+  terrain:     { cls:'cat-ter',  lbl:'Collecte Terrain',            ico:'📱' }
 };
 
 const grid = document.getElementById('resultsGrid');
@@ -1153,13 +1444,12 @@ let totalAnnuel = 0;
 const briquesGrouped = [];
 let logGroup = null;
 SELECTED.briques.forEach(b => {
+  // Masquer terrain si pas de besoin terrain
+  if (b.cat === 'terrain' && !besoinTerrain) return;
+
   if (b.cat === 'logiciels') {
-    if (!logGroup) {
-      logGroup = { ...b, extra: [] };
-      briquesGrouped.push(logGroup);
-    } else {
-      logGroup.extra.push(b);
-    }
+    if (!logGroup) { logGroup = { ...b, extra: [] }; briquesGrouped.push(logGroup); }
+    else logGroup.extra.push(b);
   } else {
     briquesGrouped.push(b);
   }
@@ -1173,8 +1463,9 @@ briquesGrouped.forEach((b, i) => {
   const prix = d.p;
   totalAnnuel += prix;
 
+  // Logo avec fallback emoji
   const logoHtml = d.img
-    ? `<img src="img/${d.img}" alt="${d.n}" style="width:38px;height:38px;object-fit:contain"
+    ? `<img src="img/${d.img}" alt="${d.n}" style="width:40px;height:40px;object-fit:contain"
            onerror="this.style.display='none';this.nextSibling.style.display='flex'">
        <span class="ico" style="display:none">${cfg.ico}</span>`
     : `<span class="ico">${cfg.ico}</span>`;
@@ -1185,16 +1476,29 @@ briquesGrouped.forEach((b, i) => {
   if (d.link) links.push(`<a class="blink web" href="${d.link}" target="_blank" rel="noopener">🔗 Site</a>`);
   if (d.mail) links.push(`<a class="blink mail" href="mailto:${d.mail}">✉️ Contact</a>`);
 
-  // Logiciels supplémentaires dans la même brique
+  // Note spécifique au secteur
+  const sectorNote = d.specs?.[secteur] || d.specs?.default || '';
+  const sectorHtml = sectorNote ? `
+    <div class="brique-sector">
+      <strong>🎯 Spécificités pour votre secteur</strong>
+      ${sectorNote}
+    </div>` : '';
+
+  // Logiciels supplémentaires groupés
   let extraHtml = '';
   if (b.extra && b.extra.length) {
     b.extra.forEach(ex => {
       const de = DATA[ex.cat]?.[ex.key];
       if (!de) return;
       totalAnnuel += de.p;
+      const exNote = de.specs?.[secteur] || de.specs?.default || '';
       extraHtml += `<div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);font-size:.78rem;color:var(--ink2)">
-        <strong>+ ${de.n}</strong> <span style="color:var(--muted);font-size:.71rem">${de.sub}</span>
-        <div style="font-size:.7rem;color:var(--muted);margin-top:2px">${de.d.substring(0,80)}…</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          ${de.img ? `<img src="img/${de.img}" style="width:22px;height:22px;object-fit:contain;border-radius:4px;border:1px solid var(--border)" onerror="this.style.display='none'">` : ''}
+          <strong>${de.n}</strong> <span style="color:var(--muted);font-size:.7rem">${de.sub}</span>
+        </div>
+        <div style="font-size:.71rem;color:var(--muted);line-height:1.55;margin-bottom:3px">${de.d.substring(0,100)}…</div>
+        ${exNote ? `<div style="font-size:.69rem;color:var(--ink2);background:var(--surface);padding:4px 7px;border-radius:5px;margin-top:3px">${exNote.substring(0,120)}</div>` : ''}
         <span style="font-family:'DM Mono',monospace;font-size:.7rem;color:${de.p===0?'var(--green)':'var(--amber)'}">${de.p===0?'Gratuit':de.p.toLocaleString('fr-FR')+' €/an'}</span>
       </div>`;
     });
@@ -1212,6 +1516,7 @@ briquesGrouped.forEach((b, i) => {
       </div>
     </div>
     <div class="brique-body">${d.d}${extraHtml}</div>
+    ${sectorHtml}
     <div class="brique-foot">
       <span class="brique-price">${priceStr}</span>
       <div class="brique-links">${links.join('')}</div>
@@ -1226,18 +1531,13 @@ briquesGrouped.forEach((b, i) => {
   </div>`;
 });
 
-// Extra logiciels dans le budget
-if (logGroup && logGroup.extra) {
-  logGroup.extra.forEach(ex => {
-    const de = DATA[ex.cat]?.[ex.key];
-    if (!de || de.p === 0) return;
-    budgetDetailEl.innerHTML += `
-    <div class="bi">
-      <span class="bi-lbl">${de.n}</span>
-      <span class="bi-val">${de.p.toLocaleString('fr-FR')} €</span>
-      ${ex.note ? `<span class="bi-note">${ex.note}</span>` : ''}
-    </div>`;
-  });
+// Terrain masqué
+if (!besoinTerrain) {
+  budgetDetailEl.innerHTML += `<div class="bi" style="opacity:.5">
+    <span class="bi-lbl">📱 Terrain</span>
+    <span class="bi-val">Non inclus</span>
+    <span class="bi-note">Pas de besoin terrain sélectionné</span>
+  </div>`;
 }
 
 document.getElementById('totalPrice').textContent = totalAnnuel.toLocaleString('fr-FR') + ' € / an';
@@ -1246,7 +1546,7 @@ document.getElementById('perUser').textContent = nbUsers > 1
   : '—';
 
 /* ══════════════════════════════════════════════════════════════════
-   RAISONS — adaptées aux briques choisies (pas au profil)
+   RAISONS
 ══════════════════════════════════════════════════════════════════ */
 const rl = document.getElementById('reasonsList');
 SELECTED.reasons.forEach(r => {
@@ -1254,21 +1554,22 @@ SELECTED.reasons.forEach(r => {
 });
 
 /* ══════════════════════════════════════════════════════════════════
-   ALTERNATIVES — triées par proximité budgétaire
-   "Similaire" si gratuit ou même fourchette
-   "Budget sup." si supérieur
-   "Hors budget" si très supérieur
+   ALTERNATIVES — Budget inf · Similaire · Budget sup · Hors budget
 ══════════════════════════════════════════════════════════════════ */
 const altContentEl = document.getElementById('altContent');
 
-// Prix du scénario actuel pour référence
-const winTotalPrice = totalAnnuel;
+// Prix de chaque composant recommandé (pour comparaison per-catégorie)
+const winPrices = {};
+briquesGrouped.forEach(b => {
+  winPrices[b.cat] = DATA[b.cat]?.[b.key]?.p || 0;
+});
 
-function budgetTag(p) {
-  if (p === 0 || Math.abs(p - winTotalPrice) < 200) return '<span class="t-sim">Similaire</span>';
-  if (p > winTotalPrice && p <= winTotalPrice * 3) return '<span class="t-sup">Budget sup.</span>';
-  if (p > winTotalPrice * 3) return '<span class="t-hb">Hors budget</span>';
-  return '<span class="t-sim">Similaire</span>';
+function budgetTag(altPrice, winCatPrice) {
+  if (altPrice < winCatPrice)                                    return '<span class="t-inf">Budget inf.</span>';
+  if (Math.abs(altPrice - winCatPrice) <= Math.max(50, winCatPrice * 0.15))
+                                                                  return '<span class="t-sim">Similaire</span>';
+  if (altPrice > winCatPrice && altPrice <= winCatPrice * 4 + 800) return '<span class="t-sup">Budget sup.</span>';
+  return '<span class="t-hb">Hors budget</span>';
 }
 
 function priceCls(p) { return p === 0 ? 'p-free' : p < 1000 ? 'p-paid' : 'p-big'; }
@@ -1286,24 +1587,34 @@ const ALT_LABELS = {
 if (SELECTED.alts) {
   Object.entries(SELECTED.alts).forEach(([cat, keys]) => {
     if (!keys || !keys.length) return;
+    if (cat === 'terrain' && !besoinTerrain) return; // Masquer alts terrain si pas besoin
+
     const cfg = ALT_LABELS[cat] || { ico:'📦', label:cat };
+    const winP = winPrices[cat] !== undefined ? winPrices[cat] : 0;
+
     const cards = keys.map(key => {
       const d = DATA[cat]?.[key];
       if (!d) return '';
       const logoEl = d.img
-        ? `<img class="alt-logo" src="img/${d.img}" alt="${d.n}" onerror="this.style.display='none'">`
+        ? `<img class="alt-logo" src="img/${d.img}" alt="${d.n}" onerror="this.style.display='none';this.nextSibling.style.display='flex'"><div class="alt-ico" style="display:none">${cfg.ico}</div>`
         : `<div class="alt-ico">${cfg.ico}</div>`;
+
+      // Spécificités secteur pour les alts
+      const specNote = d.specs?.[secteur] || d.specs?.default || '';
+      const specHtml = specNote ? `<div class="alt-specs">🎯 ${specNote.substring(0, 100)}${specNote.length>100?'…':''}</div>` : '';
+
       return `<div class="alt-card">${logoEl}
         <div class="alt-body">
           <div class="alt-name">${d.n}</div>
-          <div class="alt-d">${d.d}</div>
+          <div class="alt-d">${d.d.substring(0, 90)}…</div>
+          ${specHtml}
           <div class="alt-foot">
             <span class="alt-p ${priceCls(d.p)}">${priceLabel(d.p)}</span>
-            ${budgetTag(d.p)}
+            ${budgetTag(d.p, winP)}
           </div>
         </div>
       </div>`;
-    }).join('');
+    }).filter(Boolean).join('');
 
     if (cards) {
       altContentEl.innerHTML += `
@@ -1317,3 +1628,4 @@ if (SELECTED.alts) {
 </script>
 </body>
 </html>
+
