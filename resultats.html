@@ -78,7 +78,10 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .brique-name{font-size:.95rem;font-weight:700;color:var(--ink);line-height:1.2}
 .brique-sub{font-size:.7rem;color:var(--muted);margin-top:2px}
 .brique-body{font-size:.82rem;color:var(--muted);line-height:1.65;padding:0 18px 6px;flex:1}
-.brique-sector{font-size:.75rem;background:var(--surface);border-top:1px dashed var(--border);margin:4px 18px 12px;padding:8px 10px;border-radius:8px;color:var(--ink2);line-height:1.55}
+.brique-sector{font-size:.75rem;background:var(--surface);border-top:1px dashed var(--border);margin:4px 18px 12px;padding:8px 10px;border-radius:8px;color:var(--ink2);line-height:1.55;
+ word-wrap: break-word;       /* Coupe les mots trop longs */
+ overflow-wrap: anywhere;     /* Sécurité supplémentaire pour le responsive */
+ display: block;}
 .brique-sector strong{color:var(--ink);display:block;margin-bottom:3px;font-size:.7rem;text-transform:uppercase;letter-spacing:.5px}
 .brique-foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;padding:10px 18px;border-top:1px solid var(--border);background:var(--surface);margin-top:auto}
 .brique-price{font-family:'DM Mono',monospace;font-size:.76rem;font-weight:500;padding:3px 9px;border-radius:6px}
