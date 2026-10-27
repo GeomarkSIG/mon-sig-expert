@@ -13,6 +13,21 @@ var SOUV_LBL = ['Standard', 'Sensible (UE / France)', 'Critique (interne)'];
 var SI_LBL = {aucun: 'Aucun', azure: 'Microsoft Azure', m365: 'Microsoft 365', aws: 'AWS', google: 'Google Cloud', google_workspace: 'Google Workspace', apple_icloud: 'Apple / iCloud', on_premise: 'Serveurs internes', autocad_si: 'AutoCAD déjà licencié', arcgis_si: 'Esri déjà licencié', supermap_si: 'SuperMap déjà licencié', mapinfo_si: 'MapInfo déjà licencié', cloud_tier: 'Cloud souverain', bureautique_cloud: 'Bureautique cloud', nsp_si: 'Non précisé'};
 var NEED_LBL = {dwg: 'Échange DWG / DXF (CAO)', bim: 'BIM / IFC', erp: 'ERP / CRM', bi: 'BI et tableaux de bord', iot: 'Capteurs et temps réel', opendata: 'Open data / INSPIRE', api: 'API REST', sso: 'SSO / annuaire', mobile: 'Collecte terrain mobile', forms: 'Formulaires métier', portal: 'Portail web métier', 'public': 'Diffusion au public', scal: 'Montée en charge', big: 'Gros volumes de données', etl: 'ETL / conversion de données', raster: 'Imagerie spécialisée'};
 
+var ICON = {
+  logiciels: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
+  plateforme: '<path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 13l9 5 9-5"/>',
+  bases: '<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>',
+  hebergement: '<rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01"/>',
+  publication: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
+  imagerie: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-8 8"/>',
+  terrain: '<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>',
+  etl: '<path d="M4 8h13l-3-3M20 16H7l3 3"/>',
+  bi: '<path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/>',
+  iot: '<path d="M5 12a10 10 0 0 1 14 0M8 15a6 6 0 0 1 8 0M12 19h.01"/>',
+  securite: '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/>',
+  support: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="m5.6 5.6 3.9 3.9M14.5 14.5l3.9 3.9M18.4 5.6l-3.9 3.9M9.5 14.5l-3.9 3.9"/>'
+};
+function icon(cat) { return '<span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">' + (ICON[cat] || '') + '</svg></span>'; }
 function nm(k) { return D[k].n.split(' (')[0]; }
 function eur(n) { return n === 0 ? 'Gratuit' : fmt(n) + ' €'; }
 var current = -1;
@@ -84,12 +99,37 @@ function card(k, sc, o) {
   if (b.link) links.push('<a href="' + b.link + '" target="_blank" rel="noopener">Site</a>');
   if (b.mail) links.push('<a href="mailto:' + b.mail + '">Contact</a>');
   return '<article class="card' + (o.principal ? ' principal' : '') + (o.hide ? ' hidden alt-more' : '') + '">' +
-    '<div class="card-h"><div class="tag">' + escHtml(cat.lbl) + (o.principal ? ' · brique principale' : '') + '</div><h4>' + escHtml(b.n) + '</h4><div class="sub">' + escHtml(b.sub) + '</div></div>' +
+    '<div class="card-h">' + icon(b.cat) + '<div><div class="tag">' + escHtml(cat.lbl) + (o.principal ? ' · brique principale' : '') + '</div><h4>' + escHtml(b.n) + '</h4><div class="sub">' + escHtml(b.sub) + '</div></div></div>' +
     '<div class="card-b">' + gl(b.d, seen) + '</div>' +
     (spec ? '<div class="pour"><b>' + gl('Spécificités métier') .replace('Spécificités métier', 'Spécificités') + ' · ' + escHtml(S.l) + '</b>' + gl(spec, seen) + '</div>' : '') +
     '<dl class="spec">' + rows.map(function (r) { return '<div><dt>' + gl(r[0]) + '</dt><dd>' + gl(r[1], seen) + '</dd></div>'; }).join('') + '</dl>' +
     '<div class="card-f"><span class="px' + pxCls + '">' + pxTxt + '</span>' +
     (o.tag ? '<span class="vs ' + o.tag[0] + '">' + o.tag[1] + '</span>' : '<span class="lnk">' + links.join('') + '</span>') + '</div></article>';
+}
+
+/* ── Bandeau de chiffres ── */
+function renderStats(sc) {
+  var rows = needRows(sc), ok = rows.filter(function (r) { return r[1] === 'ok'; }).length;
+  var st = [[fmt(sc.total), ' € / an', 'Coût annuel estimé'], [String(sc.items.length), '', 'Briques dans l’architecture'], [rows.length ? ok + ' / ' + rows.length : '—', '', 'Exigences couvertes'], [String(C.users), '', 'Utilisateur' + (C.users > 1 ? 's' : '') + ' SIG']];
+  $('stats').innerHTML = st.map(function (s) { return '<div class="stat"><div class="n">' + s[0] + (s[1] ? '<span class="u">' + s[1] + '</span>' : '') + '</div><div class="l">' + s[2] + '</div></div>'; }).join('');
+}
+
+/* ── Schéma : trajet de la donnée ── */
+var FLOW = [
+  ['Acquisition', 'imagerie', ['imagerie', 'terrain']],
+  ['Données', 'bases', ['bases', 'etl']],
+  ['Traitement', 'logiciels', ['logiciels', 'plateforme', 'bi', 'iot']],
+  ['Hébergement et sécurité', 'hebergement', ['hebergement', 'securite', 'support']],
+  ['Diffusion', 'publication', ['publication']]
+];
+function renderFlow(sc) {
+  var firstSig = null;
+  sc.items.forEach(function (it) { if (!firstSig && D[it.key].cat === 'logiciels') firstSig = it.key; });
+  $('flow').innerHTML = FLOW.map(function (col) {
+    var its = sc.items.filter(function (it) { return col[2].indexOf(it.cat) >= 0; });
+    return '<div class="flow-col"><div class="flow-h">' + icon(col[1]) + '<b>' + col[0] + '</b></div>' +
+      (its.length ? its.map(function (it) { return '<div class="flow-item' + (it.key === firstSig ? ' main' : '') + '">' + escHtml(nm(it.key)) + '<small>' + (it.included ? 'inclus' : it.price === 0 ? 'gratuit' : fmt(it.price) + ' €/an') + '</small></div>'; }).join('') : '<div class="flow-empty">Non requis à ce palier</div>') + '</div>';
+  }).join('');
 }
 
 /* ── Sections ── */
@@ -222,10 +262,9 @@ function show(i) {
   current = i;
   var sc = SC[i];
   buildTabs(); markCompare(i);
-  $('h1').textContent = S.tag + ' — ' + sc.palier;
+  $('h1').innerHTML = escHtml(S.tag) + ' <span class="acc">' + escHtml(sc.palier) + '</span>';
   $('lead').textContent = leadText(sc);
-  $('curLbl').textContent = sc.roleLbl + ' · palier ' + sc.palier.toLowerCase() + ' · ' + sc.band.short;
-  renderNotes(sc); renderCards(sc); renderBudget(sc); renderNeeds(sc); renderCompat(sc); renderWhy(sc); renderAlts(sc);
+  renderNotes(sc); renderStats(sc); renderFlow(sc); renderCards(sc); renderBudget(sc); renderNeeds(sc); renderCompat(sc); renderWhy(sc); renderAlts(sc);
   $('contact').href = 'contact.html' + window.location.search + (window.location.search ? '&' : '?') + 'scenario=' + sc.level + '&total=' + sc.total;
   document.title = S.tag + ' — Diagnostic SIG Expert';
 }
@@ -235,9 +274,9 @@ show(R.recIdx);
 
 /* sommaire */
 (function () {
-  var links = document.querySelectorAll('.toc a');
+  var links = document.querySelectorAll('.subnav a');
   var io = new IntersectionObserver(function (es) {
     es.forEach(function (e) { if (e.isIntersecting) links.forEach(function (l) { l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id); }); });
   }, {rootMargin: '-80px 0px -72% 0px'});
-  document.querySelectorAll('main section').forEach(function (s) { io.observe(s); });
+  document.querySelectorAll('section[id]').forEach(function (s) { io.observe(s); });
 })();

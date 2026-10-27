@@ -4,21 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Diagnostic SIG Expert — Geomark SIG</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="img/logo-geomark.png">
 <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="style_form.css">
 
 </head>
 <body>
-<header class="topbar"><div class="topbar-in">
-  <a class="brand" href="index.html">GeomarkSIG<small>Diagnostic SIG Expert</small></a>
-  <nav class="topnav"><a href="lexique.html">Lexique et sources</a><a href="mailto:contact@geomarksig.fr">Contact</a></nav>
+<header class="site-hdr"><div class="hdr-in">
+  <a class="brand" href="https://geomark-sig.fr/" aria-label="Geomark SIG Solutions — accueil"><img src="img/logo-geomark.png" alt="Geomark Solutions SIG" width="116" height="46"></a>
+  <button class="nav-toggle" type="button" aria-label="Menu" onclick="document.getElementById('nav').classList.toggle('open')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <nav class="nav" id="nav">
+    <a href="https://geomark-sig.fr/qui-sommes-nous.html">Qui sommes-nous ?</a>
+    <a href="https://geomark-sig.fr/sig.html">SIG</a>
+    <a href="https://geomark-sig.fr/topographie.html">Topographie</a>
+    <a href="https://geomark-sig.fr/detection-reseau.html">Détection de réseau</a>
+    <a href="https://geomark-sig.fr/webmapping.html">Webmapping</a>
+    <a href="index.html" class="active">Diagnostic SIG</a>
+    <a href="lexique.html">Lexique</a>
+    <a href="contact.html" class="btn-nav">Nous contacter</a>
+  </nav>
 </div></header>
 
-<section class="intro"><div class="intro-in">
-  <div class="kicker">Diagnostic multicritères</div>
-  <h1>Quelle architecture SIG pour votre activité ?</h1>
+<section class="hero"><div class="wrap">
+  <div class="eyebrow">Diagnostic multicritères</div>
+  <h1 style="max-width:24ch">Quelle architecture SIG <span class="acc">pour votre activité ?</span></h1>
   <p class="lead">Répondez à quelques questions : vous obtenez trois scénarios chiffrés autour de votre budget, avec les compatibilités entre logiciels et les spécificités de votre métier. Gratuit, sans inscription.</p>
   <div class="mode-row">
     <button type="button" class="mode-btn active" id="btnSimple" onclick="toggleMode('simple')">Mode standard</button>
@@ -26,7 +36,7 @@
   </div>
 </div></section>
 
-<div class="wrap">
+<div class="wrap narrow">
 <form action="resultats.html" method="GET">
 <input type="hidden" name="mode" id="inputMode" value="simple">
 
@@ -339,7 +349,22 @@
 </form>
 </div>
 
-<footer class="page-footer">GeomarkSIG · Diagnostic SIG Expert · <a href="mailto:contact@geomarksig.fr">contact@geomarksig.fr</a> · <a href="lexique.html">Lexique et sources</a></footer>
+<div class="ribbon-band"><img class="ribbon-img" src="img/ribbon-band.jpg" alt="" loading="lazy"></div>
+<footer class="ftr">
+  <div class="ftr-in">
+    <div>
+      <div class="ftr-brand"><img src="img/logo-geomark.png" alt="Geomark"></div>
+      <p class="ftr-desc">Expertise indépendante en systèmes d'information géographique, topographie, détection de réseau et cartographie web. Basé au Tampon, La Réunion.</p>
+    </div>
+    <div class="ftr-col"><div class="ftr-h">Expertises</div>
+      <a href="https://geomark-sig.fr/sig.html">SIG</a><a href="https://geomark-sig.fr/topographie.html">Topographie</a><a href="https://geomark-sig.fr/detection-reseau.html">Détection de réseau</a><a href="https://geomark-sig.fr/webmapping.html">Webmapping</a></div>
+    <div class="ftr-col"><div class="ftr-h">Diagnostic</div>
+      <a href="index.html">Nouveau diagnostic</a><a href="lexique.html">Lexique et sources</a><a href="contact.html">Demander un devis</a><a href="https://geomark-sig.fr/mentions-legales.html">Mentions légales</a></div>
+    <div class="ftr-col"><div class="ftr-h">Contact</div>
+      <a href="mailto:contact@geomark-sig.fr">contact@geomark-sig.fr</a><a href="tel:+33613184710">+33 6 13 18 47 10</a><a href="tel:+262693616923">+262 6 93 61 69 23</a><a href="https://www.linkedin.com/in/robin-maume/" target="_blank" rel="noopener">LinkedIn</a></div>
+  </div>
+  <div class="ftr-bottom"><span>© 2025–2026 Geomark SIG Solutions · SIRET 939 546 248 00013</span><span>21°16'S, 55°30'E · Le Tampon, La Réunion</span></div>
+</footer>
 
 <script>
 function toggleMode(m){
