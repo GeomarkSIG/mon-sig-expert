@@ -62,7 +62,7 @@
             <p id="recapBudget">-- € / an</p>
         </div>
 
-        <form action="https://formspree.io/f/https://formspree.io/f/mkoywdpd" method="POST">
+        <form action="https://formspree.io/f/mkoywdpd" method="POST">
             
             <div class="field">
                 <label>Nom ou Entreprise</label>
@@ -71,7 +71,7 @@
 
             <div class="field">
                 <label>Email professionnel</label>
-                <input type="email" name="_replyto" id="dispEmail" readonly>
+                <input type="email" name="_replyto" id="dispEmail" placeholder="contact@domaine.com" required autocomplete="email">
             </div>
 
             <div class="field">
@@ -95,6 +95,8 @@
             </div>
 
             <input type="hidden" name="budget_estime" id="hiddenBudget">
+            <input type="hidden" name="secteur" id="hiddenSecteur">
+            <input type="hidden" name="palier_scenario" id="hiddenPalier">
             <input type="hidden" name="_subject" value="Nouvelle demande de devis SIG">
 
             <button type="submit" class="btn-submit">📤 Envoyer ma demande</button>
@@ -111,16 +113,17 @@
     const params = new URLSearchParams(window.location.search);
     
     const nom = params.get('identite') || "Non précisé";
-    const email = params.get('email') || "";
     const budget = params.get('total') || "0";
 
     // Affichage dans le formulaire
     document.getElementById('dispNom').value = nom;
-    document.getElementById('dispEmail').value = email;
     document.getElementById('recapBudget').innerText = budget + " € / an";
     
     // Remplissage du champ caché pour le mail
     document.getElementById('hiddenBudget').value = budget + " € / an";
+    var PALIERS = ["Open Source", "Starter", "Professionnel", "Avancé", "Entreprise", "Grande organisation"];
+    document.getElementById('hiddenSecteur').value = params.get('secteur') || "";
+    document.getElementById('hiddenPalier').value = PALIERS[+params.get('scenario')] || "";
 </script>
 
 </body>
